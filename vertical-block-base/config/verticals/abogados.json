@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "1.0.0",
+  "verticalKey": "abogados",
+  "name": "Estudio Jurídico",
+  "description": "Theme base para abogados, firmas legales y consultorios jurídicos.",
+  "brand": {
+    "siteName": "LexBase",
+    "tagline": "Defensa legal clara, estratégica y confiable",
+    "logo": "assets/img/verticals/abogados/logo.svg",
+    "primaryColor": "#101B2A",
+    "secondaryColor": "#B08D57",
+    "accentColor": "#EFE7DA",
+    "fontHeading": "Inter",
+    "fontBody": "Inter"
+  },
+  "navigation": {
+    "primary": [
+      {
+        "label": "Inicio",
+        "url": "/"
+      },
+      {
+        "label": "Servicios",
+        "url": "/servicios"
+      },
+      {
+        "label": "Nosotros",
+        "url": "/nosotros"
+      },
+      {
+        "label": "Blog",
+        "url": "/blog"
+      },
+      {
+        "label": "Contacto",
+        "url": "/contacto"
+      }
+    ]
+  },
+  "pages": [
+    {
+      "key": "home",
+      "title": "Inicio",
+      "slug": "inicio",
+      "template": "front-page",
+      "sections": [
+        "hero",
+        "services-grid",
+        "benefits",
+        "process",
+        "testimonials",
+        "faq",
+        "cta-final"
+      ],
+      "hero": {
+        "eyebrow": "Estudio jurídico especializado",
+        "title": "Soluciones legales claras para decisiones importantes",
+        "subtitle": "Acompañamos a personas y empresas con asesoría jurídica estratégica.",
+        "primaryCta": "Agendar consulta",
+        "primaryUrl": "/contacto"
+      }
+    },
+    {
+      "key": "services",
+      "title": "Servicios",
+      "slug": "servicios",
+      "template": "page",
+      "sections": [
+        "hero-centered",
+        "services-grid",
+        "cta-final"
+      ]
+    },
+    {
+      "key": "about",
+      "title": "Nosotros",
+      "slug": "nosotros",
+      "template": "page",
+      "sections": [
+        "hero-centered",
+        "benefits",
+        "process"
+      ]
+    },
+    {
+      "key": "contact",
+      "title": "Contacto",
+      "slug": "contacto",
+      "template": "page",
+      "sections": [
+        "hero-centered",
+        "contact-section"
+      ]
+    }
+  ],
+  "sections": {
+    "benefits": {
+      "items": [
+        "Atención clara desde el primer contacto.",
+        "Estrategia jurídica enfocada en resultados.",
+        "Comunicación profesional y seguimiento continuo."
+      ]
+    }
+  },
+  "contentModels": {
+    "service": {
+      "label": "Servicios",
+      "singular": "Servicio",
+      "items": [
+        {
+          "title": "Derecho civil",
+          "summary": "Asesoría y representación en conflictos civiles, contratos y obligaciones.",
+          "icon": "scale",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/servicios/derecho-civil"
+        },
+        {
+          "title": "Derecho laboral",
+          "summary": "Acompañamiento legal para trabajadores, empleadores y empresas.",
+          "icon": "briefcase",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/servicios/derecho-laboral"
+        },
+        {
+          "title": "Derecho familiar",
+          "summary": "Orientación en divorcios, alimentos, custodia y acuerdos familiares.",
+          "icon": "users",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/servicios/derecho-familiar"
+        }
+      ]
+    }
+  },
+  "cta": {
+    "final": {
+      "text": "Agenda una consulta legal con enfoque estratégico",
+      "buttonText": "Solicitar consulta",
+      "buttonUrl": "/contacto"
+    }
+  },
+  "contact": {
+    "email": "contacto@lexbase.example",
+    "phone": "+00 000 000 000"
+  },
+  "seoDefaults": {
+    "titlePattern": "%page% | %siteName%",
+    "metaDescription": "Asesoría legal profesional, clara y confiable."
+  }
+}

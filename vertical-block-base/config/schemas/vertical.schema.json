@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/vertical.schema.json",
+  "title": "Vertical Block Base Vertical Config",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "verticalKey",
+    "name",
+    "brand",
+    "navigation",
+    "pages",
+    "contentModels"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "verticalKey": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "object",
+      "required": [
+        "siteName",
+        "tagline",
+        "primaryColor",
+        "secondaryColor",
+        "accentColor"
+      ],
+      "properties": {
+        "siteName": {
+          "type": "string"
+        },
+        "tagline": {
+          "type": "string"
+        },
+        "logo": {
+          "type": "string"
+        },
+        "primaryColor": {
+          "type": "string"
+        },
+        "secondaryColor": {
+          "type": "string"
+        },
+        "accentColor": {
+          "type": "string"
+        },
+        "fontHeading": {
+          "type": "string"
+        },
+        "fontBody": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "navigation": {
+      "type": "object",
+      "properties": {
+        "primary": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "url"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "title",
+          "slug",
+          "template",
+          "sections"
+        ],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "template": {
+            "type": "string"
+          },
+          "sections": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "hero": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "sections": {
+      "type": "object"
+    },
+    "contentModels": {
+      "type": "object"
+    },
+    "cta": {
+      "type": "object"
+    },
+    "contact": {
+      "type": "object"
+    },
+    "seoDefaults": {
+      "type": "object"
+    },
+    "woocommerce": {
+      "type": "object",
+      "description": "WooCommerce configuration for store-type verticals. When mode is 'catalog' or 'vidriera', purchase/cart functionality is hidden and the site operates in catalog/showcase mode.",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "description": "WooCommerce operation mode: 'catalog' or 'vidriera' for showcase-only, 'full' for full e-commerce, or absent for non-store verticals.",
+          "enum": ["catalog", "vidriera", "full"]
+        },
+        "shop_page": {
+          "type": "string",
+          "description": "Slug of the page to set as WooCommerce shop page. Must match a page slug in pages[].slug."
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

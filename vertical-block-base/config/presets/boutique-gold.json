@@ -1,0 +1,60 @@
+{
+  "presetKey": "boutique-gold",
+  "name": "Boutique Gold",
+  "settings": {
+    "profileName": "Boutique Gold",
+    "colors": {
+      "primary": "#18120B",
+      "secondary": "#D6B46A",
+      "accent": "#FFF7E6",
+      "background": "#FFFCF6",
+      "text": "#2C2418"
+    },
+    "typography": {
+      "heading": "Georgia, Times New Roman, serif",
+      "body": "Inter, Arial, sans-serif"
+    },
+    "layout": {
+      "contentWidth": "1160px",
+      "wideWidth": "1400px",
+      "radius": "30px",
+      "shadow": "strong",
+      "spacingScale": "wide"
+    },
+    "blocks": {
+      "hero": true,
+      "servicesGrid": true,
+      "benefits": true,
+      "process": true,
+      "testimonials": true,
+      "faq": true,
+      "contact": true,
+      "ctaFinal": true
+    },
+    "buttons": {
+      "style": "pill",
+      "uppercase": true
+    },
+    "colorMode": "light",
+    "palettes": {
+      "light": {
+        "primary": "#18120B",
+        "secondary": "#D6B46A",
+        "accent": "#FFF7E6",
+        "background": "#FFFCF6",
+        "surface": "#F7F3ED",
+        "text": "#2C2418",
+        "mutedText": "#667085"
+      },
+      "dark": {
+        "primary": "#F4E6C8",
+        "secondary": "#D6B46A",
+        "accent": "#1E2A3A",
+        "background": "#0F1724",
+        "surface": "#152033",
+        "text": "#E7EDF5",
+        "mutedText": "#A8B3C4"
+      }
+    }
+  }
+}

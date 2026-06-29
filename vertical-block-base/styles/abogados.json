@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Abogados",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "base",
+          "color": "#FAF8F4",
+          "name": "Base"
+        },
+        {
+          "slug": "contrast",
+          "color": "#101B2A",
+          "name": "Contrast"
+        },
+        {
+          "slug": "primary",
+          "color": "#101B2A",
+          "name": "Primary"
+        },
+        {
+          "slug": "secondary",
+          "color": "#B08D57",
+          "name": "Secondary"
+        },
+        {
+          "slug": "accent",
+          "color": "#EFE7DA",
+          "name": "Accent"
+        },
+        {
+          "slug": "muted",
+          "color": "#5D6672",
+          "name": "Muted"
+        }
+      ]
+    }
+  }
+}

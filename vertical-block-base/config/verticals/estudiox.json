@@ -1,0 +1,1685 @@
+{
+  "schemaVersion": "1.0.0",
+  "verticalKey": "estudiox",
+  "name": "ESTUDIO X — Legal 5.0",
+  "description": "Vertical importada desde WXR de WordPress para un sitio legal/abogados basado en el theme vertical-block-base.",
+  "source": {
+    "type": "wordpress-wxr",
+    "file": "estudiox.WordPress.2026-05-19.xml",
+    "site": {
+      "title": "ESTUDIO X",
+      "link": "https://tkmsoluciones.com/legal50",
+      "description": "Legal 5.0",
+      "language": "es",
+      "generator": "https://wordpress.org/?v=6.9.4",
+      "baseSiteUrl": "https://tkmsoluciones.com/legal50",
+      "baseBlogUrl": "https://tkmsoluciones.com/legal50"
+    },
+    "extractedAt": "2026-05-19",
+    "notes": [
+      "El XML no contiene binarios de imágenes; este JSON referencia URLs de medios y assets.",
+      "La home original estaba principalmente en wp_template/front-page, no en el contenido de la página Home."
+    ]
+  },
+  "brand": {
+    "siteName": "ESTUDIO X",
+    "tagline": "Legal 5.0",
+    "logo": "",
+    "primaryColor": "#1b1b1b",
+    "secondaryColor": "#b4935a",
+    "accentColor": "#f1e6ea",
+    "backgroundColor": "#ffffff",
+    "fontHeading": "Inter",
+    "fontBody": "Inter"
+  },
+  "navigation": {
+    "primary": [
+      {
+        "label": "Home",
+        "url": "/",
+        "type": "post_type",
+        "object": "page",
+        "pageKey": "home",
+        "sourceId": "94",
+        "objectId": "93",
+        "order": 0,
+        "parent": "0"
+      },
+      {
+        "label": "About Us",
+        "url": "/about-us",
+        "type": "post_type",
+        "object": "page",
+        "pageKey": "about-us",
+        "sourceId": "96",
+        "objectId": "95",
+        "order": 2,
+        "parent": "0"
+      },
+      {
+        "label": "Practice Area",
+        "url": "/practice-area",
+        "type": "post_type",
+        "object": "page",
+        "pageKey": "practice-area",
+        "sourceId": "98",
+        "objectId": "97",
+        "order": 3,
+        "parent": "0"
+      },
+      {
+        "label": "Attorneys",
+        "url": "/attorneys",
+        "type": "post_type",
+        "object": "page",
+        "pageKey": "attorneys",
+        "sourceId": "100",
+        "objectId": "99",
+        "order": 4,
+        "parent": "0"
+      },
+      {
+        "label": "Pages",
+        "url": "/pages",
+        "type": "post_type",
+        "object": "page",
+        "pageKey": "pages",
+        "sourceId": "102",
+        "objectId": "101",
+        "order": 5,
+        "parent": "0"
+      },
+      {
+        "label": "Contacta con nosotros",
+        "url": "/contact-us",
+        "type": "post_type",
+        "object": "page",
+        "pageKey": "contact-us",
+        "sourceId": "104",
+        "objectId": "103",
+        "order": 6,
+        "parent": "0"
+      }
+    ],
+    "menus": {
+      "main-menus": [
+        {
+          "label": "Home",
+          "url": "/",
+          "type": "post_type",
+          "object": "page",
+          "pageKey": "home",
+          "sourceId": "94",
+          "objectId": "93",
+          "order": 0,
+          "parent": "0"
+        },
+        {
+          "label": "About Us",
+          "url": "/about-us",
+          "type": "post_type",
+          "object": "page",
+          "pageKey": "about-us",
+          "sourceId": "96",
+          "objectId": "95",
+          "order": 2,
+          "parent": "0"
+        },
+        {
+          "label": "Practice Area",
+          "url": "/practice-area",
+          "type": "post_type",
+          "object": "page",
+          "pageKey": "practice-area",
+          "sourceId": "98",
+          "objectId": "97",
+          "order": 3,
+          "parent": "0"
+        },
+        {
+          "label": "Attorneys",
+          "url": "/attorneys",
+          "type": "post_type",
+          "object": "page",
+          "pageKey": "attorneys",
+          "sourceId": "100",
+          "objectId": "99",
+          "order": 4,
+          "parent": "0"
+        },
+        {
+          "label": "Pages",
+          "url": "/pages",
+          "type": "post_type",
+          "object": "page",
+          "pageKey": "pages",
+          "sourceId": "102",
+          "objectId": "101",
+          "order": 5,
+          "parent": "0"
+        },
+        {
+          "label": "Contacta con nosotros",
+          "url": "/contact-us",
+          "type": "post_type",
+          "object": "page",
+          "pageKey": "contact-us",
+          "sourceId": "104",
+          "objectId": "103",
+          "order": 6,
+          "parent": "0"
+        }
+      ]
+    },
+    "wpNavigationBlocks": [
+      {
+        "title": "Navigation",
+        "slug": "navigation",
+        "sourceId": "4",
+        "blockMarkup": "<!-- wp:page-list /-->",
+        "links": []
+      },
+      {
+        "title": "Menú",
+        "slug": "menu",
+        "sourceId": "138",
+        "blockMarkup": "<!-- wp:navigation-link {\"label\":\"Personal Injury/ Disability\",\"type\":\"\",\"url\":\"#\",\"kind\":\"custom\",\"isTopLevelLink\":true} /-->\n\n<!-- wp:navigation-link {\"label\":\"Corporte\",\"type\":\"\",\"url\":\"#\",\"kind\":\"custom\",\"isTopLevelLink\":true} /-->\n\n<!-- wp:navigation-link {\"label\":\"Real Estate\",\"type\":\"\",\"url\":\"#\",\"kind\":\"custom\",\"isTopLevelLink\":true} /-->\n\n<!-- wp:navigation-link {\"label\":\"Buy Now\",\"type\":\"\",\"opensInNewTab\":true,\"url\":\"https://www.cretathemes.com/products/lawyer-wordpress-theme\",\"kind\":\"custom\",\"isTopLevelLink\":true} /-->",
+        "links": [
+          {
+            "label": "Personal Injury/ Disability",
+            "url": "#",
+            "kind": "custom",
+            "opensInNewTab": false,
+            "isTopLevelLink": true
+          },
+          {
+            "label": "Corporte",
+            "url": "#",
+            "kind": "custom",
+            "opensInNewTab": false,
+            "isTopLevelLink": true
+          },
+          {
+            "label": "Real Estate",
+            "url": "#",
+            "kind": "custom",
+            "opensInNewTab": false,
+            "isTopLevelLink": true
+          },
+          {
+            "label": "Buy Now",
+            "url": "https://www.cretathemes.com/products/lawyer-wordpress-theme",
+            "kind": "custom",
+            "opensInNewTab": true,
+            "isTopLevelLink": true
+          }
+        ]
+      }
+    ]
+  },
+  "menus": {
+    "main-menus": [
+      {
+        "label": "Home",
+        "url": "/",
+        "type": "post_type",
+        "object": "page",
+        "pageKey": "home",
+        "sourceId": "94",
+        "objectId": "93",
+        "order": 0,
+        "parent": "0"
+      },
+      {
+        "label": "About Us",
+        "url": "/about-us",
+        "type": "post_type",
+        "object": "page",
+        "pageKey": "about-us",
+        "sourceId": "96",
+        "objectId": "95",
+        "order": 2,
+        "parent": "0"
+      },
+      {
+        "label": "Practice Area",
+        "url": "/practice-area",
+        "type": "post_type",
+        "object": "page",
+        "pageKey": "practice-area",
+        "sourceId": "98",
+        "objectId": "97",
+        "order": 3,
+        "parent": "0"
+      },
+      {
+        "label": "Attorneys",
+        "url": "/attorneys",
+        "type": "post_type",
+        "object": "page",
+        "pageKey": "attorneys",
+        "sourceId": "100",
+        "objectId": "99",
+        "order": 4,
+        "parent": "0"
+      },
+      {
+        "label": "Pages",
+        "url": "/pages",
+        "type": "post_type",
+        "object": "page",
+        "pageKey": "pages",
+        "sourceId": "102",
+        "objectId": "101",
+        "order": 5,
+        "parent": "0"
+      },
+      {
+        "label": "Contacta con nosotros",
+        "url": "/contact-us",
+        "type": "post_type",
+        "object": "page",
+        "pageKey": "contact-us",
+        "sourceId": "104",
+        "objectId": "103",
+        "order": 6,
+        "parent": "0"
+      }
+    ]
+  },
+  "pages": [
+    {
+      "key": "sample-page",
+      "title": "Sample Page",
+      "slug": "sample-page",
+      "template": "page",
+      "status": "publish",
+      "sourceId": "2",
+      "sourceLink": "https://tkmsoluciones.com/legal50/sample-page/",
+      "sections": [
+        "hero-centered"
+      ],
+      "hero": {
+        "title": "Sample Page",
+        "subtitle": "This is an example page. It's different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an Abou",
+        "primaryCta": "Contacto",
+        "primaryUrl": "/contact-us"
+      },
+      "contentSummary": "This is an example page. It's different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this: Hi there! I'm a bike messenger by day, aspiring actor by night, and this is my website. I live in Los Angeles, have a great dog named Jack, and I like piña coladas. (And gettin' caught in the rain.) ...or something like this: The ",
+      "import": {
+        "createIfMissing": true,
+        "skipIfSlugExists": true,
+        "source": "WXR page"
+      }
+    },
+    {
+      "key": "home",
+      "title": "Home",
+      "slug": "",
+      "template": "front-page",
+      "status": "publish",
+      "sourceId": "93",
+      "sourceLink": "https://tkmsoluciones.com/legal50/",
+      "sections": [
+        "hero",
+        "services-grid",
+        "testimonials",
+        "benefits",
+        "cta-final"
+      ],
+      "hero": {
+        "eyebrow": "CASA DE LA LEY Y DEL ORDEN",
+        "title": "TU SOCIO LEGAL DE CONFIANZA",
+        "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+        "primaryCta": "SABER MÁS",
+        "primaryUrl": "/about-us",
+        "secondaryCta": "LLAMA 123 456 6789",
+        "secondaryUrl": "tel:1234566789",
+        "image": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/slider-image.png"
+      },
+      "contentSummary": "",
+      "import": {
+        "createIfMissing": true,
+        "skipIfSlugExists": true,
+        "source": "WXR page"
+      }
+    },
+    {
+      "key": "about-us",
+      "title": "About Us",
+      "slug": "about-us",
+      "template": "page",
+      "status": "publish",
+      "sourceId": "95",
+      "sourceLink": "https://tkmsoluciones.com/legal50/about-us/",
+      "sections": [
+        "hero-centered",
+        "benefits",
+        "process",
+        "cta-final"
+      ],
+      "hero": {
+        "title": "About Us",
+        "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam... Lorem Ipsum is simply dummy t",
+        "primaryCta": "Contacto",
+        "primaryUrl": "/contact-us"
+      },
+      "contentSummary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam... Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentia",
+      "import": {
+        "createIfMissing": true,
+        "skipIfSlugExists": true,
+        "source": "WXR page"
+      }
+    },
+    {
+      "key": "practice-area",
+      "title": "Practice Area",
+      "slug": "practice-area",
+      "template": "page",
+      "status": "publish",
+      "sourceId": "97",
+      "sourceLink": "https://tkmsoluciones.com/legal50/practice-area/",
+      "sections": [
+        "hero-centered",
+        "services-grid",
+        "faq",
+        "cta-final"
+      ],
+      "hero": {
+        "title": "Practice Area",
+        "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam... Lorem Ipsum is simply dummy t",
+        "primaryCta": "Contacto",
+        "primaryUrl": "/contact-us"
+      },
+      "contentSummary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam... Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentia",
+      "import": {
+        "createIfMissing": true,
+        "skipIfSlugExists": true,
+        "source": "WXR page"
+      }
+    },
+    {
+      "key": "attorneys",
+      "title": "Attorneys",
+      "slug": "attorneys",
+      "template": "page",
+      "status": "publish",
+      "sourceId": "99",
+      "sourceLink": "https://tkmsoluciones.com/legal50/attorneys/",
+      "sections": [
+        "hero-centered",
+        "benefits",
+        "testimonials",
+        "cta-final"
+      ],
+      "hero": {
+        "title": "Attorneys",
+        "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam... Lorem Ipsum is simply dummy t",
+        "primaryCta": "Contacto",
+        "primaryUrl": "/contact-us"
+      },
+      "contentSummary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam... Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentia",
+      "import": {
+        "createIfMissing": true,
+        "skipIfSlugExists": true,
+        "source": "WXR page"
+      }
+    },
+    {
+      "key": "pages",
+      "title": "Pages",
+      "slug": "pages",
+      "template": "page",
+      "status": "publish",
+      "sourceId": "101",
+      "sourceLink": "https://tkmsoluciones.com/legal50/pages/",
+      "sections": [
+        "hero-centered",
+        "benefits",
+        "cta-final"
+      ],
+      "hero": {
+        "title": "Pages",
+        "subtitle": "Explore all the pages we have on our website. Find information about our services, company, and more. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lor",
+        "primaryCta": "Contacto",
+        "primaryUrl": "/contact-us"
+      },
+      "contentSummary": "Explore all the pages we have on our website. Find information about our services, company, and more. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960 wit",
+      "import": {
+        "createIfMissing": true,
+        "skipIfSlugExists": true,
+        "source": "WXR page"
+      }
+    },
+    {
+      "key": "contact-us",
+      "title": "Contact US",
+      "slug": "contact-us",
+      "template": "page",
+      "status": "publish",
+      "sourceId": "103",
+      "sourceLink": "https://tkmsoluciones.com/legal50/contact-us/",
+      "sections": [
+        "hero-centered",
+        "contact-section"
+      ],
+      "hero": {
+        "title": "Contact US",
+        "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam... Lorem Ipsum is simply dummy t",
+        "primaryCta": "Contacto",
+        "primaryUrl": "/contact-us"
+      },
+      "contentSummary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam... Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentia",
+      "import": {
+        "createIfMissing": true,
+        "skipIfSlugExists": true,
+        "source": "WXR page"
+      }
+    },
+    {
+      "key": "privacy-policy",
+      "title": "Privacy Policy",
+      "slug": "privacy-policy",
+      "template": "page-legal",
+      "status": "draft",
+      "sourceId": "3",
+      "sourceLink": "https://tkmsoluciones.com/legal50/?page_id=3",
+      "sections": [
+        "hero-centered"
+      ],
+      "hero": {
+        "title": "Privacy Policy",
+        "subtitle": "Who we are Suggested text: Our website address is: https://tkmsoluciones.com/legal50. Comments Suggested text: When visitors leave comments on the site we collect the data shown in",
+        "primaryCta": "Contacto",
+        "primaryUrl": "/contact-us"
+      },
+      "contentSummary": "Who we are Suggested text: Our website address is: https://tkmsoluciones.com/legal50. Comments Suggested text: When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor’s IP address and browser user agent string to help spam detection. An anonymized string created from your email address (also called a hash) may be provided to the Gravatar service to see if you are using it. The Gravatar service privacy policy is available here: https://automat",
+      "import": {
+        "createIfMissing": true,
+        "skipIfSlugExists": true,
+        "source": "WXR page"
+      }
+    }
+  ],
+  "sections": {
+    "hero": {
+      "type": "hero-slider",
+      "title": "TU SOCIO LEGAL DE CONFIANZA",
+      "eyebrow": "CASA DE LA LEY Y DEL ORDEN",
+      "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+      "slides": [
+        {
+          "eyebrow": "CASA DE LA LEY Y DEL ORDEN",
+          "title": "TU SOCIO LEGAL DE CONFIANZA",
+          "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+          "primaryCta": "SABER MÁS",
+          "primaryUrl": "/about-us",
+          "secondaryCta": "LLAMA 123 456 6789",
+          "secondaryUrl": "tel:1234566789",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/slider-image.png"
+        },
+        {
+          "eyebrow": "CASA DE LA LEY Y DEL ORDEN",
+          "title": "TU SOCIO LEGAL DE CONFIANZA",
+          "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+          "primaryCta": "SABER MÁS",
+          "primaryUrl": "/about-us",
+          "secondaryCta": "LLAMA 123 456 6789",
+          "secondaryUrl": "tel:1234566789",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/slider-image.png"
+        },
+        {
+          "eyebrow": "CASA DE LA LEY Y DEL ORDEN",
+          "title": "TU SOCIO LEGAL DE CONFIANZA",
+          "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+          "primaryCta": "SABER MÁS",
+          "primaryUrl": "/about-us",
+          "secondaryCta": "LLAMA 123 456 6789",
+          "secondaryUrl": "tel:1234566789",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/slider-image.png"
+        }
+      ]
+    },
+    "services-grid": {
+      "eyebrow": "NUESTROS IMPORTANTES CASOS",
+      "title": "Services You Can Trust",
+      "subtitle": "Within our esteemed law firm, a trusted team of seasoned attorneys operates with unwavering integrity and transparency",
+      "itemsSource": "contentModels.service.items"
+    },
+    "testimonials": {
+      "title": "What our Client Says",
+      "subtitle": "Within our esteemed law firm, a trusted team of seasoned attorneys operates with unwavering integrity and transparency",
+      "itemsSource": "contentModels.testimonial.items"
+    },
+    "projects": {
+      "title": "Our Project",
+      "subtitle": "Within our esteemed law firm, a trusted team of seasoned attorneys operates with unwavering integrity and transparency",
+      "items": [
+        {
+          "title": "Protecting What Matters Most to You",
+          "summary": "Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed"
+        },
+        {
+          "title": "Results-Driven Representation, Every Step of the Way",
+          "summary": "Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed"
+        },
+        {
+          "title": "Legal Expertise You Can Rely On",
+          "summary": "Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed"
+        },
+        {
+          "title": "Your Rights, Our Mission",
+          "summary": "Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed"
+        }
+      ]
+    }
+  },
+  "graphics": {
+    "images": [
+      {
+        "key": "slider1",
+        "title": "slider1",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/slider1.png",
+        "relativeFile": "2026/02/slider1.png",
+        "role": "hero-slider",
+        "sourceId": "106",
+        "status": "inherit",
+        "alt": "slider1"
+      },
+      {
+        "key": "slider2",
+        "title": "slider2",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/slider2.png",
+        "relativeFile": "2026/02/slider2.png",
+        "role": "hero-slider",
+        "sourceId": "108",
+        "status": "inherit",
+        "alt": "slider2"
+      },
+      {
+        "key": "slider3",
+        "title": "slider3",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/slider3.png",
+        "relativeFile": "2026/02/slider3.png",
+        "role": "hero-slider",
+        "sourceId": "110",
+        "status": "inherit",
+        "alt": "slider3"
+      },
+      {
+        "key": "service1",
+        "title": "service1",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service1.png",
+        "relativeFile": "2026/02/service1.png",
+        "role": "service-card",
+        "sourceId": "113",
+        "status": "inherit",
+        "alt": "service1"
+      },
+      {
+        "key": "service2",
+        "title": "service2",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service2.png",
+        "relativeFile": "2026/02/service2.png",
+        "role": "service-card",
+        "sourceId": "115",
+        "status": "inherit",
+        "alt": "service2"
+      },
+      {
+        "key": "service3",
+        "title": "service3",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service3.png",
+        "relativeFile": "2026/02/service3.png",
+        "role": "service-card",
+        "sourceId": "117",
+        "status": "inherit",
+        "alt": "service3"
+      },
+      {
+        "key": "service1-1",
+        "title": "service1-1",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service1-1.png",
+        "relativeFile": "2026/02/service1-1.png",
+        "role": "service-card",
+        "sourceId": "119",
+        "status": "inherit",
+        "alt": "service1-1"
+      },
+      {
+        "key": "service2-1",
+        "title": "service2-1",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service2-1.png",
+        "relativeFile": "2026/02/service2-1.png",
+        "role": "service-card",
+        "sourceId": "121",
+        "status": "inherit",
+        "alt": "service2-1"
+      },
+      {
+        "key": "service3-1",
+        "title": "service3-1",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service3-1.png",
+        "relativeFile": "2026/02/service3-1.png",
+        "role": "service-card",
+        "sourceId": "123",
+        "status": "inherit",
+        "alt": "service3-1"
+      },
+      {
+        "key": "service1-2",
+        "title": "service1-2",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service1-2.png",
+        "relativeFile": "2026/02/service1-2.png",
+        "role": "service-card",
+        "sourceId": "125",
+        "status": "inherit",
+        "alt": "service1-2"
+      },
+      {
+        "key": "service2-2",
+        "title": "service2-2",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service2-2.png",
+        "relativeFile": "2026/02/service2-2.png",
+        "role": "service-card",
+        "sourceId": "127",
+        "status": "inherit",
+        "alt": "service2-2"
+      },
+      {
+        "key": "service3-2",
+        "title": "service3-2",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service3-2.png",
+        "relativeFile": "2026/02/service3-2.png",
+        "role": "service-card",
+        "sourceId": "129",
+        "status": "inherit",
+        "alt": "service3-2"
+      },
+      {
+        "key": "service1-3",
+        "title": "service1-3",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service1-3.png",
+        "relativeFile": "2026/02/service1-3.png",
+        "role": "service-card",
+        "sourceId": "131",
+        "status": "inherit",
+        "alt": "service1-3"
+      },
+      {
+        "key": "service2-3",
+        "title": "service2-3",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service2-3.png",
+        "relativeFile": "2026/02/service2-3.png",
+        "role": "service-card",
+        "sourceId": "133",
+        "status": "inherit",
+        "alt": "service2-3"
+      },
+      {
+        "key": "service3-3",
+        "title": "service3-3",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service3-3.png",
+        "relativeFile": "2026/02/service3-3.png",
+        "role": "service-card",
+        "sourceId": "135",
+        "status": "inherit",
+        "alt": "service3-3"
+      },
+      {
+        "key": "aurix-panel-zip",
+        "title": "aurix-panel.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/aurix-panel.zip",
+        "relativeFile": "2026/02/aurix-panel.zip",
+        "role": "media",
+        "sourceId": "207",
+        "status": "private",
+        "alt": "aurix-panel.zip"
+      },
+      {
+        "key": "aurix-panel-zip-2",
+        "title": "aurix-panel.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/aurix-panel-1.zip",
+        "relativeFile": "2026/02/aurix-panel-1.zip",
+        "role": "media",
+        "sourceId": "208",
+        "status": "private",
+        "alt": "aurix-panel.zip"
+      },
+      {
+        "key": "aurix-panel-zip-3",
+        "title": "aurix-panel.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/aurix-panel-2.zip",
+        "relativeFile": "2026/02/aurix-panel-2.zip",
+        "role": "media",
+        "sourceId": "209",
+        "status": "private",
+        "alt": "aurix-panel.zip"
+      },
+      {
+        "key": "aurix-panel-zip-4",
+        "title": "aurix-panel.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/aurix-panel-3.zip",
+        "relativeFile": "2026/02/aurix-panel-3.zip",
+        "role": "media",
+        "sourceId": "235",
+        "status": "private",
+        "alt": "aurix-panel.zip"
+      },
+      {
+        "key": "aurix-panel-v4-1-4-leads-aura-click-fix-zip",
+        "title": "aurix-panel-v4.1.4-leads-aura-click-fix.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/03/aurix-panel-v4.1.4-leads-aura-click-fix.zip",
+        "relativeFile": "2026/03/aurix-panel-v4.1.4-leads-aura-click-fix.zip",
+        "role": "media",
+        "sourceId": "557",
+        "status": "private",
+        "alt": "aurix-panel-v4.1.4-leads-aura-click-fix.zip"
+      },
+      {
+        "key": "aurix-panel-v4-1-4-leads-aura-click-fix-zip-2",
+        "title": "aurix-panel-v4.1.4-leads-aura-click-fix.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/03/aurix-panel-v4.1.4-leads-aura-click-fix-1.zip",
+        "relativeFile": "2026/03/aurix-panel-v4.1.4-leads-aura-click-fix-1.zip",
+        "role": "media",
+        "sourceId": "558",
+        "status": "private",
+        "alt": "aurix-panel-v4.1.4-leads-aura-click-fix.zip"
+      },
+      {
+        "key": "aurix-panel-v4-5-8-topbar-plan-status-zip",
+        "title": "aurix-panel-v4.5.8-topbar-plan-status.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/03/aurix-panel-v4.5.8-topbar-plan-status.zip",
+        "relativeFile": "2026/03/aurix-panel-v4.5.8-topbar-plan-status.zip",
+        "role": "media",
+        "sourceId": "598",
+        "status": "private",
+        "alt": "aurix-panel-v4.5.8-topbar-plan-status.zip"
+      },
+      {
+        "key": "aurix-panel-v5-0-0-panel-base-dia8-zip",
+        "title": "aurix-panel-v5.0.0-panel-base-dia8.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-panel-v5.0.0-panel-base-dia8.zip",
+        "relativeFile": "2026/04/aurix-panel-v5.0.0-panel-base-dia8.zip",
+        "role": "media",
+        "sourceId": "613",
+        "status": "private",
+        "alt": "aurix-panel-v5.0.0-panel-base-dia8.zip"
+      },
+      {
+        "key": "aurix-console-v0-8-11-schema-lightmode-zip",
+        "title": "aurix-console-v0.8.11-schema-lightmode.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-console-v0.8.11-schema-lightmode.zip",
+        "relativeFile": "2026/04/aurix-console-v0.8.11-schema-lightmode.zip",
+        "role": "media",
+        "sourceId": "619",
+        "status": "private",
+        "alt": "aurix-console-v0.8.11-schema-lightmode.zip"
+      },
+      {
+        "key": "aurix-panel-v5-2-6-tenant-fix-real-zip",
+        "title": "aurix-panel-v5.2.6-tenant-fix-real.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-panel-v5.2.6-tenant-fix-real.zip",
+        "relativeFile": "2026/04/aurix-panel-v5.2.6-tenant-fix-real.zip",
+        "role": "media",
+        "sourceId": "646",
+        "status": "private",
+        "alt": "aurix-panel-v5.2.6-tenant-fix-real.zip"
+      },
+      {
+        "key": "aurix-api-v5-1-1-register-runtime-fix-zip",
+        "title": "aurix-api-v5.1.1-register-runtime-fix.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-api-v5.1.1-register-runtime-fix.zip",
+        "relativeFile": "2026/04/aurix-api-v5.1.1-register-runtime-fix.zip",
+        "role": "media",
+        "sourceId": "654",
+        "status": "private",
+        "alt": "aurix-api-v5.1.1-register-runtime-fix.zip"
+      },
+      {
+        "key": "aurix-panel-v6-0-16-aura-action-target-fix-zip",
+        "title": "aurix-panel-v6.0.16-aura-action-target-fix.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-panel-v6.0.16-aura-action-target-fix.zip",
+        "relativeFile": "2026/04/aurix-panel-v6.0.16-aura-action-target-fix.zip",
+        "role": "media",
+        "sourceId": "717",
+        "status": "private",
+        "alt": "aurix-panel-v6.0.16-aura-action-target-fix.zip"
+      },
+      {
+        "key": "aurix-panel-v6-18-50-aura-feedback-cleanup-zip",
+        "title": "aurix-panel-v6.18.50-aura-feedback-cleanup.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-panel-v6.18.50-aura-feedback-cleanup.zip",
+        "relativeFile": "2026/04/aurix-panel-v6.18.50-aura-feedback-cleanup.zip",
+        "role": "media",
+        "sourceId": "935",
+        "status": "private",
+        "alt": "aurix-panel-v6.18.50-aura-feedback-cleanup.zip"
+      },
+      {
+        "key": "aurix-api-v6-8-36-aura-front-canonical-capture-zip",
+        "title": "aurix-api-v6.8.36-aura-front-canonical-capture.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-api-v6.8.36-aura-front-canonical-capture.zip",
+        "relativeFile": "2026/04/aurix-api-v6.8.36-aura-front-canonical-capture.zip",
+        "role": "media",
+        "sourceId": "957",
+        "status": "private",
+        "alt": "aurix-api-v6.8.36-aura-front-canonical-capture.zip"
+      },
+      {
+        "key": "aurix-api-v6-8-36-aura-front-canonical-capture-zip-2",
+        "title": "aurix-api-v6.8.36-aura-front-canonical-capture.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-api-v6.8.36-aura-front-canonical-capture-1.zip",
+        "relativeFile": "2026/04/aurix-api-v6.8.36-aura-front-canonical-capture-1.zip",
+        "role": "media",
+        "sourceId": "958",
+        "status": "private",
+        "alt": "aurix-api-v6.8.36-aura-front-canonical-capture.zip"
+      },
+      {
+        "key": "aurix-api-v6-8-36-aura-front-canonical-capture-zip-3",
+        "title": "aurix-api-v6.8.36-aura-front-canonical-capture.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-api-v6.8.36-aura-front-canonical-capture-2.zip",
+        "relativeFile": "2026/04/aurix-api-v6.8.36-aura-front-canonical-capture-2.zip",
+        "role": "media",
+        "sourceId": "959",
+        "status": "private",
+        "alt": "aurix-api-v6.8.36-aura-front-canonical-capture.zip"
+      },
+      {
+        "key": "aurix-panel-v6-18-73-aura-front-ssot-final-zip",
+        "title": "aurix-panel-v6.18.73-aura-front-ssot-final.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/05/aurix-panel-v6.18.73-aura-front-ssot-final.zip",
+        "relativeFile": "2026/05/aurix-panel-v6.18.73-aura-front-ssot-final.zip",
+        "role": "media",
+        "sourceId": "971",
+        "status": "private",
+        "alt": "aurix-panel-v6.18.73-aura-front-ssot-final.zip"
+      },
+      {
+        "key": "aurix-panel-v6-18-73-aura-front-ssot-final-zip-2",
+        "title": "aurix-panel-v6.18.73-aura-front-ssot-final.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/05/aurix-panel-v6.18.73-aura-front-ssot-final-1.zip",
+        "relativeFile": "2026/05/aurix-panel-v6.18.73-aura-front-ssot-final-1.zip",
+        "role": "media",
+        "sourceId": "972",
+        "status": "private",
+        "alt": "aurix-panel-v6.18.73-aura-front-ssot-final.zip"
+      },
+      {
+        "key": "aurix-api-v6-15-05-intelligence-screen-real-zip",
+        "title": "aurix-api-v6.15.05-intelligence-screen-real.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/05/aurix-api-v6.15.05-intelligence-screen-real.zip",
+        "relativeFile": "2026/05/aurix-api-v6.15.05-intelligence-screen-real.zip",
+        "role": "media",
+        "sourceId": "986",
+        "status": "private",
+        "alt": "aurix-api-v6.15.05-intelligence-screen-real.zip"
+      },
+      {
+        "key": "aurix-panel-v6-19-26-mp-checkout-scope-zip",
+        "title": "aurix-panel-v6.19.26-mp-checkout-scope.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/05/aurix-panel-v6.19.26-mp-checkout-scope.zip",
+        "relativeFile": "2026/05/aurix-panel-v6.19.26-mp-checkout-scope.zip",
+        "role": "media",
+        "sourceId": "1008",
+        "status": "private",
+        "alt": "aurix-panel-v6.19.26-mp-checkout-scope.zip"
+      },
+      {
+        "key": "aurix-panel-v7-00-00-zip",
+        "title": "aurix-panel-v7.00.00.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/05/aurix-panel-v7.00.00.zip",
+        "relativeFile": "2026/05/aurix-panel-v7.00.00.zip",
+        "role": "media",
+        "sourceId": "1064",
+        "status": "private",
+        "alt": "aurix-panel-v7.00.00.zip"
+      }
+    ],
+    "themeAssets": [
+      {
+        "key": "banner",
+        "title": "banner.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/banner.png",
+        "role": "theme-asset"
+      },
+      {
+        "key": "gallery",
+        "title": "gallery.jpg",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/gallery.jpg",
+        "role": "gallery"
+      },
+      {
+        "key": "gallery1",
+        "title": "gallery1.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/gallery1.png",
+        "role": "gallery"
+      },
+      {
+        "key": "icon1",
+        "title": "icon1.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/icon1.png",
+        "role": "icon"
+      },
+      {
+        "key": "icon2",
+        "title": "icon2.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/icon2.png",
+        "role": "icon"
+      },
+      {
+        "key": "icon3",
+        "title": "icon3.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/icon3.png",
+        "role": "icon"
+      },
+      {
+        "key": "project-arrow",
+        "title": "project-arrow.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/project-arrow.png",
+        "role": "theme-asset"
+      },
+      {
+        "key": "project1",
+        "title": "project1.jpg",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/project1.jpg",
+        "role": "theme-asset"
+      },
+      {
+        "key": "slider-image",
+        "title": "slider-image.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/slider-image.png",
+        "role": "hero-slider"
+      },
+      {
+        "key": "testimonail-star",
+        "title": "testimonail-star.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonail-star.png",
+        "role": "testimonial"
+      },
+      {
+        "key": "testimonial-comas",
+        "title": "testimonial-comas.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonial-comas.png",
+        "role": "testimonial"
+      },
+      {
+        "key": "testimonial1",
+        "title": "testimonial1.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonial1.png",
+        "role": "testimonial"
+      },
+      {
+        "key": "testimonial2",
+        "title": "testimonial2.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonial2.png",
+        "role": "testimonial"
+      },
+      {
+        "key": "testimonial3",
+        "title": "testimonial3.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonial3.png",
+        "role": "testimonial"
+      }
+    ]
+  },
+  "graficos": {
+    "imagenes": [
+      {
+        "key": "slider1",
+        "title": "slider1",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/slider1.png",
+        "relativeFile": "2026/02/slider1.png",
+        "role": "hero-slider",
+        "sourceId": "106",
+        "status": "inherit",
+        "alt": "slider1"
+      },
+      {
+        "key": "slider2",
+        "title": "slider2",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/slider2.png",
+        "relativeFile": "2026/02/slider2.png",
+        "role": "hero-slider",
+        "sourceId": "108",
+        "status": "inherit",
+        "alt": "slider2"
+      },
+      {
+        "key": "slider3",
+        "title": "slider3",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/slider3.png",
+        "relativeFile": "2026/02/slider3.png",
+        "role": "hero-slider",
+        "sourceId": "110",
+        "status": "inherit",
+        "alt": "slider3"
+      },
+      {
+        "key": "service1",
+        "title": "service1",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service1.png",
+        "relativeFile": "2026/02/service1.png",
+        "role": "service-card",
+        "sourceId": "113",
+        "status": "inherit",
+        "alt": "service1"
+      },
+      {
+        "key": "service2",
+        "title": "service2",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service2.png",
+        "relativeFile": "2026/02/service2.png",
+        "role": "service-card",
+        "sourceId": "115",
+        "status": "inherit",
+        "alt": "service2"
+      },
+      {
+        "key": "service3",
+        "title": "service3",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service3.png",
+        "relativeFile": "2026/02/service3.png",
+        "role": "service-card",
+        "sourceId": "117",
+        "status": "inherit",
+        "alt": "service3"
+      },
+      {
+        "key": "service1-1",
+        "title": "service1-1",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service1-1.png",
+        "relativeFile": "2026/02/service1-1.png",
+        "role": "service-card",
+        "sourceId": "119",
+        "status": "inherit",
+        "alt": "service1-1"
+      },
+      {
+        "key": "service2-1",
+        "title": "service2-1",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service2-1.png",
+        "relativeFile": "2026/02/service2-1.png",
+        "role": "service-card",
+        "sourceId": "121",
+        "status": "inherit",
+        "alt": "service2-1"
+      },
+      {
+        "key": "service3-1",
+        "title": "service3-1",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service3-1.png",
+        "relativeFile": "2026/02/service3-1.png",
+        "role": "service-card",
+        "sourceId": "123",
+        "status": "inherit",
+        "alt": "service3-1"
+      },
+      {
+        "key": "service1-2",
+        "title": "service1-2",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service1-2.png",
+        "relativeFile": "2026/02/service1-2.png",
+        "role": "service-card",
+        "sourceId": "125",
+        "status": "inherit",
+        "alt": "service1-2"
+      },
+      {
+        "key": "service2-2",
+        "title": "service2-2",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service2-2.png",
+        "relativeFile": "2026/02/service2-2.png",
+        "role": "service-card",
+        "sourceId": "127",
+        "status": "inherit",
+        "alt": "service2-2"
+      },
+      {
+        "key": "service3-2",
+        "title": "service3-2",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service3-2.png",
+        "relativeFile": "2026/02/service3-2.png",
+        "role": "service-card",
+        "sourceId": "129",
+        "status": "inherit",
+        "alt": "service3-2"
+      },
+      {
+        "key": "service1-3",
+        "title": "service1-3",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service1-3.png",
+        "relativeFile": "2026/02/service1-3.png",
+        "role": "service-card",
+        "sourceId": "131",
+        "status": "inherit",
+        "alt": "service1-3"
+      },
+      {
+        "key": "service2-3",
+        "title": "service2-3",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service2-3.png",
+        "relativeFile": "2026/02/service2-3.png",
+        "role": "service-card",
+        "sourceId": "133",
+        "status": "inherit",
+        "alt": "service2-3"
+      },
+      {
+        "key": "service3-3",
+        "title": "service3-3",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service3-3.png",
+        "relativeFile": "2026/02/service3-3.png",
+        "role": "service-card",
+        "sourceId": "135",
+        "status": "inherit",
+        "alt": "service3-3"
+      },
+      {
+        "key": "aurix-panel-zip",
+        "title": "aurix-panel.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/aurix-panel.zip",
+        "relativeFile": "2026/02/aurix-panel.zip",
+        "role": "media",
+        "sourceId": "207",
+        "status": "private",
+        "alt": "aurix-panel.zip"
+      },
+      {
+        "key": "aurix-panel-zip-2",
+        "title": "aurix-panel.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/aurix-panel-1.zip",
+        "relativeFile": "2026/02/aurix-panel-1.zip",
+        "role": "media",
+        "sourceId": "208",
+        "status": "private",
+        "alt": "aurix-panel.zip"
+      },
+      {
+        "key": "aurix-panel-zip-3",
+        "title": "aurix-panel.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/aurix-panel-2.zip",
+        "relativeFile": "2026/02/aurix-panel-2.zip",
+        "role": "media",
+        "sourceId": "209",
+        "status": "private",
+        "alt": "aurix-panel.zip"
+      },
+      {
+        "key": "aurix-panel-zip-4",
+        "title": "aurix-panel.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/aurix-panel-3.zip",
+        "relativeFile": "2026/02/aurix-panel-3.zip",
+        "role": "media",
+        "sourceId": "235",
+        "status": "private",
+        "alt": "aurix-panel.zip"
+      },
+      {
+        "key": "aurix-panel-v4-1-4-leads-aura-click-fix-zip",
+        "title": "aurix-panel-v4.1.4-leads-aura-click-fix.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/03/aurix-panel-v4.1.4-leads-aura-click-fix.zip",
+        "relativeFile": "2026/03/aurix-panel-v4.1.4-leads-aura-click-fix.zip",
+        "role": "media",
+        "sourceId": "557",
+        "status": "private",
+        "alt": "aurix-panel-v4.1.4-leads-aura-click-fix.zip"
+      },
+      {
+        "key": "aurix-panel-v4-1-4-leads-aura-click-fix-zip-2",
+        "title": "aurix-panel-v4.1.4-leads-aura-click-fix.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/03/aurix-panel-v4.1.4-leads-aura-click-fix-1.zip",
+        "relativeFile": "2026/03/aurix-panel-v4.1.4-leads-aura-click-fix-1.zip",
+        "role": "media",
+        "sourceId": "558",
+        "status": "private",
+        "alt": "aurix-panel-v4.1.4-leads-aura-click-fix.zip"
+      },
+      {
+        "key": "aurix-panel-v4-5-8-topbar-plan-status-zip",
+        "title": "aurix-panel-v4.5.8-topbar-plan-status.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/03/aurix-panel-v4.5.8-topbar-plan-status.zip",
+        "relativeFile": "2026/03/aurix-panel-v4.5.8-topbar-plan-status.zip",
+        "role": "media",
+        "sourceId": "598",
+        "status": "private",
+        "alt": "aurix-panel-v4.5.8-topbar-plan-status.zip"
+      },
+      {
+        "key": "aurix-panel-v5-0-0-panel-base-dia8-zip",
+        "title": "aurix-panel-v5.0.0-panel-base-dia8.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-panel-v5.0.0-panel-base-dia8.zip",
+        "relativeFile": "2026/04/aurix-panel-v5.0.0-panel-base-dia8.zip",
+        "role": "media",
+        "sourceId": "613",
+        "status": "private",
+        "alt": "aurix-panel-v5.0.0-panel-base-dia8.zip"
+      },
+      {
+        "key": "aurix-console-v0-8-11-schema-lightmode-zip",
+        "title": "aurix-console-v0.8.11-schema-lightmode.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-console-v0.8.11-schema-lightmode.zip",
+        "relativeFile": "2026/04/aurix-console-v0.8.11-schema-lightmode.zip",
+        "role": "media",
+        "sourceId": "619",
+        "status": "private",
+        "alt": "aurix-console-v0.8.11-schema-lightmode.zip"
+      },
+      {
+        "key": "aurix-panel-v5-2-6-tenant-fix-real-zip",
+        "title": "aurix-panel-v5.2.6-tenant-fix-real.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-panel-v5.2.6-tenant-fix-real.zip",
+        "relativeFile": "2026/04/aurix-panel-v5.2.6-tenant-fix-real.zip",
+        "role": "media",
+        "sourceId": "646",
+        "status": "private",
+        "alt": "aurix-panel-v5.2.6-tenant-fix-real.zip"
+      },
+      {
+        "key": "aurix-api-v5-1-1-register-runtime-fix-zip",
+        "title": "aurix-api-v5.1.1-register-runtime-fix.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-api-v5.1.1-register-runtime-fix.zip",
+        "relativeFile": "2026/04/aurix-api-v5.1.1-register-runtime-fix.zip",
+        "role": "media",
+        "sourceId": "654",
+        "status": "private",
+        "alt": "aurix-api-v5.1.1-register-runtime-fix.zip"
+      },
+      {
+        "key": "aurix-panel-v6-0-16-aura-action-target-fix-zip",
+        "title": "aurix-panel-v6.0.16-aura-action-target-fix.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-panel-v6.0.16-aura-action-target-fix.zip",
+        "relativeFile": "2026/04/aurix-panel-v6.0.16-aura-action-target-fix.zip",
+        "role": "media",
+        "sourceId": "717",
+        "status": "private",
+        "alt": "aurix-panel-v6.0.16-aura-action-target-fix.zip"
+      },
+      {
+        "key": "aurix-panel-v6-18-50-aura-feedback-cleanup-zip",
+        "title": "aurix-panel-v6.18.50-aura-feedback-cleanup.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-panel-v6.18.50-aura-feedback-cleanup.zip",
+        "relativeFile": "2026/04/aurix-panel-v6.18.50-aura-feedback-cleanup.zip",
+        "role": "media",
+        "sourceId": "935",
+        "status": "private",
+        "alt": "aurix-panel-v6.18.50-aura-feedback-cleanup.zip"
+      },
+      {
+        "key": "aurix-api-v6-8-36-aura-front-canonical-capture-zip",
+        "title": "aurix-api-v6.8.36-aura-front-canonical-capture.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-api-v6.8.36-aura-front-canonical-capture.zip",
+        "relativeFile": "2026/04/aurix-api-v6.8.36-aura-front-canonical-capture.zip",
+        "role": "media",
+        "sourceId": "957",
+        "status": "private",
+        "alt": "aurix-api-v6.8.36-aura-front-canonical-capture.zip"
+      },
+      {
+        "key": "aurix-api-v6-8-36-aura-front-canonical-capture-zip-2",
+        "title": "aurix-api-v6.8.36-aura-front-canonical-capture.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-api-v6.8.36-aura-front-canonical-capture-1.zip",
+        "relativeFile": "2026/04/aurix-api-v6.8.36-aura-front-canonical-capture-1.zip",
+        "role": "media",
+        "sourceId": "958",
+        "status": "private",
+        "alt": "aurix-api-v6.8.36-aura-front-canonical-capture.zip"
+      },
+      {
+        "key": "aurix-api-v6-8-36-aura-front-canonical-capture-zip-3",
+        "title": "aurix-api-v6.8.36-aura-front-canonical-capture.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/04/aurix-api-v6.8.36-aura-front-canonical-capture-2.zip",
+        "relativeFile": "2026/04/aurix-api-v6.8.36-aura-front-canonical-capture-2.zip",
+        "role": "media",
+        "sourceId": "959",
+        "status": "private",
+        "alt": "aurix-api-v6.8.36-aura-front-canonical-capture.zip"
+      },
+      {
+        "key": "aurix-panel-v6-18-73-aura-front-ssot-final-zip",
+        "title": "aurix-panel-v6.18.73-aura-front-ssot-final.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/05/aurix-panel-v6.18.73-aura-front-ssot-final.zip",
+        "relativeFile": "2026/05/aurix-panel-v6.18.73-aura-front-ssot-final.zip",
+        "role": "media",
+        "sourceId": "971",
+        "status": "private",
+        "alt": "aurix-panel-v6.18.73-aura-front-ssot-final.zip"
+      },
+      {
+        "key": "aurix-panel-v6-18-73-aura-front-ssot-final-zip-2",
+        "title": "aurix-panel-v6.18.73-aura-front-ssot-final.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/05/aurix-panel-v6.18.73-aura-front-ssot-final-1.zip",
+        "relativeFile": "2026/05/aurix-panel-v6.18.73-aura-front-ssot-final-1.zip",
+        "role": "media",
+        "sourceId": "972",
+        "status": "private",
+        "alt": "aurix-panel-v6.18.73-aura-front-ssot-final.zip"
+      },
+      {
+        "key": "aurix-api-v6-15-05-intelligence-screen-real-zip",
+        "title": "aurix-api-v6.15.05-intelligence-screen-real.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/05/aurix-api-v6.15.05-intelligence-screen-real.zip",
+        "relativeFile": "2026/05/aurix-api-v6.15.05-intelligence-screen-real.zip",
+        "role": "media",
+        "sourceId": "986",
+        "status": "private",
+        "alt": "aurix-api-v6.15.05-intelligence-screen-real.zip"
+      },
+      {
+        "key": "aurix-panel-v6-19-26-mp-checkout-scope-zip",
+        "title": "aurix-panel-v6.19.26-mp-checkout-scope.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/05/aurix-panel-v6.19.26-mp-checkout-scope.zip",
+        "relativeFile": "2026/05/aurix-panel-v6.19.26-mp-checkout-scope.zip",
+        "role": "media",
+        "sourceId": "1008",
+        "status": "private",
+        "alt": "aurix-panel-v6.19.26-mp-checkout-scope.zip"
+      },
+      {
+        "key": "aurix-panel-v7-00-00-zip",
+        "title": "aurix-panel-v7.00.00.zip",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/05/aurix-panel-v7.00.00.zip",
+        "relativeFile": "2026/05/aurix-panel-v7.00.00.zip",
+        "role": "media",
+        "sourceId": "1064",
+        "status": "private",
+        "alt": "aurix-panel-v7.00.00.zip"
+      }
+    ],
+    "assetsDelThemeOriginal": [
+      {
+        "key": "banner",
+        "title": "banner.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/banner.png",
+        "role": "theme-asset"
+      },
+      {
+        "key": "gallery",
+        "title": "gallery.jpg",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/gallery.jpg",
+        "role": "gallery"
+      },
+      {
+        "key": "gallery1",
+        "title": "gallery1.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/gallery1.png",
+        "role": "gallery"
+      },
+      {
+        "key": "icon1",
+        "title": "icon1.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/icon1.png",
+        "role": "icon"
+      },
+      {
+        "key": "icon2",
+        "title": "icon2.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/icon2.png",
+        "role": "icon"
+      },
+      {
+        "key": "icon3",
+        "title": "icon3.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/icon3.png",
+        "role": "icon"
+      },
+      {
+        "key": "project-arrow",
+        "title": "project-arrow.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/project-arrow.png",
+        "role": "theme-asset"
+      },
+      {
+        "key": "project1",
+        "title": "project1.jpg",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/project1.jpg",
+        "role": "theme-asset"
+      },
+      {
+        "key": "slider-image",
+        "title": "slider-image.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/slider-image.png",
+        "role": "hero-slider"
+      },
+      {
+        "key": "testimonail-star",
+        "title": "testimonail-star.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonail-star.png",
+        "role": "testimonial"
+      },
+      {
+        "key": "testimonial-comas",
+        "title": "testimonial-comas.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonial-comas.png",
+        "role": "testimonial"
+      },
+      {
+        "key": "testimonial1",
+        "title": "testimonial1.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonial1.png",
+        "role": "testimonial"
+      },
+      {
+        "key": "testimonial2",
+        "title": "testimonial2.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonial2.png",
+        "role": "testimonial"
+      },
+      {
+        "key": "testimonial3",
+        "title": "testimonial3.png",
+        "url": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonial3.png",
+        "role": "testimonial"
+      }
+    ]
+  },
+  "contentModels": {
+    "service": {
+      "label": "Servicios / Practice Areas",
+      "singular": "Servicio",
+      "source": "WordPress posts excluding Hello world",
+      "archivePage": "practice-area",
+      "singleTemplate": "single",
+      "items": [
+        {
+          "title": "Practice Areas Title 1",
+          "slug": "practice-areas-title-1",
+          "summary": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "category": "postcategory1",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service1.png",
+          "sourceId": "112",
+          "sourceLink": "https://tkmsoluciones.com/legal50/practice-areas-title-1/",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/practice-areas-title-1"
+        },
+        {
+          "title": "Practice Areas Title 2",
+          "slug": "practice-areas-title-2",
+          "summary": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "category": "postcategory1",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service2.png",
+          "sourceId": "114",
+          "sourceLink": "https://tkmsoluciones.com/legal50/practice-areas-title-2/",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/practice-areas-title-2"
+        },
+        {
+          "title": "Practice Areas Title 3",
+          "slug": "practice-areas-title-3",
+          "summary": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "category": "postcategory1",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service3.png",
+          "sourceId": "116",
+          "sourceLink": "https://tkmsoluciones.com/legal50/practice-areas-title-3/",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/practice-areas-title-3"
+        },
+        {
+          "title": "Practice Areas Title 1",
+          "slug": "practice-areas-title-1-2",
+          "summary": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "category": "postcategory2",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service1-1.png",
+          "sourceId": "118",
+          "sourceLink": "https://tkmsoluciones.com/legal50/practice-areas-title-1-2/",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/practice-areas-title-1-2"
+        },
+        {
+          "title": "Practice Areas Title 2",
+          "slug": "practice-areas-title-2-2",
+          "summary": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "category": "postcategory2",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service2-1.png",
+          "sourceId": "120",
+          "sourceLink": "https://tkmsoluciones.com/legal50/practice-areas-title-2-2/",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/practice-areas-title-2-2"
+        },
+        {
+          "title": "Practice Areas Title 3",
+          "slug": "practice-areas-title-3-2",
+          "summary": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "category": "postcategory2",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service3-1.png",
+          "sourceId": "122",
+          "sourceLink": "https://tkmsoluciones.com/legal50/practice-areas-title-3-2/",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/practice-areas-title-3-2"
+        },
+        {
+          "title": "Practice Areas Title 1",
+          "slug": "practice-areas-title-1-3",
+          "summary": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "category": "postcategory3",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service1-2.png",
+          "sourceId": "124",
+          "sourceLink": "https://tkmsoluciones.com/legal50/practice-areas-title-1-3/",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/practice-areas-title-1-3"
+        },
+        {
+          "title": "Practice Areas Title 2",
+          "slug": "practice-areas-title-2-3",
+          "summary": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "category": "postcategory3",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service2-2.png",
+          "sourceId": "126",
+          "sourceLink": "https://tkmsoluciones.com/legal50/practice-areas-title-2-3/",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/practice-areas-title-2-3"
+        },
+        {
+          "title": "Practice Areas Title 3",
+          "slug": "practice-areas-title-3-3",
+          "summary": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "category": "postcategory3",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service3-2.png",
+          "sourceId": "128",
+          "sourceLink": "https://tkmsoluciones.com/legal50/practice-areas-title-3-3/",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/practice-areas-title-3-3"
+        },
+        {
+          "title": "Practice Areas Title 1",
+          "slug": "practice-areas-title-1-4",
+          "summary": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "category": "postcategory4",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service1-3.png",
+          "sourceId": "130",
+          "sourceLink": "https://tkmsoluciones.com/legal50/practice-areas-title-1-4/",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/practice-areas-title-1-4"
+        },
+        {
+          "title": "Practice Areas Title 2",
+          "slug": "practice-areas-title-2-4",
+          "summary": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "category": "postcategory4",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service2-3.png",
+          "sourceId": "132",
+          "sourceLink": "https://tkmsoluciones.com/legal50/practice-areas-title-2-4/",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/practice-areas-title-2-4"
+        },
+        {
+          "title": "Practice Areas Title 3",
+          "slug": "practice-areas-title-3-4",
+          "summary": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          "category": "postcategory4",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/uploads/2026/02/service3-3.png",
+          "sourceId": "134",
+          "sourceLink": "https://tkmsoluciones.com/legal50/practice-areas-title-3-4/",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/practice-areas-title-3-4"
+        }
+      ]
+    },
+    "testimonial": {
+      "label": "Testimonios",
+      "singular": "Testimonio",
+      "source": "front-page template text",
+      "items": [
+        {
+          "name": "Kristan Watson",
+          "role": "Business Manager",
+          "quote": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonial1.png"
+        },
+        {
+          "name": "Kristan Watson",
+          "role": "Ui Developer",
+          "quote": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonial2.png"
+        },
+        {
+          "name": "Kristan Watson",
+          "role": "Business Ceo",
+          "quote": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+          "image": "https://tkmsoluciones.com/legal50/wp-content/themes/fse-lawyer-firm/assets/images/testimonial3.png"
+        }
+      ]
+    },
+    "project": {
+      "label": "Proyectos",
+      "singular": "Proyecto",
+      "source": "front-page template text",
+      "items": [
+        {
+          "title": "Protecting What Matters Most to You",
+          "summary": "Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed"
+        },
+        {
+          "title": "Results-Driven Representation, Every Step of the Way",
+          "summary": "Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed"
+        },
+        {
+          "title": "Legal Expertise You Can Rely On",
+          "summary": "Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed"
+        },
+        {
+          "title": "Your Rights, Our Mission",
+          "summary": "Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed"
+        }
+      ]
+    }
+  },
+  "contact": {
+    "phone": "123 456 6789",
+    "phoneUrl": "tel:1234566789",
+    "primaryCta": "LLAMA 123 456 6789",
+    "contactPage": "/contact-us"
+  },
+  "seoDefaults": {
+    "titlePattern": "%page% | %siteName%",
+    "metaDescription": "Sitio legal ESTUDIO X — Legal 5.0."
+  },
+  "importOptions": {
+    "homepageKey": "home",
+    "setFrontPage": true,
+    "generatePagesCommand": "wp vbb generate-pages",
+    "mediaHandling": "reference_external_urls",
+    "recommendedThemeStyleVariation": "abogados"
+  }
+}

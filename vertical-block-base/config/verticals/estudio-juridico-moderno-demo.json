@@ -1,0 +1,262 @@
+{
+  "schemaVersion": "1.0.0",
+  "verticalKey": "estudio-juridico-moderno-demo",
+  "name": "Aurea Legal Studio",
+  "description": "Demo inventada para mostrar una vertical elegante, moderna y premium de estudio jurídico corporativo.",
+  "brand": {
+    "siteName": "Aurea Legal Studio",
+    "tagline": "Derecho estratégico para patrimonio, empresa y reputación",
+    "logo": "assets/img/verticals/legal-modern/logo-aurea-legal.svg",
+    "primaryColor": "#0F1724",
+    "secondaryColor": "#C6A163",
+    "accentColor": "#F4F1EC",
+    "backgroundColor": "#FFFFFF",
+    "fontHeading": "Georgia",
+    "fontBody": "Inter",
+    "styleVariation": "legal-modern"
+  },
+  "navigation": {
+    "primary": [
+      { "label": "Inicio", "url": "/" },
+      { "label": "Áreas de práctica", "url": "/areas-de-practica" },
+      { "label": "Equipo", "url": "/equipo" },
+      { "label": "Casos", "url": "/casos" },
+      { "label": "Insights", "url": "/insights" },
+      { "label": "Contacto", "url": "/contacto" }
+    ]
+  },
+  "pages": [
+    {
+      "key": "home",
+      "title": "Inicio",
+      "slug": "inicio",
+      "template": "front-page",
+      "sections": ["hero", "benefits", "services-grid", "process", "testimonials", "faq", "cta-final"],
+      "hero": {
+        "eyebrow": "Boutique legal contemporánea",
+        "title": "Soluciones jurídicas con criterio estratégico y presencia premium",
+        "subtitle": "Acompañamos a empresas, inversionistas y familias en decisiones legales complejas con un enfoque discreto, moderno y preciso.",
+        "primaryCta": "Solicitar consulta",
+        "primaryUrl": "/contacto",
+        "secondaryCta": "Ver áreas de práctica",
+        "secondaryUrl": "/areas-de-practica",
+        "backgroundGraphic": "assets/img/verticals/legal-modern/hero-abstract.svg"
+      }
+    },
+    {
+      "key": "practice-areas",
+      "title": "Áreas de práctica",
+      "slug": "areas-de-practica",
+      "template": "page",
+      "sections": ["hero-centered", "services-grid", "cta-final"]
+    },
+    {
+      "key": "team",
+      "title": "Equipo",
+      "slug": "equipo",
+      "template": "page",
+      "sections": ["hero-centered", "benefits", "testimonials"]
+    },
+    {
+      "key": "cases",
+      "title": "Casos",
+      "slug": "casos",
+      "template": "page",
+      "sections": ["hero-centered", "process", "cta-final"]
+    },
+    {
+      "key": "insights",
+      "title": "Insights",
+      "slug": "insights",
+      "template": "archive",
+      "sections": ["hero-centered", "cta-final"]
+    },
+    {
+      "key": "contact",
+      "title": "Contacto",
+      "slug": "contacto",
+      "template": "page",
+      "sections": ["hero-centered", "contact-section"]
+    }
+  ],
+  "sections": {
+    "benefits": {
+      "title": "Por qué clientes exigentes nos eligen",
+      "items": [
+        "Diagnóstico claro y ejecutivo desde la primera reunión.",
+        "Estrategias discretas orientadas a proteger patrimonio y reputación.",
+        "Experiencia coordinando asuntos corporativos, contractuales y litigiosos.",
+        "Diseño de soluciones preventivas para reducir riesgo legal futuro."
+      ]
+    },
+    "process": {
+      "title": "Un proceso jurídico sobrio y eficiente",
+      "steps": [
+        {"title": "Evaluación", "text": "Analizamos contexto, urgencia, exposición y objetivos."},
+        {"title": "Estrategia", "text": "Definimos la vía legal más sólida y financieramente sensata."},
+        {"title": "Ejecución", "text": "Negociamos, documentamos o litigamos con seguimiento constante."},
+        {"title": "Cierre", "text": "Consolidamos resultados y dejamos mecanismos de prevención futura."}
+      ]
+    },
+    "faq": {
+      "items": [
+        {"q": "¿Atienden personas y empresas?", "a": "Sí. El estudio trabaja con clientes individuales, patrimoniales y corporativos."},
+        {"q": "¿Pueden iniciar con una consulta virtual?", "a": "Sí. La primera revisión puede realizarse por videollamada con documentación previa."},
+        {"q": "¿Trabajan asuntos confidenciales?", "a": "Sí. La confidencialidad y la gestión reputacional forman parte del servicio."}
+      ]
+    },
+    "contact": {
+      "phone": "+34 900 555 120",
+      "email": "hola@aurealegal.example",
+      "address": "Paseo de la Castellana 180, Madrid",
+      "hours": "Lunes a viernes · 9:00 a 18:30"
+    }
+  },
+  "contentModels": {
+    "service": {
+      "label": "Áreas de práctica",
+      "singular": "Área",
+      "items": [
+        {
+          "title": "Derecho corporativo",
+          "summary": "Estructuración societaria, pactos, gobierno corporativo y operaciones estratégicas.",
+          "icon": "briefcase",
+          "graphic": "assets/img/verticals/legal-modern/icon-shield.svg",
+          "ctaText": "Explorar área",
+          "ctaUrl": "/areas-de-practica/derecho-corporativo"
+        },
+        {
+          "title": "Litigio y arbitraje",
+          "summary": "Representación en controversias complejas con enfoque en prevención de impacto reputacional.",
+          "icon": "gavel",
+          "graphic": "assets/img/verticals/legal-modern/icon-scales.svg",
+          "ctaText": "Explorar área",
+          "ctaUrl": "/areas-de-practica/litigio-y-arbitraje"
+        },
+        {
+          "title": "Patrimonio y sucesiones",
+          "summary": "Protección patrimonial, planificación hereditaria y estructuras familiares.",
+          "icon": "shield",
+          "graphic": "assets/img/verticals/legal-modern/icon-shield.svg",
+          "ctaText": "Explorar área",
+          "ctaUrl": "/areas-de-practica/patrimonio-y-sucesiones"
+        },
+        {
+          "title": "Inmobiliario de alto valor",
+          "summary": "Adquisiciones, contratos, regularización y due diligence inmobiliaria.",
+          "icon": "building",
+          "graphic": "assets/img/verticals/legal-modern/office-modern.svg",
+          "ctaText": "Explorar área",
+          "ctaUrl": "/areas-de-practica/inmobiliario"
+        }
+      ]
+    },
+    "team": {
+      "label": "Socios y abogados",
+      "singular": "Profesional",
+      "items": [
+        {
+          "name": "Valeria Montes",
+          "role": "Socia directora",
+          "bio": "Especialista en estrategia corporativa y negociación de alto nivel.",
+          "image": "assets/img/verticals/legal-modern/office-modern.svg"
+        },
+        {
+          "name": "Tomás Rivas",
+          "role": "Socio de litigio",
+          "bio": "Conduce controversias complejas, arbitrajes y defensa reputacional.",
+          "image": "assets/img/verticals/legal-modern/pattern-lines.svg"
+        }
+      ]
+    },
+    "testimonial": {
+      "label": "Testimonios",
+      "singular": "Testimonio",
+      "items": [
+        {
+          "author": "CEO de grupo industrial",
+          "quote": "El estudio combinó velocidad, criterio ejecutivo y una ejecución impecable en una negociación crítica."
+        },
+        {
+          "author": "Family office",
+          "quote": "Nos dieron tranquilidad jurídica y una hoja de ruta muy clara para proteger el patrimonio familiar."
+        }
+      ]
+    }
+  },
+  "graphics": {
+    "images": [
+      {
+        "title": "Logo Aurea Legal",
+        "url": "assets/img/verticals/legal-modern/logo-aurea-legal.svg",
+        "alt": "Logo de Aurea Legal Studio",
+        "role": "logo"
+      },
+      {
+        "title": "Hero abstract legal modern",
+        "url": "assets/img/verticals/legal-modern/hero-abstract.svg",
+        "alt": "Ilustración abstracta premium para portada de estudio jurídico",
+        "role": "hero"
+      },
+      {
+        "title": "Office modern",
+        "url": "assets/img/verticals/legal-modern/office-modern.svg",
+        "alt": "Ilustración de oficina moderna y arquitectura jurídica",
+        "role": "section"
+      }
+    ],
+    "themeAssets": [
+      {
+        "title": "Pattern lines",
+        "url": "assets/img/verticals/legal-modern/pattern-lines.svg",
+        "alt": "Patrón abstracto de líneas en azul y dorado",
+        "role": "background"
+      },
+      {
+        "title": "Icon shield",
+        "url": "assets/img/verticals/legal-modern/icon-shield.svg",
+        "alt": "Ícono escudo legal",
+        "role": "icon"
+      },
+      {
+        "title": "Icon scales",
+        "url": "assets/img/verticals/legal-modern/icon-scales.svg",
+        "alt": "Ícono balanza legal",
+        "role": "icon"
+      }
+    ]
+  },
+  "graficos": {
+    "imagenes": [
+      {
+        "title": "Logo demo",
+        "url": "assets/img/verticals/legal-modern/logo-aurea-legal.svg",
+        "alt": "Logo legal demo",
+        "role": "logo"
+      }
+    ],
+    "assetsDelThemeOriginal": [
+      {
+        "title": "Pattern legal modern",
+        "url": "assets/img/verticals/legal-modern/pattern-lines.svg",
+        "alt": "Patrón moderno legal",
+        "role": "background"
+      }
+    ]
+  },
+  "seoDefaults": {
+    "titlePattern": "%page% | %siteName%",
+    "metaDescription": "Boutique legal moderna para empresa, patrimonio y litigio estratégico.",
+    "keywords": ["estudio jurídico", "abogados corporativos", "litigio estratégico", "asesoría patrimonial"]
+  },
+  "importOptions": {
+    "homepageKey": "home",
+    "setFrontPage": true,
+    "generateNavigation": true,
+    "importMedia": false,
+    "notes": [
+      "Los gráficos demo ya vienen incluidos dentro del theme, por lo que no necesitan importarse como Media Library.",
+      "Si deseas usar imágenes reales, reemplaza las rutas por URLs públicas o súbelas manualmente a WordPress."
+    ]
+  }
+}

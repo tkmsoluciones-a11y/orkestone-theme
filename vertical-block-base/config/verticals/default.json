@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "1.0.0",
+  "verticalKey": "default",
+  "name": "Theme Base",
+  "description": "Vertical base neutral para sitios corporativos o de servicios.",
+  "brand": {
+    "siteName": "Vertical Block Base",
+    "tagline": "Theme base Gutenberg configurable por JSON",
+    "logo": "assets/img/verticals/default/logo.svg",
+    "primaryColor": "#102033",
+    "secondaryColor": "#B08D57",
+    "accentColor": "#E9EEF5",
+    "fontHeading": "Inter",
+    "fontBody": "Inter"
+  },
+  "navigation": {
+    "primary": [
+      {
+        "label": "Inicio",
+        "url": "/"
+      },
+      {
+        "label": "Servicios",
+        "url": "/servicios"
+      },
+      {
+        "label": "Nosotros",
+        "url": "/nosotros"
+      },
+      {
+        "label": "Blog",
+        "url": "/blog"
+      },
+      {
+        "label": "Contacto",
+        "url": "/contacto"
+      }
+    ]
+  },
+  "pages": [
+    {
+      "key": "home",
+      "title": "Inicio",
+      "slug": "inicio",
+      "template": "front-page",
+      "sections": [
+        "hero",
+        "services-grid",
+        "benefits",
+        "process",
+        "testimonials",
+        "faq",
+        "cta-final"
+      ],
+      "hero": {
+        "eyebrow": "Theme base configurable",
+        "title": "Un sitio base listo para adaptar por vertical",
+        "subtitle": "Cambia contenido, páginas y modelo de negocio desde JSON sin rehacer el theme.",
+        "primaryCta": "Ver servicios",
+        "primaryUrl": "/servicios"
+      }
+    },
+    {
+      "key": "services",
+      "title": "Servicios",
+      "slug": "servicios",
+      "template": "page",
+      "sections": [
+        "hero-centered",
+        "services-grid",
+        "cta-final"
+      ]
+    },
+    {
+      "key": "about",
+      "title": "Nosotros",
+      "slug": "nosotros",
+      "template": "page",
+      "sections": [
+        "hero-centered",
+        "benefits",
+        "process"
+      ]
+    },
+    {
+      "key": "contact",
+      "title": "Contacto",
+      "slug": "contacto",
+      "template": "page",
+      "sections": [
+        "hero-centered",
+        "contact-section"
+      ]
+    }
+  ],
+  "sections": {
+    "benefits": {
+      "items": [
+        "Arquitectura reusable por vertical.",
+        "Edición visual con Gutenberg.",
+        "Contenido inicial controlado por JSON."
+      ]
+    }
+  },
+  "contentModels": {
+    "service": {
+      "label": "Servicios",
+      "singular": "Servicio",
+      "items": [
+        {
+          "title": "Diseño base",
+          "summary": "Estructura visual reutilizable para sitios de servicios.",
+          "icon": "layout",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/servicios/diseno-base"
+        },
+        {
+          "title": "Verticalización",
+          "summary": "Adaptación de páginas, textos y secciones por vertical.",
+          "icon": "sliders",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/servicios/verticalizacion"
+        },
+        {
+          "title": "Optimización",
+          "summary": "Mejora de estructura, performance y experiencia editorial.",
+          "icon": "sparkles",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/servicios/optimizacion"
+        }
+      ]
+    }
+  },
+  "cta": {
+    "final": {
+      "text": "Convierte esta base en un sitio listo para vender",
+      "buttonText": "Contactar",
+      "buttonUrl": "/contacto"
+    }
+  },
+  "contact": {
+    "email": "contacto@example.com",
+    "phone": "+00 000 000 000"
+  },
+  "seoDefaults": {
+    "titlePattern": "%page% | %siteName%",
+    "metaDescription": "Theme base Gutenberg configurable por vertical."
+  }
+}

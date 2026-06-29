@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Legal Modern",
+  "settings": {
+    "color": {
+      "palette": [
+        {"slug": "base", "name": "Base", "color": "#0F1724"},
+        {"slug": "accent", "name": "Accent", "color": "#C6A163"},
+        {"slug": "soft", "name": "Soft", "color": "#F4F1EC"},
+        {"slug": "text", "name": "Text", "color": "#E7EDF5"},
+        {"slug": "ink", "name": "Ink", "color": "#112034"}
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {"fontFamily": "Inter, Arial, sans-serif", "slug": "body", "name": "Inter"},
+        {"fontFamily": "Georgia, Times New Roman, serif", "slug": "display", "name": "Classic Serif"}
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "#0F1724",
+      "text": "#E7EDF5"
+    },
+    "elements": {
+      "button": {
+        "color": {"background": "#C6A163", "text": "#0F1724"},
+        "border": {"radius": "999px"}
+      },
+      "heading": {
+        "typography": {"fontFamily": "var:preset|font-family|display"},
+        "color": {"text": "#F4F1EC"}
+      }
+    }
+  }
+}

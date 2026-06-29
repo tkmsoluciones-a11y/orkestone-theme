@@ -1,0 +1,60 @@
+{
+  "presetKey": "legal-elite",
+  "name": "Legal Elite",
+  "settings": {
+    "profileName": "Legal Elite",
+    "colors": {
+      "primary": "#0F1724",
+      "secondary": "#C6A163",
+      "accent": "#F4F1EC",
+      "background": "#FFFFFF",
+      "text": "#172033"
+    },
+    "typography": {
+      "heading": "Georgia, Times New Roman, serif",
+      "body": "Inter, Arial, sans-serif"
+    },
+    "layout": {
+      "contentWidth": "1180px",
+      "wideWidth": "1440px",
+      "radius": "24px",
+      "shadow": "soft",
+      "spacingScale": "comfortable"
+    },
+    "blocks": {
+      "hero": true,
+      "servicesGrid": true,
+      "benefits": true,
+      "process": true,
+      "testimonials": true,
+      "faq": true,
+      "contact": true,
+      "ctaFinal": true
+    },
+    "buttons": {
+      "style": "pill",
+      "uppercase": false
+    },
+    "colorMode": "light",
+    "palettes": {
+      "light": {
+        "primary": "#0F1724",
+        "secondary": "#C6A163",
+        "accent": "#F4F1EC",
+        "background": "#FFFFFF",
+        "surface": "#F7F3ED",
+        "text": "#172033",
+        "mutedText": "#667085"
+      },
+      "dark": {
+        "primary": "#F4E6C8",
+        "secondary": "#C6A163",
+        "accent": "#1E2A3A",
+        "background": "#0F1724",
+        "surface": "#152033",
+        "text": "#E7EDF5",
+        "mutedText": "#A8B3C4"
+      }
+    }
+  }
+}

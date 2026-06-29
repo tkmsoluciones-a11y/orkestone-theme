@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Inmobiliaria",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "base",
+          "color": "#FFFFFF",
+          "name": "Base"
+        },
+        {
+          "slug": "contrast",
+          "color": "#102033",
+          "name": "Contrast"
+        },
+        {
+          "slug": "primary",
+          "color": "#102033",
+          "name": "Primary"
+        },
+        {
+          "slug": "secondary",
+          "color": "#B08D57",
+          "name": "Secondary"
+        },
+        {
+          "slug": "accent",
+          "color": "#E9EEF5",
+          "name": "Accent"
+        },
+        {
+          "slug": "muted",
+          "color": "#5B6673",
+          "name": "Muted"
+        }
+      ]
+    }
+  }
+}

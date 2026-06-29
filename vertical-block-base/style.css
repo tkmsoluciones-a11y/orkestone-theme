@@ -1,0 +1,64 @@
+/*
+Theme Name: Vertical Block Base
+Theme URI: https://example.com/vertical-block-base
+Author: wp_theme_master_base
+Author URI: https://example.com
+Description: Gutenberg Block Theme base configurable por vertical vía JSON.
+Requires at least: 6.6
+Tested up to: 6.8
+Requires PHP: 7.4
+Version: 0.3.2
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: vertical-block-base
+Tags: block-theme, full-site-editing, editor-style, wide-blocks, custom-colors, custom-menu, custom-logo, translation-ready
+*/
+
+:root {
+  --vbb-transition: 180ms ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+}
+
+a {
+  transition: color var(--vbb-transition), background-color var(--vbb-transition), border-color var(--vbb-transition);
+}
+
+.wp-site-blocks {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.wp-site-blocks > main {
+  flex: 1;
+}
+
+.vbb-section {
+  padding-block: var(--wp--preset--spacing--70);
+}
+
+.vbb-card {
+  border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  border-radius: 18px;
+  padding: var(--wp--preset--spacing--50);
+  background: var(--wp--preset--color--base);
+  box-shadow: 0 18px 45px rgba(16, 32, 51, 0.08);
+}
+
+.vbb-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--wp--preset--font-size--small);
+  font-weight: 700;
+}
+
+.vbb-muted {
+  opacity: 0.76;
+}

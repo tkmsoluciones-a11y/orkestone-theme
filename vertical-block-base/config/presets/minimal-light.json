@@ -1,0 +1,60 @@
+{
+  "presetKey": "minimal-light",
+  "name": "Minimal Light",
+  "settings": {
+    "profileName": "Minimal Light",
+    "colors": {
+      "primary": "#111827",
+      "secondary": "#2563EB",
+      "accent": "#F3F4F6",
+      "background": "#FFFFFF",
+      "text": "#1F2937"
+    },
+    "typography": {
+      "heading": "Inter, Arial, sans-serif",
+      "body": "Inter, Arial, sans-serif"
+    },
+    "layout": {
+      "contentWidth": "1080px",
+      "wideWidth": "1280px",
+      "radius": "14px",
+      "shadow": "none",
+      "spacingScale": "compact"
+    },
+    "blocks": {
+      "hero": true,
+      "servicesGrid": true,
+      "benefits": true,
+      "process": false,
+      "testimonials": true,
+      "faq": true,
+      "contact": true,
+      "ctaFinal": true
+    },
+    "buttons": {
+      "style": "rounded",
+      "uppercase": false
+    },
+    "colorMode": "light",
+    "palettes": {
+      "light": {
+        "primary": "#111827",
+        "secondary": "#2563EB",
+        "accent": "#F3F4F6",
+        "background": "#FFFFFF",
+        "surface": "#F7F3ED",
+        "text": "#1F2937",
+        "mutedText": "#667085"
+      },
+      "dark": {
+        "primary": "#F4E6C8",
+        "secondary": "#2563EB",
+        "accent": "#1E2A3A",
+        "background": "#0F1724",
+        "surface": "#152033",
+        "text": "#E7EDF5",
+        "mutedText": "#A8B3C4"
+      }
+    }
+  }
+}
