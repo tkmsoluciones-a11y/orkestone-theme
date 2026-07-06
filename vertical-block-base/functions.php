@@ -42,3 +42,4 @@ require_once get_template_directory() . '/inc/pro-settings.php';
 require_once get_template_directory() . '/inc/pro-presets.php';
 require_once get_template_directory() . '/inc/pro-css-vars.php';
 require_once get_template_directory() . '/inc/pro-admin.php';
+require_once get_template_directory() . '/inc/pro-rest-api.php';

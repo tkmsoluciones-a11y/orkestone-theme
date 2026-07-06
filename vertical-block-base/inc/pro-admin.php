@@ -18,13 +18,25 @@ function vbb_pro_admin_menu() {
 	add_submenu_page( 'vbb-pro-elite', 'Bloques', 'Bloques', 'manage_options', 'vbb-pro-elite-blocks', 'vbb_pro_render_admin_page' );
 	add_submenu_page( 'vbb-pro-elite', 'Perfiles', 'Perfiles', 'manage_options', 'vbb-pro-elite-profiles', 'vbb_pro_render_admin_page' );
 	add_submenu_page( 'vbb-pro-elite', 'Export / Import', 'Export / Import', 'manage_options', 'vbb-pro-elite-import-export', 'vbb_pro_render_admin_page' );
+	add_submenu_page( 'vbb-pro-elite', 'Command Center', 'Command Center', 'manage_options', 'vbb-command-center', 'vbb_pro_render_command_center' );
 }
 add_action( 'admin_menu', 'vbb_pro_admin_menu' );
 
 function vbb_pro_admin_assets( $hook ) {
-	if ( false === strpos( $hook, 'vbb-pro-elite' ) && false === strpos( $hook, 'vbb-verticals' ) ) { return; }
+	if ( false === strpos( $hook, 'vbb-pro-elite' ) && false === strpos( $hook, 'vbb-verticals' ) && false === strpos( $hook, 'vbb-command-center' ) ) { return; }
 	wp_enqueue_style( 'vbb-pro-admin', get_template_directory_uri() . '/assets/css/admin-pro.css', array(), wp_get_theme()->get( 'Version' ) );
 	wp_enqueue_script( 'vbb-pro-admin', get_template_directory_uri() . '/assets/js/admin-pro.js', array(), wp_get_theme()->get( 'Version' ), true );
+
+	if ( false !== strpos( $hook, 'vbb-command-center' ) ) {
+		wp_localize_script(
+			'vbb-pro-admin',
+			'vbbCommandCenterData',
+			array(
+				'restUrl' => rest_url( 'orkestone/v1/' ),
+				'nonce'   => wp_create_nonce( 'wp_rest' ),
+			)
+		);
+	}
 }
 add_action( 'admin_enqueue_scripts', 'vbb_pro_admin_assets' );
 
@@ -139,6 +151,7 @@ function vbb_pro_nav_tabs() {
 		'vbb-pro-elite-blocks'        => 'Bloques',
 		'vbb-pro-elite-profiles'      => 'Perfiles',
 		'vbb-pro-elite-import-export' => 'Export / Import',
+		'vbb-command-center'         => 'Command Center',
 	);
 	$current = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : 'vbb-pro-elite';
 	echo '<nav class="nav-tab-wrapper vbb-pro-tabs">';
@@ -225,6 +238,51 @@ function vbb_pro_render_admin_page() {
 				<p class="submit"><button class="button button-primary">Guardar configuración</button> <button class="button" name="vbb_pro_action" value="save_profile">Guardar como perfil</button></p>
 			</form>
 		<?php endif; ?>
+	</div>
+	<?php
+}
+
+/**
+ * Render the Command Center admin page with card UI and live preview iframe.
+ *
+ * @return void
+ */
+function vbb_pro_render_command_center() {
+	$preview_url = add_query_arg(
+		array(
+			'vbb_preview'  => time(),
+			'vbb_no_admin' => '1',
+		),
+		home_url( '/' )
+	);
+	?>
+	<div class="wrap vbb-pro-wrap vbb-command-center">
+		<h1>Command Center</h1>
+		<p class="description">Interactive theme settings — changes are saved automatically with debounce and previewed live.</p>
+		<?php settings_errors( 'vbb_pro_elite' ); vbb_pro_nav_tabs(); ?>
+
+		<div class="vbb-cc-layout">
+			<div class="vbb-cc-cards" id="vbb-cc-cards">
+				<p class="vbb-cc-loading">Loading Command Center…</p>
+			</div>
+
+			<div class="vbb-cc-sidebar">
+				<div class="vbb-cc-preview">
+					<h2>Live Preview</h2>
+					<iframe id="vbb-cc-iframe" src="<?php echo esc_url( $preview_url ); ?>" title="Live Preview"></iframe>
+				</div>
+
+				<div class="vbb-cc-toolbar">
+					<button class="button button-primary" id="vbb-cc-save-profile">Save as Profile</button>
+					<button class="button" id="vbb-cc-reset">Reset to Vertical Defaults</button>
+				</div>
+			</div>
+		</div>
+
+		<form method="post" id="vbb-cc-hidden-form" style="display:none;">
+			<?php wp_nonce_field( 'vbb_pro_elite_action', 'vbb_pro_nonce' ); ?>
+			<input type="hidden" name="vbb_pro_action" value="save">
+		</form>
 	</div>
 	<?php
 }
