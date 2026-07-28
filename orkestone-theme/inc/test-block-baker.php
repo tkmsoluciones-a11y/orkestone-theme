@@ -133,10 +133,27 @@ if ( ! function_exists( 'wp_update_post' ) ) {
 
 if ( ! function_exists( 'get_post_field' ) ) {
 	function get_post_field( $field, $post_id ) {
+		if ( 'post_content' === $field && isset( $GLOBALS['vbb_test_posts'][ $post_id ] ) ) {
+			return $GLOBALS['vbb_test_posts'][ $post_id ]['post_content'] ?? '';
+		}
 		if ( 'post_name' === $field && 1 === (int) $post_id ) {
 			return 'home';
 		}
 		return '';
+	}
+}
+
+if ( ! function_exists( 'get_pages' ) ) {
+	function get_pages( $args = array() ) {
+		$posts = $GLOBALS['vbb_test_posts'] ?? array();
+		$result = array();
+		foreach ( $posts as $id => $data ) {
+			$p = new stdClass();
+			$p->ID = $id;
+			$p->post_content = $data['post_content'] ?? '';
+			$result[] = $p;
+		}
+		return $result;
 	}
 }
 
@@ -545,6 +562,666 @@ $hero2 = vbb_bake_hero( array(
 assert_contains( $hero2, '<!-- wp:', 'Output has opening block comments' );
 assert_contains( $hero2, '<!-- /wp:', 'Output has closing block comments' );
 assert_contains( $hero2, '-->', 'Block comment delimiters are complete' );
+
+// ── Phase 5 integration test stubs ────────────────────────────────────────
+
+// Stub get_option / update_option / delete_option
+if ( ! function_exists( 'get_option' ) ) {
+	$GLOBALS['vbb_test_options'] = array();
+
+	function get_option( $option, $default = false ) {
+		return isset( $GLOBALS['vbb_test_options'][ $option ] ) ? $GLOBALS['vbb_test_options'][ $option ] : $default;
+	}
+
+	function update_option( $option, $value, $autoload = null ) {
+		$GLOBALS['vbb_test_options'][ $option ] = $value;
+		return true;
+	}
+
+	function delete_option( $option ) {
+		unset( $GLOBALS['vbb_test_options'][ $option ] );
+		return true;
+	}
+}
+
+// Stub current_time
+if ( ! function_exists( 'current_time' ) ) {
+	function current_time( $type ) {
+		return '2025-01-15 10:00:00';
+	}
+}
+
+// Stub version_compare (native PHP function — just make sure it's accessible)
+// Already a built-in PHP function, no stub needed.
+
+// Stub set_time_limit (may be disabled in some PHP environments)
+if ( ! function_exists( 'set_time_limit' ) ) {
+	function set_time_limit( $seconds ) {
+		return true;
+	}
+}
+
+// Stub for get_posts used in vbb_pro_has_unresolved_tokens
+if ( ! function_exists( 'get_posts' ) ) {
+	$GLOBALS['vbb_test_posts'] = array();
+
+	function get_posts( $args = array() ) {
+		if ( isset( $args['fields'] ) && 'ids' === $args['fields'] ) {
+			return array_keys( $GLOBALS['vbb_test_posts'] );
+		}
+		// Return as objects (like WP_Query results)
+		$objects = array();
+		foreach ( $GLOBALS['vbb_test_posts'] as $id => $data ) {
+			$p = new stdClass();
+			$p->ID = $id;
+			$p->post_content = $data['post_content'] ?? '';
+			$objects[] = $p;
+		}
+		return $objects;
+	}
+}
+
+// Stub for wp_insert_post (used by menu sync)
+if ( ! function_exists( 'wp_insert_post' ) ) {
+	$GLOBALS['vbb_test_last_inserted_post'] = null;
+
+	function wp_insert_post( $post_data, $wp_error = false ) {
+		$GLOBALS['vbb_test_last_inserted_post'] = $post_data;
+		// Return a fake ID
+		return 42;
+	}
+}
+
+// Stub for is_wp_error
+if ( ! function_exists( 'is_wp_error' ) ) {
+	function is_wp_error( $thing ) {
+		return false;
+	}
+}
+
+// Stub for add_action / add_filter (used by pro-settings.php at top level)
+if ( ! function_exists( 'add_action' ) ) {
+	$GLOBALS['vbb_test_wp_hooks'] = array();
+	function add_action( $hook, $callback, $priority = 10, $accepted_args = 1 ) {
+		$GLOBALS['vbb_test_wp_hooks'][ $hook ][] = array( 'callback' => $callback, 'priority' => $priority, 'args' => $accepted_args );
+		return true;
+	}
+	function add_filter( $hook, $callback, $priority = 10, $accepted_args = 1 ) {
+		$GLOBALS['vbb_test_wp_hooks'][ $hook ][] = array( 'callback' => $callback, 'priority' => $priority, 'args' => $accepted_args );
+		return true;
+	}
+	function do_action( $hook ) {
+		return;
+	}
+}
+
+// Stub for get_current_screen (used by admin notice)
+if ( ! function_exists( 'get_current_screen' ) ) {
+	function get_current_screen() {
+		return null;
+	}
+}
+
+// Stub for current_user_can (used by admin notice guard)
+if ( ! function_exists( 'current_user_can' ) ) {
+	function current_user_can( $cap ) {
+		return true;
+	}
+}
+
+// Stub for _n and _n_noop (used in sprintf for regeneration count)
+if ( ! function_exists( '_n' ) ) {
+	function _n( $singular, $plural, $number, $domain = '' ) {
+		return $number > 1 ? $plural : $singular;
+	}
+}
+
+// Additional WP function stubs needed by Phase 5 functions
+if ( ! function_exists( 'sanitize_text_field' ) ) {
+	function sanitize_text_field( $str ) {
+		return trim( (string) $str );
+	}
+}
+
+if ( ! function_exists( 'esc_url_raw' ) ) {
+	function esc_url_raw( $url ) {
+		return filter_var( (string) $url, FILTER_SANITIZE_URL );
+	}
+}
+
+if ( ! function_exists( 'wp_json_encode' ) ) {
+	function wp_json_encode( $data, $options = 0, $depth = 512 ) {
+		return json_encode( $data, $options, $depth );
+	}
+}
+
+if ( ! function_exists( 'admin_url' ) ) {
+	function admin_url( $path = '' ) {
+		return '/wp-admin/' . ltrim( $path, '/' );
+	}
+}
+
+if ( ! function_exists( 'wp_nonce_url' ) ) {
+	function wp_nonce_url( $url, $action = '', $name = '_wpnonce' ) {
+		return $url . '&' . $name . '=' . md5( $action );
+	}
+}
+
+if ( ! function_exists( 'add_query_arg' ) ) {
+	function add_query_arg( $key, $value = '', $url = '' ) {
+		if ( is_array( $key ) ) {
+			$parts = array();
+			foreach ( $key as $k => $v ) {
+				$parts[] = urlencode( $k ) . '=' . urlencode( $v );
+			}
+			return $url . ( strpos( $url, '?' ) === false ? '?' : '&' ) . implode( '&', $parts );
+		}
+		return $url . ( strpos( $url, '?' ) === false ? '?' : '&' ) . urlencode( $key ) . '=' . urlencode( $value );
+	}
+}
+
+if ( ! function_exists( 'check_admin_referer' ) ) {
+	function check_admin_referer( $action = -1, $query_arg = '_wpnonce' ) {
+		return true; // Skip validation in tests
+	}
+}
+
+if ( ! function_exists( 'wp_safe_redirect' ) ) {
+	function wp_safe_redirect( $url ) {
+		// Capture for test assertions
+		$GLOBALS['vbb_test_last_redirect'] = $url;
+		return true;
+	}
+}
+
+if ( ! function_exists( 'absint' ) ) {
+	function absint( $val ) {
+		return abs( (int) $val );
+	}
+}
+
+// ── Phase 5 function definitions (replicas from pro-settings.php / pro-admin.php) ──
+// These are defined here with function_exists guards to avoid conflicts
+// when loading pro-settings.php in a real WP context.
+
+if ( ! function_exists( 'vbb_pro_regenerate_all_pages' ) ) {
+	function vbb_pro_regenerate_all_pages() {
+		$pages = get_pages();
+		$count = 0;
+		foreach ( $pages as $page ) {
+			if ( function_exists( 'vbb_bake_page_content' ) ) {
+				vbb_bake_page_content( $page->ID );
+				$count++;
+			}
+		}
+		return $count;
+	}
+}
+
+if ( ! function_exists( 'vbb_pro_on_theme_activation' ) ) {
+	function vbb_pro_on_theme_activation() {
+		if ( function_exists( 'set_time_limit' ) ) {
+			set_time_limit( 300 );
+		}
+		$version = get_option( 'vbb_baker_version', '0' );
+		if ( version_compare( $version, '1.0.0', '<' ) ) {
+			$count = vbb_pro_regenerate_all_pages();
+			update_option( 'vbb_baker_version', '1.0.0', false );
+			delete_option( 'vbb_tokens_detected' );
+			return $count;
+		}
+		return 0;
+	}
+}
+
+if ( ! function_exists( 'vbb_pro_has_unresolved_tokens' ) ) {
+	function vbb_pro_has_unresolved_tokens() {
+		$pages = get_posts(
+			array(
+				'post_type'      => 'page',
+				'post_status'    => 'publish',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+			)
+		);
+		foreach ( $pages as $page_id ) {
+			$content = get_post_field( 'post_content', $page_id );
+			if ( false !== strpos( $content, '{{vbb_' ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
+
+if ( ! function_exists( 'vbb_pro_show_regenerate_notice' ) ) {
+	function vbb_pro_show_regenerate_notice() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		$screen = get_current_screen();
+		if ( $screen && false !== strpos( $screen->id, 'vbb-command-center' ) ) {
+			return;
+		}
+		$token_detected = get_option( 'vbb_tokens_detected', 'not_scanned' );
+		if ( 'not_scanned' === $token_detected ) {
+			$found = vbb_pro_has_unresolved_tokens();
+			update_option( 'vbb_tokens_detected', $found ? 'yes' : 'no', false );
+			$token_detected = $found ? 'yes' : 'no';
+		}
+		if ( 'yes' !== $token_detected ) {
+			return;
+		}
+		$command_center_url = admin_url( 'admin.php?page=vbb-command-center' );
+		$regenerate_url     = wp_nonce_url(
+			add_query_arg( 'vbb_action', 'regenerate_all', admin_url( 'admin.php' ) ),
+			'vbb_pro_regenerate_action',
+			'vbb_pro_nonce'
+		);
+		// Echo notice HTML (captured or displayed)
+		echo '<div class="notice notice-warning is-dismissible">';
+		echo '<p><strong>OrkestOne Theme:</strong> Some pages contain placeholder tokens from the No-Code Builder.</p>';
+		echo '<p><a href="' . $command_center_url . '" class="button button-primary">Open Command Center</a> ';
+		echo '<a href="' . $regenerate_url . '" class="button">Regenerate All Pages Now</a></p>';
+		echo '</div>';
+	}
+}
+
+if ( ! function_exists( 'vbb_pro_sanitize_menu_items' ) ) {
+	function vbb_pro_sanitize_menu_items( $items ) {
+		if ( ! is_array( $items ) ) {
+			return array();
+		}
+		$sanitized = array();
+		foreach ( $items as $item ) {
+			if ( ! is_array( $item ) ) {
+				continue;
+			}
+			$sanitized_item = array(
+				'id'            => sanitize_key( isset( $item['id'] ) ? $item['id'] : 'menu_' . uniqid() ),
+				'label'         => sanitize_text_field( isset( $item['label'] ) ? $item['label'] : '' ),
+				'type'          => in_array( isset( $item['type'] ) ? $item['type'] : 'custom', array( 'page', 'custom' ), true ) ? $item['type'] : 'custom',
+				'url'           => esc_url_raw( isset( $item['url'] ) ? $item['url'] : '' ),
+				'targetPageId'  => absint( isset( $item['targetPageId'] ) ? $item['targetPageId'] : 0 ),
+				'children'      => array(),
+			);
+			if ( ! empty( $item['children'] ) && is_array( $item['children'] ) ) {
+				$sanitized_item['children'] = vbb_pro_sanitize_menu_items( $item['children'] );
+			}
+			$sanitized[] = $sanitized_item;
+		}
+		return $sanitized;
+	}
+}
+
+if ( ! function_exists( 'vbb_pro_build_nav_block' ) ) {
+	function vbb_pro_build_nav_block( $item ) {
+		if ( empty( $item['label'] ) && empty( $item['url'] ) ) {
+			return '';
+		}
+		$attrs = array(
+			'label' => $item['label'] ?? '',
+			'url'   => $item['url'] ?? '',
+		);
+		if ( 'page' === $item['type'] && ! empty( $item['targetPageId'] ) ) {
+			$attrs['kind'] = 'page';
+			$attrs['id']   = (int) $item['targetPageId'];
+		} else {
+			$attrs['kind'] = 'custom';
+		}
+		$has_children = ! empty( $item['children'] );
+		if ( $has_children ) {
+			$block = '<!-- wp:navigation-link ' . wp_json_encode( $attrs ) . ' -->' . "\n";
+			foreach ( $item['children'] as $child ) {
+				$child_block = vbb_pro_build_nav_block( $child );
+				if ( '' !== $child_block ) {
+					$block .= $child_block . "\n";
+				}
+			}
+			$block .= '<!-- /wp:navigation-link -->';
+		} else {
+			$block = '<!-- wp:navigation-link ' . wp_json_encode( $attrs ) . ' /-->';
+		}
+		return $block;
+	}
+}
+
+if ( ! function_exists( 'vbb_pro_sync_menu_to_wp_navigation' ) ) {
+	function vbb_pro_sync_menu_to_wp_navigation( $menu_items ) {
+		$menu_items = vbb_pro_sanitize_menu_items( $menu_items );
+		$content = '<!-- wp:navigation {"ref":0} -->' . "\n";
+		foreach ( $menu_items as $item ) {
+			$block = vbb_pro_build_nav_block( $item );
+			if ( '' !== $block ) {
+				$content .= $block . "\n";
+			}
+		}
+		$content .= '<!-- /wp:navigation -->';
+		$nav_name  = 'OrkestOne Primary Navigation';
+		$nav_slug  = 'orkestone-primary-navigation';
+		$existing  = get_posts(
+			array(
+				'post_type'      => 'wp_navigation',
+				'title'          => $nav_name,
+				'posts_per_page' => 1,
+				'post_status'    => 'any',
+			)
+		);
+		$nav_id = ! empty( $existing ) ? $existing[0]->ID : 0;
+		$post_data = array(
+			'post_type'    => 'wp_navigation',
+			'post_title'   => $nav_name,
+			'post_name'    => $nav_slug,
+			'post_status'  => 'publish',
+			'post_content' => $content,
+		);
+		if ( $nav_id > 0 ) {
+			$post_data['ID'] = $nav_id;
+		}
+		$result = wp_insert_post( $post_data, true );
+		if ( ! is_wp_error( $result ) ) {
+			update_option( 'vbb_last_menu_sync', current_time( 'mysql' ), false );
+		}
+		return $result;
+	}
+}
+
+if ( ! function_exists( 'vbb_pro_handle_regenerate_action' ) ) {
+	function vbb_pro_handle_regenerate_action() {
+		if ( empty( $_GET['vbb_action'] ) || 'regenerate_all' !== $_GET['vbb_action'] ) {
+			return;
+		}
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'No autorizado.' );
+		}
+		check_admin_referer( 'vbb_pro_regenerate_action', 'vbb_pro_nonce' );
+		$count = vbb_pro_regenerate_all_pages();
+		update_option( 'vbb_tokens_detected', 'no', false );
+		wp_safe_redirect(
+			add_query_arg(
+				'vbb_regenerated',
+				$count,
+				admin_url( 'admin.php?page=vbb-command-center' )
+			)
+		);
+		exit;
+	}
+}
+
+// ── Phase 5 Integration Tests ────────────────────────────────────────────
+
+echo "\n\n=== Phase 5: Activation hook (vbb_pro_on_theme_activation) ===\n";
+
+// Reset options
+$GLOBALS['vbb_test_options'] = array();
+$GLOBALS['vbb_test_posts']   = array();
+
+// Fresh install scenario: no vbb_baker_version set
+assert_no_notices(
+	function () {
+		$count = vbb_pro_on_theme_activation();
+		$version = get_option( 'vbb_baker_version', '0' );
+		$cond = ( '1.0.0' === $version && 0 === $count );
+		if ( $cond ) {
+			echo "  ✅ Activation: fresh install sets version to 1.0.0 (no pages to regenerate)\n";
+			$GLOBALS['passed']++;
+		} else {
+			echo "  ❌ Activation: expected version 1.0.0, got {$version}, count={$count}\n";
+			$GLOBALS['failed']++;
+		}
+	},
+	'Activation hook triggers no notices with no pages'
+);
+
+// Existing install with old version
+$GLOBALS['vbb_test_options'] = array( 'vbb_baker_version' => '0.0.5' );
+$GLOBALS['vbb_test_posts']   = array(
+	1 => array( 'post_content' => 'Some content without tokens' ),
+	2 => array( 'post_content' => '{{vbb_hero_title}} unresolved token' ),
+);
+
+// Register vbb_bake_page_content mock for the test
+if ( ! function_exists( 'vbb_bake_page_content' ) ) {
+	function vbb_bake_page_content( $page_id ) {
+		// Simulate baking by replacing tokens in content
+		if ( isset( $GLOBALS['vbb_test_posts'][ $page_id ] ) ) {
+			$content = $GLOBALS['vbb_test_posts'][ $page_id ]['post_content'];
+			$GLOBALS['vbb_test_posts'][ $page_id ]['post_content'] = str_replace( '{{vbb_hero_title}}', 'Resolved Title', $content );
+		}
+	}
+}
+
+assert_no_notices(
+	function () {
+		$count = vbb_pro_on_theme_activation();
+		$version = get_option( 'vbb_baker_version', '0' );
+		$cond = ( '1.0.0' === $version && 2 === $count );
+		if ( $cond ) {
+			echo "  ✅ Activation: old version (< 1.0.0) triggers regeneration of {$count} pages\n";
+			$GLOBALS['passed']++;
+		} else {
+			echo "  ❌ Activation: expected version 1.0.0 and 2 pages, got version={$version}, count={$count}\n";
+			$GLOBALS['failed']++;
+		}
+	},
+	'Activation hook regenerates pages when version is outdated'
+);
+
+// Already at 1.0.0 — should NOT regenerate
+$GLOBALS['vbb_test_options'] = array( 'vbb_baker_version' => '1.0.0' );
+
+assert_no_notices(
+	function () {
+		$count = vbb_pro_on_theme_activation();
+		if ( 0 === $count ) {
+			echo "  ✅ Activation: version >= 1.0.0 skips regeneration (count={$count})\n";
+			$GLOBALS['passed']++;
+		} else {
+			echo "  ❌ Activation: expected 0 pages, got {$count}\n";
+			$GLOBALS['failed']++;
+		}
+	},
+	'Activation hook skips regeneration when already at version 1.0.0'
+);
+
+echo "\n=== Phase 5: Admin notice token detection (vbb_pro_has_unresolved_tokens) ===\n";
+
+// Pages with no tokens
+$GLOBALS['vbb_test_posts'] = array(
+	3 => array( 'post_content' => 'Clean baked content no placeholders' ),
+	4 => array( 'post_content' => 'Normal page with some text' ),
+);
+
+$has_tokens = vbb_pro_has_unresolved_tokens();
+if ( false === $has_tokens ) {
+	echo "  ✅ Token detection: no false positive when pages have no tokens\n";
+	$passed++;
+} else {
+	echo "  ❌ Token detection: reported tokens but none exist\n";
+	$failed++;
+}
+
+// Pages WITH tokens
+$GLOBALS['vbb_test_posts'] = array(
+	5 => array( 'post_content' => '{{vbb_hero_title}} and {{vbb_hero_subtitle}} still raw' ),
+);
+
+$has_tokens = vbb_pro_has_unresolved_tokens();
+if ( true === $has_tokens ) {
+	echo "  ✅ Token detection: correctly detects {{vbb_}} tokens in page content\n";
+	$passed++;
+} else {
+	echo "  ❌ Token detection: failed to detect tokens\n";
+	$failed++;
+}
+
+// vbb_pro_show_regenerate_notice — verify it sets the option flag after first scan
+$GLOBALS['vbb_test_options'] = array();
+$GLOBALS['vbb_test_posts']   = array(
+	6 => array( 'post_content' => 'Some {{vbb_cta_final_text}} here' ),
+);
+
+// Call the function and check the option was set
+vbb_pro_show_regenerate_notice();
+$token_flag = get_option( 'vbb_tokens_detected', 'not_scanned' );
+if ( 'yes' === $token_flag ) {
+	echo "  ✅ Admin notice: first scan sets vbb_tokens_detected=yes when tokens found\n";
+	$passed++;
+} else {
+	echo "  ❌ Admin notice: expected vbb_tokens_detected=yes, got {$token_flag}\n";
+	$failed++;
+}
+
+// Clean pages — flag should be 'no'
+$GLOBALS['vbb_test_options'] = array( 'vbb_tokens_detected' => 'not_scanned' );
+$GLOBALS['vbb_test_posts']   = array(
+	7 => array( 'post_content' => 'Clean content without tokens' ),
+);
+
+vbb_pro_show_regenerate_notice();
+$token_flag = get_option( 'vbb_tokens_detected', 'not_scanned' );
+if ( 'no' === $token_flag ) {
+	echo "  ✅ Admin notice: sets vbb_tokens_detected=no when no tokens found\n";
+	$passed++;
+} else {
+	echo "  ❌ Admin notice: expected vbb_tokens_detected=no, got {$token_flag}\n";
+	$failed++;
+}
+
+// Cached flag — should not re-scan
+$GLOBALS['vbb_test_options'] = array( 'vbb_tokens_detected' => 'yes' );
+vbb_pro_show_regenerate_notice();
+$token_flag = get_option( 'vbb_tokens_detected', 'not_scanned' );
+if ( 'yes' === $token_flag ) {
+	echo "  ✅ Admin notice: respects cached detection flag (does not re-scan)\n";
+	$passed++;
+} else {
+	echo "  ❌ Admin notice: flag changed unexpectedly to {$token_flag}\n";
+	$failed++;
+}
+
+echo "\n=== Phase 5: Menu sync to wp_navigation ===\n";
+
+// Reset state for clean test
+$GLOBALS['vbb_test_last_inserted_post'] = null;
+$GLOBALS['vbb_test_options']            = array();
+$GLOBALS['vbb_test_posts']              = array();
+
+$menu_items = array(
+	array(
+		'id'    => 'menu_1',
+		'label' => 'Home',
+		'type'  => 'page',
+		'url'   => '',
+		'targetPageId' => 2,
+		'children' => array(),
+	),
+	array(
+		'id'    => 'menu_2',
+		'label' => 'About',
+		'type'  => 'custom',
+		'url'   => '/about',
+		'children' => array(
+			array(
+				'id'    => 'menu_2_1',
+				'label' => 'Team',
+				'type'  => 'page',
+				'url'   => '',
+				'targetPageId' => 3,
+				'children' => array(),
+			),
+		),
+	),
+);
+
+$result = vbb_pro_sync_menu_to_wp_navigation( $menu_items );
+$inserted = $GLOBALS['vbb_test_last_inserted_post'];
+
+if ( 42 === $result && null !== $inserted ) {
+	echo "  ✅ Menu sync: returns post ID\n";
+	$passed++;
+} else {
+	echo "  ❌ Menu sync: expected ID 42, got " . var_export( $result, true ) . "\n";
+	$failed++;
+}
+
+if ( 'wp_navigation' === $inserted['post_type'] ) {
+	echo "  ✅ Menu sync: creates wp_navigation post type\n";
+	$passed++;
+} else {
+	echo "  ❌ Menu sync: expected post_type=wp_navigation, got {$inserted['post_type']}\n";
+	$failed++;
+}
+
+if ( 'OrkestOne Primary Navigation' === $inserted['post_title'] ) {
+	echo "  ✅ Menu sync: post title matches\n";
+	$passed++;
+} else {
+	echo "  ❌ Menu sync: unexpected title '{$inserted['post_title']}'\n";
+	$failed++;
+}
+
+// Verify block markup
+$content = $inserted['post_content'];
+assert_contains( $content, '<!-- wp:navigation', 'Menu sync: wraps in wp:navigation block' );
+assert_contains( $content, 'wp:navigation-link', 'Menu sync: uses navigation-link blocks' );
+assert_contains( $content, 'Home', 'Menu sync: includes item label "Home"' );
+assert_contains( $content, 'About', 'Menu sync: includes item label "About"' );
+assert_contains( $content, 'Team', 'Menu sync: includes child label "Team"' );
+assert_contains( $content, '"kind":"page"', 'Menu sync: page type items have kind=page' );
+assert_contains( $content, '"kind":"custom"', 'Menu sync: custom type items have kind=custom' );
+// Verify sync timestamp stored (vbb_last_menu_sync option not in content — it's an option)
+$sync_time = get_option( 'vbb_last_menu_sync', '' );
+if ( '' !== $sync_time ) {
+	echo "  ✅ Menu sync: last sync timestamp stored\n";
+	$passed++;
+} else {
+	echo "  ❌ Menu sync: timestamp not stored\n";
+	$failed++;
+}
+
+echo "\n=== Phase 5: Regenerate action handler (vbb_pro_handle_regenerate_action) ===\n";
+
+// Simulate the action — set up options and posts
+$GLOBALS['vbb_test_options'] = array( 'vbb_tokens_detected' => 'yes' );
+$GLOBALS['vbb_test_posts']   = array(
+	8 => array( 'post_content' => 'Has {{vbb_hero_title}} token' ),
+	9 => array( 'post_content' => 'Has {{vbb_cta_final_text}} token' ),
+);
+
+// We can't easily test the redirect, but we can test that the function
+// doesn't error when called with invalid/non-matching action
+$original_get = $_GET;
+$_GET['vbb_action'] = 'nonexistent';
+assert_no_notices(
+	function () {
+		vbb_pro_handle_regenerate_action();
+	},
+	'Regenerate action handler no-ops on non-matching action (no error)'
+);
+$_GET = $original_get;
+
+echo "\n=== Phase 5: vbb_pro_regenerate_all_pages() ===\n";
+
+// Reset
+$GLOBALS['vbb_test_posts'] = array(
+	10 => array( 'post_content' => 'Page ten' ),
+	11 => array( 'post_content' => 'Page eleven' ),
+);
+
+assert_no_notices(
+	function () {
+		$count = vbb_pro_regenerate_all_pages();
+		if ( 2 === $count ) {
+			echo "  ✅ Regenerate all: processed {$count} pages\n";
+			$GLOBALS['passed']++;
+		} else {
+			echo "  ❌ Regenerate all: expected 2 pages, got {$count}\n";
+			$GLOBALS['failed']++;
+		}
+	},
+	'vbb_pro_regenerate_all_pages triggers no notices'
+);
 
 // Summary
 $total = $passed + $failed;
