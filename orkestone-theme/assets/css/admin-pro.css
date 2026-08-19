@@ -371,20 +371,103 @@
 	color:var(--vbb-admin-danger,#b32d2e);
 	opacity:1;
 }
-.vbb-cc-status-bar--error .vbb-cc-status-retry{
-	margin-left:auto;
-	padding:2px 10px;
-	font-size:0.8rem;
-	cursor:pointer;
-	border:1px solid var(--vbb-admin-danger,#b32d2e);
-	border-radius:6px;
-	background:transparent;
-	color:var(--vbb-admin-danger,#b32d2e);
-	transition:background .15s;
+.vbb-cc-status-bar--unsaved{
+  background:var(--vbb-admin-toast-info-bg,#f0f6fc);
+  color:#1d4c7a;
+  opacity:1;
+  border-left:4px solid var(--vbb-admin-accent,#2c5f2d);
 }
-.vbb-cc-status-bar--error .vbb-cc-status-retry:hover{
-	background:var(--vbb-admin-danger,#b32d2e);
-	color:var(--vbb-admin-card-bg,#fff);
+.vbb-cc-status-bar--unsaved .vbb-cc-status-text{
+  font-weight:600;
+}
+.vbb-cc-status-bar--unsaved .vbb-cc-status-unsaved-icon{
+  flex-shrink:0;
+  font-size:1rem;
+  margin-right:6px;
+  opacity:1;
+}
+
+/* Undo/Redo buttons in toolbar */
+.vbb-cc-undo-btn,.vbb-cc-redo-btn{
+  padding:4px 10px;
+  font-size:0.75rem;
+  border:1px solid var(--vbb-admin-input-border,#c3c4c7);
+  border-radius:6px;
+  background:var(--vbb-admin-surface,#f6f7f7);
+  cursor:pointer;
+  transition:all .15s;
+  font-weight:500;
+  color:var(--vbb-admin-text,#172033);
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.vbb-cc-undo-btn:hover,.vbb-cc-redo-btn:hover{
+  background:var(--vbb-admin-border-light,#eaeced);
+  border-color:var(--vbb-admin-text-secondary,#667085);
+}
+.vbb-cc-undo-btn--disabled,.vbb-cc-redo-btn--disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+.vbb-cc-undo-btn--disabled:hover,.vbb-cc-redo-btn--disabled:hover{
+  background:var(--vbb-admin-border-light,#eaeced);
+  border-color:var(--vbb-admin-text-secondary,#667085);
+}
+
+/* Comparator button */
+.vbb-cc-compare-btn{
+  padding:4px 10px;
+  font-size:0.75rem;
+  border:1px solid var(--vbb-admin-input-border,#c3c4c7);
+  border-radius:6px;
+  background:var(--vbb-admin-surface,#f6f7f7);
+  cursor:pointer;
+  transition:all .15s;
+  font-weight:500;
+  color:var(--vbb-admin-text,#172033);
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.vbb-cc-compare-btn:hover{
+  background:var(--vbb-admin-border-light,#eaeced);
+  border-color:var(--vbb-admin-text-secondary,#667085);
+}
+.vbb-cc-compare-btn--active{
+  background:var(--vbb-admin-accent,#2c5f2d);
+  border-color:var(--vbb-admin-accent,#2c5f2d);
+  color:var(--vbb-admin-card-bg,#fff);
+}
+
+/* Export/Import buttons */
+.vbb-cc-export-profile-btn,.vbb-cc-import-profile-btn{
+  padding:4px 10px;
+  font-size:0.75rem;
+  border:1px solid var(--vbb-admin-input-border,#c3c4c7);
+  border-radius:6px;
+  background:var(--vbb-admin-surface,#f6f7f7);
+  cursor:pointer;
+  transition:all .15s;
+  font-weight:500;
+  color:var(--vbb-admin-text,#172033);
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.vbb-cc-export-profile-btn:hover,.vbb-cc-import-profile-btn:hover{
+  background:var(--vbb-admin-border-light,#eaeced);
+  border-color:var(--vbb-admin-text-secondary,#667085);
+}
+
+/* Keyboard shortcut indicator */
+.vbb-cc-keyshort-indicator{
+  font-size:0.7rem;
+  color:var(--vbb-admin-text-secondary,#667085);
+  margin-left:8px;
+}
+
+/* Focus ring for input elements when using shortcuts */
+.vbb-cc-input-focused{
+  outline:2px solid var(--vbb-admin-accent,#2c5f2d);
+  outline-offset:2px;
 }
 .vbb-cc-status-spinner{
 	display:inline-block;

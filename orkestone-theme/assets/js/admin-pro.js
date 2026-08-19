@@ -15,6 +15,9 @@
     state: {
       settings: {},
       dirty: false,
+      undoRedoStack: [],
+      redoStack: [],
+      comparisonMode: 'after',
       previewUrl: '',
       ajaxUrl: '',
       nonce: '',
@@ -317,6 +320,12 @@
 
       // Keyboard shortcuts
       CC._bindKeyboardShortcuts();
+
+      // Initialize undo/redo buttons state
+      CC._initUndoRedoButtons();
+
+      // Initialize comparison mode
+      CC._initComparisonMode();
 
       // 7. Dark mode toggle
       CC.initDarkMode();
@@ -634,8 +643,8 @@
       if (typeof callback === 'function') {
         callback({ success: true });
       }
-      // Pure palette/color hex changes don't need page regeneration — CSS vars
-      // update live via postMessage already. Skip reload to avoid unnecessary flash.
+      // Reset unsaved visual indicator
+      CC.state.dirty = false;
       if (CC._needsRegeneration) {
         CC.regenerateAndRefresh();
       } else {
@@ -770,6 +779,11 @@
           });
           bar.appendChild(retryBtn);
         }
+      } else if (state === 'unsaved') {
+        bar.classList.add('vbb-cc-status-bar--unsaved');
+        bar.setAttribute('title', 'Unsaved changes');
+        iconEl.innerHTML = '<span class="vbb-cc-status-unsaved-icon">🡱</span>';
+        textEl.textContent = 'Unsaved changes';
       }
     },
 
@@ -860,6 +874,52 @@
       return toast;
     },
 
+    undo: function () {
+      if (CC.undoRedoStack.length === 0) return;
+      var lastChange = CC.undoRedoStack.pop();
+      CC.redoStack.push(lastChange);
+      // Revert the setting
+      var path = lastChange.path;
+      var value = lastChange.value;
+      var keys = path.split('.');
+      var current = CC.state.settings;
+      for (var i = 0; i < keys.length - 1; i++) {
+        if (!current[keys[i]] || typeof current[keys[i]] !== 'object') {
+          current[keys[i]] = {};
+        }
+        current = current[keys[i]];
+      }
+      var lastKey = keys[keys.length - 1];
+      current[lastKey] = value;
+      // Re-render affected cards
+      CC.renderCards();
+      // Show toast feedback
+      CC.showToast('Undo performed', 'info');
+    },
+
+    redo: function () {
+      if (CC.redoStack.length === 0) return;
+      var undoneChange = CC.redoStack.pop();
+      CC.undoRedoStack.push(undoneChange);
+      // Re-apply the setting
+      var path = undoneChange.path;
+      var value = undoneChange.value;
+      var keys = path.split('.');
+      var current = CC.state.settings;
+      for (var i = 0; i < keys.length - 1; i++) {
+        if (!current[keys[i]] || typeof current[keys[i]] !== 'object') {
+          current[keys[i]] = {};
+        }
+        current = current[keys[i]];
+      }
+      var lastKey = keys[keys.length - 1];
+      current[lastKey] = value;
+      // Re-render affected cards
+      CC.renderCards();
+      // Show toast feedback
+      CC.showToast('Redo performed', 'info');
+    },
+
     _dismissToast: function (toast) {
       if (!toast || toast._dismissing) return;
       toast._dismissing = true;
@@ -895,7 +955,14 @@
       // than palette/color hex values changed, the next _finishSave MUST
       // regenerate + reload to pick up fresh baked HTML.
       if (path.indexOf('palettes.') === 0 || path.indexOf('colors.') === 0) {
-        // Pure palette/color hex change — no regeneration needed.
+        // Pure palette/color hex change — track for undo/redo
+        CC.undoRedoStack.push({ path: path, value: CC.state.settings });
+        // Keep only last 5 entries
+        if (CC.undoRedoStack.length > 5) {
+          CC.undoRedoStack.shift();
+        }
+        // Clear redo stack on new color change
+        CC.redoStack = [];
       } else {
         CC._needsRegeneration = true;
       }
@@ -905,11 +972,35 @@
         CC._reRenderColorsCard();
       }
 
+      // Undo stack size limit notification (optional)
+      if (CC.undoRedoStack.length >= 5) {
+        // Maximum reached, oldest will be dropped on next change
+      }
+
       // Smart debounce based on field type
       var isColor = path.indexOf('.colors.') !== -1;
       var isVisual = path.indexOf('colors.') !== -1 || path.indexOf('.style') !== -1 || path.indexOf('.layout') !== -1 || path.indexOf('palettes.') === 0;
       var isImmediate = path.indexOf('.enabled') !== -1 || path.indexOf('style') !== -1;
       CC.debouncedSave({ visual: isVisual, immediate: isImmediate });
+    },
+
+    _isInputFocused: function () {
+      var focused = document.activeElement;
+      if (!focused) return false;
+      // Check if focused element is a color input, text input, or color picker
+      var tag = focused.tagName.toLowerCase();
+      if (tag === 'input') {
+        var type = focused.getAttribute('type');
+        if (type === 'color' || type === 'text') {
+          // Check if it has a data-path (color swatch hex input or font dropdown)
+          var path = focused.getAttribute('data-path');
+          if (path) return true;
+          // Generic text input
+          return true;
+        }
+      }
+      if (tag === 'select') return true;
+      return false;
     },
 
     _flashChangedField: function () {
@@ -4335,6 +4426,17 @@ CC._initExtras();
 
     document.addEventListener('keydown', function (e) {
       var target = e.target;
+      // Disable keyboard shortcuts when focused on input fields (color pickers, text inputs)
+      if (target.tagName === 'INPUT') {
+        var type = target.getAttribute('type');
+        if (type === 'color' || type === 'text') {
+          // Allow Ctrl+S to be handled by the input, but block Ctrl+Z
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            return;
+          }
+        }
+      }
       if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT') {
         if (e.key === 'Escape') {
           self._closeAllModals();
@@ -4381,16 +4483,25 @@ CC._initExtras();
         if (preview) preview.focus();
         return;
       }
-      // Ctrl+Z = Undo
+      // Ctrl+Z = Undo (from 5-action color stack or full settings snapshot)
       if (isMeta && !isShift && e.key === 'z') {
         e.preventDefault();
-        CC._undo();
+        // Use the 5-action color undo stack if available, otherwise fall back to full settings snapshot
+        if (CC.undoRedoStack.length > 0) {
+          CC.undo();
+        } else {
+          CC._undo();
+        }
         return;
       }
-      // Ctrl+Shift+Z = Redo
+      // Ctrl+Shift+Z = Redo (from 5-action color stack or full settings snapshot)
       if (isMeta && isShift && e.key === 'z') {
         e.preventDefault();
-        CC._redo();
+        if (CC.redoStack.length > 0) {
+          CC.redo();
+        } else {
+          CC._redo();
+        }
         return;
       }
       if (!e.metaKey && !e.ctrlKey && e.key >= '1' && e.key <= '9') {
@@ -4574,9 +4685,158 @@ CC._initExtras();
     }
   };
 
+  // Initialize undo/redo and comparison on load
+  CC._initUndoRedoButtons();
+  CC._initComparisonMode();
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
   } else {
     boot();
   }
 })();
+
+/* ── Undo/Redo Initialization ───────────────────── */
+CC._initUndoRedoButtons = function () {
+  var undoBtn = CC.el.undoBtn;
+  var redoBtn = CC.el.redoBtn;
+  if (!undoBtn || !redoBtn) return;
+  // Enable/disable based on stack state
+  if (CC.undoRedoStack.length === 0) {
+    undoBtn.disabled = true;
+  } else {
+    undoBtn.disabled = false;
+  }
+  if (CC.redoStack.length === 0) {
+    redoBtn.disabled = true;
+  } else {
+    redoBtn.disabled = false;
+  }
+};
+
+/* ── Comparison Mode Initialization ──────────────── */
+CC._initComparisonMode = function () {
+  var compareBtn = document.getElementById('vbb-cc-compare-btn');
+  var cc = CC || window.vbbCommandCenter;
+  if (!compareBtn) return;
+  // Restore saved mode or default to 'after'
+  var savedMode = localStorage.getItem('vbb-cc-comparison-mode');
+  cc.state.comparisonMode = savedMode === 'before' ? 'before' : 'after';
+  // Update button visual state
+  if (cc.state.comparisonMode === 'before') {
+    compareBtn.classList.add('vbb-cc-compare-btn--active');
+  } else {
+    compareBtn.classList.remove('vbb-cc-compare-btn--active');
+  }
+  // Add click handler
+  compareBtn.addEventListener('click', function () {
+    cc.state.comparisonMode = cc.state.comparisonMode === 'after' ? 'before' : 'after';
+    localStorage.setItem('vbb-cc-comparison-mode', cc.state.comparisonMode);
+    // Update button visual state
+    if (cc.state.comparisonMode === 'before') {
+      compareBtn.classList.add('vbb-cc-compare-btn--active');
+    } else {
+      compareBtn.classList.remove('vbb-cc-compare-btn--active');
+    }
+    // Switch preview iframe state
+    var iframe = document.getElementById('vbb-cc-iframe');
+    if (iframe) {
+      var allowedOrigin = window.location.origin;
+      if (cc.state.comparisonMode === 'before') {
+        // Send saved CSS vars via postMessage
+        var cssVars = cc.buildCssVars();
+        if (cssVars && iframe.contentWindow) {
+          iframe.contentWindow.postMessage({ type: 'vbb:css-vars', styleTag: cssVars }, allowedOrigin);
+        }
+      }
+    }
+  });
+};
+
+/* ── Keyboard Shortcuts Fix ──────────────────────── */
+CC._fixKeyboardShortcuts = function () {
+  // Already handled in _bindKeyboardShortcuts - disable on input focus
+  var inputs = document.querySelectorAll('input[type="color"], input[type="text"][data-path]');
+  inputs.forEach(function (input) {
+    input.addEventListener('focus', function () {
+      input.classList.add('vbb-cc-input-focused');
+    });
+    input.addEventListener('blur', function () {
+      input.classList.remove('vbb-cc-input-focused');
+    });
+  });
+};
+
+/* ── Export/Import Profile Functions ───────────── */
+CC.exportProfile = function () {
+  var settings = CC.state.settings || {};
+  var profileName = settings.profileName || 'Pro Elite Profile';
+  var data = {
+    profileName: profileName,
+    colorMode: settings.colorMode || 'light',
+    palettes: settings.palettes || { light: {}, dark: {} },
+    typography: settings.typography || { heading: '', body: '' },
+    layout: settings.layout || { contentWidth: '', wideWidth: '', radius: '', shadow: '', spacingScale: '' },
+    blocks: settings.blocks || {},
+    buttons: settings.buttons || {},
+    exportedAt: new Date().toISOString(),
+    theme: 'vertical-block-base',
+    profileType: 'pro-elite-settings',
+    schemaVersion: '0.3.2'
+  };
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'vbb-pro-profile-' + new Date().toISOString().replace(/[:.]/g, '').slice(0, 15) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  CC.showToast('Perfil exportado exitosamente', 'success');
+};
+
+CC.importProfile = function () {
+  var fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.accept = '.json';
+  fileInput.click();
+  fileInput.addEventListener('change', function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var data = JSON.parse(e.target.result);
+      if (!data || typeof data !== 'object') {
+        CC.showToast('El JSON no es válido', 'error');
+        return;
+      }
+      // Validate required fields
+      var hasSettings = data.settings && typeof data.settings === 'object';
+      if (!hasSettings) {
+        CC.showToast('El JSON no es válido: falta settings', 'error');
+        return;
+      }
+      // Apply via AJAX
+      CC.showStatus('saving', 'Importando configuración…');
+      CC.xhr(
+        CC.state.ajaxUrl + 'vertical-settings',
+        'POST',
+        { settings: data.settings },
+        function (resp) {
+          CC.showStatus('saved', 'Importación completada');
+          CC.showToast('Configuración Pro Elite importada.', 'success');
+          // Refresh the UI
+          CC.loadSettings();
+        },
+        function (xhr) {
+          var msg = 'Import failed.';
+          try { var err = JSON.parse(xhr.responseText); msg = err.message || msg; } catch (e) { msg += ' (HTTP ' + xhr.status + ')'; }
+          CC.showStatus('error', msg);
+          CC.showToast(msg, 'error');
+        }
+      );
+    };
+    reader.readAsText(file);
+  });
+};

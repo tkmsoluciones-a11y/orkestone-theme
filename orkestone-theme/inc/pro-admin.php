@@ -620,19 +620,26 @@ function vbb_pro_render_command_center() {
 			</div>
 
 			<div class="vbb-cc-preview-column">
-				<!-- Preview toolbar — Inside column, at the top -->
-				<div class="vbb-cc-preview-toolbar">
-					<div class="vbb-cc-preview-presets" id="vbb-cc-preview-presets">
-						<button class="vbb-cc-preset-btn vbb-cc-preset-btn--active" data-width="desktop">Desktop</button>
-						<button class="vbb-cc-preset-btn" data-width="768">Tablet</button>
-						<button class="vbb-cc-preset-btn" data-width="375">Mobile</button>
-					</div>
-					<button class="vbb-cc-dark-preview-btn" id="vbb-cc-dark-preview-btn" title="Toggle dark preview">&#x2600; Light</button>
-					<button class="vbb-cc-preset-btn" id="vbb-cc-zoom-btn" title="Zoom 2x">&#x26B0;</button>
-					<button class="button vbb-cc-preview-refresh" id="vbb-cc-preview-refresh" title="Refresh preview">&#x21bb;</button>
-					<span id="vbb-cc-preview-url" style="display:none"></span>
+<!-- Preview toolbar — Inside column, at the top -->
+			<div class="vbb-cc-preview-toolbar">
+				<div class="vbb-cc-preview-presets" id="vbb-cc-preview-presets">
+					<button class="vbb-cc-preset-btn vbb-cc-preset-btn--active" data-width="desktop">Desktop</button>
+					<button class="vbb-cc-preset-btn" data-width="768">Tablet</button>
+					<button class="vbb-cc-preset-btn" data-width="375">Mobile</button>
+				</div>
+				<button class="vbb-cc-compare-btn" id="vbb-cc-compare-btn" title="Mostrar estado guardado / Current state">Comparar</button>
+				<button class="vbb-cc-undo-btn" id="vbb-cc-undo" title="Deshacer última cambio" disabled>⇦</button>
+				<button class="vbb-cc-redo-btn" id="vbb-cc-redo" title="Rehacer último cambio" disabled>⇨</button>
+				<button class="vbb-cc-export-profile-btn" id="vbb-cc-export-profile" title="Exportar perfil JSON">Export</button>
+				<button class="vbb-cc-import-profile-btn" id="vbb-cc-import-profile" title="Importar perfil JSON">Import</button>
+				<button class="vbb-cc-dark-preview-btn" id="vbb-cc-dark-preview-btn" title="Toggle dark preview">&#x2600; Light</button>
+				<button class="vbb-cc-preset-btn" id="vbb-cc-zoom-btn" title="Zoom 2x">&#x26B0;</button>
+				<button class="button vbb-cc-preview-refresh" id="vbb-cc-preview-refresh" title="Refresh preview">&#x21bb;</button>
+				<span id="vbb-cc-preview-url" style="display:none"></span>
 				<button class="vbb-cc-preview-btn" id="vbb-cc-preview-open" title="Abrir en nueva pestaña">&#x2197;</button>
 				<button class="vbb-cc-preview-btn" id="vbb-cc-preview-copy" title="Copiar enlace">&#x1F4CB;</button>
+				<!-- Keyboard shortcut indicator -->
+				<span class="vbb-cc-keyshort-indicator">Ctrl+S: guardar | Ctrl+Z: deshacer</span>
 				</div>
 
 <!-- Preview Iframe Container — taking up 100% remaining vertical space -->
@@ -648,12 +655,14 @@ function vbb_pro_render_command_center() {
 			</div>
 
 				<!-- Actions row — Inside column, at the bottom -->
-				<div class="vbb-cc-actions-row">
-					<button class="button button-primary" id="vbb-cc-save-profile">Save as Profile</button>
-					<button class="button" id="vbb-cc-export">Export Site</button>
-					<button class="button" id="vbb-cc-regenerate">Regenerate Pages</button>
-					<button class="button" id="vbb-cc-reset">Reset to Vertical Defaults</button>
-				</div>
+			<div class="vbb-cc-actions-row">
+				<button class="button button-primary" id="vbb-cc-save-profile">Save as Profile</button>
+				<button class="vbb-cc-undo-btn" id="vbb-cc-undo" title="Deshacer última cambio" disabled>⇦</button>
+				<button class="vbb-cc-redo-btn" id="vbb-cc-redo" title="Rehacer último cambio" disabled>⇨</button>
+				<button class="button" id="vbb-cc-export">Export Site</button>
+				<button class="button" id="vbb-cc-regenerate">Regenerate Pages</button>
+				<button class="button" id="vbb-cc-reset">Reset to Vertical Defaults</button>
+			</div>
 			</div>
 		</div>
 
