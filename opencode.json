@@ -1,4 +1,4 @@
-﻿{
+{
     "$schema":  "https://opencode.ai/config.json",
     "agent":  {
                   	"playwright-verifier": {
@@ -13,7 +13,7 @@
 								"read": "allow",
 								"write": "allow"
 							},
-							"prompt": "You are a Playwright verification agent. Execute the audit script at `backend/verification/playwright/get_panel_token.js` to perform a full PWP audit: extract the signed_token_panel from WordPress, capture console errors/warnings, network errors, UI screenshots, accessibility issues and performance metrics. The script writes: (1) the token to `.panel_token.txt` in the project root, (2) a JSON report to `.project/reports/pwp-verification-<timestamp>.json`, (3) screenshots to `.project/reports/pwp-screenshots/`. After running, read the latest report JSON and return to the orchestrator: (a) the token, (b) counts of console/network errors, (c) list of screenshots, (d) accessibility issues, (e) verdict PASS/PARTIAL/FAIL. Do NOT modify the script unless explicitly asked.",
+							"prompt": "You are a visual verification agent for the Orkestone WordPress theme. Run the theme audit with `cd verification && npm run audit`. This captures current screenshots of the live site, compares them pixel-by-pixel against the baseline in verification/baseline/, and detects console errors, network errors and accessibility issues. The script writes a JSON report to .project/reports/theme-audit-<timestamp>.json, current screenshots to .project/reports/current-screenshots/ and diff images to .project/reports/diff-screenshots/. After running, read the latest theme-audit-*.json and return to the orchestrator: (a) verdict PASS/WARNING/FAIL, (b) every page with diffPercent > 0.5% plus the path to its diff screenshot, (c) console error count, (d) network error count, (e) accessibility issues. If verification/baseline/ is empty, report that `npm run baseline` must be run first and stop. Do NOT modify the audit scripts unless explicitly asked.",
 							"tools": {
 								"bash": true,
 								"edit": true,
@@ -31,9 +31,17 @@
 							"delegate": "allow",
 							"delegation_list": "allow",
 							"delegation_read": "allow",
-							"edit": { "*": "allow", "/backend/": "deny", "/frontend/": "deny", "/panel/": "deny", "/packages/": "deny", "/logs/legacy/": "deny" },
+							"edit": {
+								"*": "allow",
+								"**/logs/legacy/**": "deny",
+								"**/verification/baseline/**": "deny"
+							},
 							"read": "allow",
-							"write": { "*": "allow", "/backend/": "deny", "/frontend/": "deny", "/panel/": "deny", "/packages/": "deny", "/logs/legacy/": "deny" },
+							"write": {
+								"*": "allow",
+								"**/logs/legacy/**": "deny",
+								"**/verification/baseline/**": "deny"
+							},
 							"task": {
 							  "*": "deny",
 							  "jd-fix-agent": "allow",
@@ -73,9 +81,17 @@
 							"delegate": "allow",
 							"delegation_list": "allow",
 							"delegation_read": "allow",
-							"edit": { "*": "allow", "/backend/": "deny", "/frontend/": "deny", "/panel/": "deny", "/packages/": "deny", "/logs/legacy/": "deny" },
+							"edit": {
+								"*": "allow",
+								"**/logs/legacy/**": "deny",
+								"**/verification/baseline/**": "deny"
+							},
 							"read": "allow",
-							"write": { "*": "allow", "/backend/": "deny", "/frontend/": "deny", "/panel/": "deny", "/packages/": "deny", "/logs/legacy/": "deny" },
+							"write": {
+								"*": "allow",
+								"**/logs/legacy/**": "deny",
+								"**/verification/baseline/**": "deny"
+							},
 							"task": {
 							  "*": "deny",
 							  "playwright-verifier": "allow",
@@ -112,20 +128,16 @@
 						"options": {},
 						"permission": {
 							"bash": "deny",
-							"read": "allow",
 							"edit": {
 								"*": "allow",
-								"/orkestone-theme/": "deny",
-								"/orkestone-agency-hub/": "deny",
-								"/verification/": "deny",
-								"/logs/legacy/": "deny"
+								"**/logs/legacy/**": "deny",
+								"**/verification/baseline/**": "deny"
 							},
+							"read": "allow",
 							"write": {
 								"*": "allow",
-								"/orkestone-theme/": "deny",
-								"/orkestone-agency-hub/": "deny",
-								"/verification/": "deny",
-								"/logs/legacy/": "deny"
+								"**/logs/legacy/**": "deny",
+								"**/verification/baseline/**": "deny"
 							}
 						},
 						"prompt": "{file:C:/Users/Admin/.config/opencode/prompts/ceo-theme-orkestone.md}",
@@ -445,11 +457,12 @@
                               "npx",
                               "-y",
                               "@modelcontextprotocol/server-filesystem",
-                              "F:\\aurix-core-dev"
+                              "F:\\Proyectos\\theme Orkestone"
                             ]
                           },
                           "mcp-postgres": {
                             "type": "local",
+							"enabled": false,
                             "command": [
                               "npx",
                               "-y",
@@ -457,6 +470,16 @@
                               "postgresql://adminger_aurix:T1K2M3@A5U6R7I8X9@localhost:5432/aurix_core_tkm_dev"
                             ]
                           },
+						  "mcp-playwright": {
+							"type": "local",
+							"command": [
+								"npx",
+								"-y",
+								"@playwright/mcp@latest",
+								"--headless",
+								"--browser=chromium"
+							]
+						},
                           "mcp-puppeteer": {
                             "type": "local",
                             "command": [
