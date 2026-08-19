@@ -346,8 +346,7 @@ function vbb_print_block_visibility_js() {
 	// Get the current page ID to apply the correct overrides
 	$page_id = get_the_ID();
 	$page_settings = vbb_pro_get_cached_page_settings( $page_id );
-	
-	// Get the vertical configuration for this specific page to know the order of sections
+		// Get the vertical configuration for this specific page to know the order of sections
 	$vertical_config = function_exists( 'vbb_get_vertical_config' ) ? vbb_get_vertical_config() : array();
 	$page_data = isset( $vertical_config['pages'][$page_id] ) ? $vertical_config['pages'][$page_id] : array();
 	$sections = isset( $page_data['sections'] ) ? $page_data['sections'] : array();
@@ -365,8 +364,9 @@ function vbb_print_block_visibility_js() {
 		$block_key = vbb_block_key_for_section( $section_type );
 		if ( null !== $block_key && isset( $page_settings['blocks'][ $block_key ] ) ) {
 			$block_val = $page_settings['blocks'][ $block_key ];
-			$enabled = is_array( $block_val ) ? ! empty( $block_val['enabled'] ) : ! empty( $block_val );
-			if ( ! $enabled ) {
+			// Only hide if explicitly set to enabled: false, not merely because the toggle is off
+			$is_explicitly_hidden = is_array( $block_val ) && false === $block_val['enabled'];
+			if ( $is_explicitly_hidden ) {
 				$hidden_indices[] = $index;
 			}
 		}

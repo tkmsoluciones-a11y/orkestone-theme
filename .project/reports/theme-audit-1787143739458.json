@@ -1,0 +1,153 @@
+{
+  "timestamp": "2026-08-19T12:48:11.010Z",
+  "pages": [
+    {
+      "name": "about",
+      "error": "pixelmatch is not a function"
+    },
+    {
+      "name": "blog",
+      "error": "pixelmatch is not a function"
+    },
+    {
+      "name": "builder",
+      "error": "pixelmatch is not a function"
+    },
+    {
+      "name": "contact",
+      "error": "pixelmatch is not a function"
+    },
+    {
+      "name": "dashboard",
+      "error": "pixelmatch is not a function"
+    },
+    {
+      "name": "home-mobile",
+      "error": "pixelmatch is not a function"
+    },
+    {
+      "name": "home",
+      "error": "pixelmatch is not a function"
+    },
+    {
+      "name": "legal-page",
+      "error": "pixelmatch is not a function"
+    },
+    {
+      "name": "my-account",
+      "error": "pixelmatch is not a function"
+    },
+    {
+      "name": "services",
+      "error": "pixelmatch is not a function"
+    },
+    {
+      "name": "wp-admin-edit",
+      "error": "pixelmatch is not a function"
+    },
+    {
+      "name": "wp-admin-index",
+      "error": "pixelmatch is not a function"
+    },
+    {
+      "name": "wp-admin",
+      "error": "pixelmatch is not a function"
+    }
+  ],
+  "consoleErrors": [
+    {
+      "page": "about",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "page": "blog",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "page": "builder",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "page": "contact",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "page": "dashboard",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "page": "home-mobile",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "page": "home",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "page": "legal-page",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "page": "my-account",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "page": "services",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "networkErrors": [
+    {
+      "page": "about",
+      "url": "https://tkmsoluciones.com/about/",
+      "status": 404
+    },
+    {
+      "page": "blog",
+      "url": "https://tkmsoluciones.com/blog/",
+      "status": 404
+    },
+    {
+      "page": "builder",
+      "url": "https://tkmsoluciones.com/wp-admin/admin.php?page=orkestone-builder",
+      "status": 403
+    },
+    {
+      "page": "contact",
+      "url": "https://tkmsoluciones.com/contact/",
+      "status": 404
+    },
+    {
+      "page": "dashboard",
+      "url": "https://tkmsoluciones.com/dashboard/",
+      "status": 404
+    },
+    {
+      "page": "home-mobile",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 400
+    },
+    {
+      "page": "home",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 400
+    },
+    {
+      "page": "legal-page",
+      "url": "https://tkmsoluciones.com/legal/",
+      "status": 404
+    },
+    {
+      "page": "my-account",
+      "url": "https://tkmsoluciones.com/mi-cuenta/",
+      "status": 404
+    },
+    {
+      "page": "services",
+      "url": "https://tkmsoluciones.com/services/",
+      "status": 404
+    }
+  ],
+  "verdict": "FAIL",
+  "loginSuccessful": true
+}

@@ -456,7 +456,13 @@ function vbb_pro_inject_preview_script() {
 			if (data.type.indexOf('vbb:') !== 0) return;
 
 			if (data.type === 'vbb:css-vars' && data.styleTag) {
-				styleEl.textContent = data.styleTag;
+				// Accumulate: merge new vars with existing, preserving both
+				if (styleEl.textContent.trim()) {
+					// Append new vars, separated by a comment to avoid CSS conflicts
+					styleEl.textContent += '\n/* auto-merged from CC */\n' + data.styleTag;
+				} else {
+					styleEl.textContent = data.styleTag;
+				}
 			} else if (data.type === 'vbb:setting-update' && data.path && data.value !== undefined) {
 				// Single field update — rebuild CSS vars via AJAX is not practical here,
 				// so we rely on vbb:css-vars for batch updates.

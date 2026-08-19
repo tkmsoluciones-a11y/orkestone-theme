@@ -7,6 +7,13 @@ const IGNORE_URL = [
     /googletagmanager/
 ];
 
+// Y en el handler de response:
+page.on('response', r => {
+    if (IGNORE_URL.some(re => re.test(r.url()))) return;
+    if (r.status() >= 400) {
+        report.networkErrors.push({ page: p.name, url: r.url(), status: r.status() });
+    }
+});
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
