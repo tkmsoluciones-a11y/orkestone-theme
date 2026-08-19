@@ -1,0 +1,9 @@
+
+FullName
+--------
+F:\Proyectos\theme Orkestone\.opencode\package.json
+F:\Proyectos\theme Orkestone\bck\vertical-block-base\functions.php
+F:\Proyectos\theme Orkestone\bck\vertical-block-base\style.css
+F:\Proyectos\theme Orkestone\orkestone-theme\functions.php
+F:\Proyectos\theme Orkestone\orkestone-theme\style.css
+

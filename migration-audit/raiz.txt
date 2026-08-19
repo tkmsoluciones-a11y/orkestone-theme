@@ -1,0 +1,17 @@
+
+Name                 LastWriteTime
+----                 -------------
+.agents              14/7/2026 11:48:54
+.atl                 26/7/2026 22:01:16
+.claude              17/7/2026 20:07:35
+.opencode            24/7/2026 09:36:30
+.qwen                14/7/2026 11:49:08
+.superpowers         28/7/2026 06:32:45
+bck                  8/7/2026 10:07:48
+docs                 29/7/2026 20:06:07
+migration-audit      19/8/2026 07:27:16
+openspec             16/7/2026 18:36:04
+orkestone-agency-hub 9/7/2026 13:59:23
+orkestone-theme      28/7/2026 05:08:23
+spec                 26/7/2026 21:49:01
+

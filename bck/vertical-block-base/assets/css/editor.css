@@ -1,0 +1,11 @@
+.editor-styles-wrapper .vbb-card {
+	border: 1px solid rgba(16, 32, 51, 0.12);
+	border-radius: 18px;
+	padding: 1.5rem;
+}
+
+.editor-styles-wrapper .vbb-eyebrow {
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	font-weight: 700;
+}

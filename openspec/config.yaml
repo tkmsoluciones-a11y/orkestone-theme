@@ -1,0 +1,48 @@
+project: orkestone-theme
+persistence: hybrid
+strict_tdd: true
+
+context: |
+  WordPress Block Theme (Gutenberg FSE) with Vertical-Driven Architecture.
+  JSON configs define verticals -> baking engine generates real Gutenberg blocks.
+  Stack: PHP 7.4+ / WP 6.6+, vanilla JS (ES6+), CSS3 Custom Properties.
+  No composer deps; no build step; standalone PHP test scripts.
+  Key modules: inc/ (helpers, vertical-validator, vertical-storage, vertical-loader,
+  content-model, pattern-registry, block-baker, reset-orchestrator, page-blueprint,
+  vertical-importer, pro-settings, pro-presets, pro-css-vars, pro-admin, pro-rest-api).
+
+testing:
+  runner: php
+  framework: standalone-php-scripts
+  command: |
+    php orkestone-theme/inc/test-block-baker.php
+    php orkestone-theme/inc/test-orkestone-engine.php
+  layers:
+    unit: true
+    integration: false
+    e2e: false
+  unit_tool: custom-assert-functions (assert_contains, assert_true, assert_no_notices)
+  integration_tool: —
+  e2e_tool: —
+  coverage: false
+  coverage_command: —
+  linter: false
+  linter_command: —
+  type_checker: false
+  type_checker_command: —
+  formatter: false
+  formatter_command: —
+  notes: |
+    Tests are standalone PHP scripts with WP function stubs, NOT PHPUnit/Pest.
+    Run directly with `php inc/test-*.php`. No external test framework installed.
+    test-orkestone-engine.php passes (99/99). test-block-baker.php has a stale
+    failure under PHP 8.5 (missing vbb_render_cta_button — needs fix).
+
+phase_rules:
+  propose: Create openspec/changes/{change-slug}/proposal.md
+  spec: Create openspec/changes/{change-slug}/spec.md + delta specs in openspec/specs/
+  design: Create openspec/changes/{change-slug}/design.md
+  tasks: Create openspec/changes/{change-slug}/tasks.md
+  apply: Implement code; update openspec/changes/{change-slug}/apply-progress.md
+  verify: Run tests; create openspec/changes/{change-slug}/verify-report.md
+  archive: Move to openspec/changes/archive/{date}-{change-slug}/; sync delta specs

@@ -1,0 +1,407 @@
+/* ==========================================================================
+   Orkestone Agency Hub — Admin Styles
+   ==========================================================================
+   All selectors are namespaced under .orke-hub-* to prevent selector
+   collision with Command Center (R11) and other WordPress admin styles.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Layout & Shell
+   -------------------------------------------------------------------------- */
+
+.orke-hub-wrap {
+	margin: 20px 0;
+	max-width: 1200px;
+}
+
+.orke-hub-header {
+	background: #1a365d;
+	color: #fff;
+	padding: 20px 24px;
+	border-radius: 4px 4px 0 0;
+	margin: 0 0 20px;
+}
+
+.orke-hub-header h1 {
+	color: #fff;
+	margin: 0;
+	font-size: 1.5em;
+	font-weight: 600;
+}
+
+.orke-hub-header .description {
+	color: #cbd5e0;
+	margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   2. Cards & Panels
+   -------------------------------------------------------------------------- */
+
+.orke-hub-card {
+	background: #fff;
+	border: 1px solid #d1d5db;
+	border-radius: 4px;
+	padding: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.orke-hub-card h2 {
+	margin-top: 0;
+	border-bottom: 1px solid #e5e7eb;
+	padding-bottom: 12px;
+	font-size: 1.25em;
+}
+
+.orke-hub-card h3 {
+	margin: 16px 0 8px;
+	font-size: 1.1em;
+}
+
+/* --------------------------------------------------------------------------
+   3. Status Badges
+   -------------------------------------------------------------------------- */
+
+.orke-hub-badge {
+	display: inline-block;
+	padding: 3px 10px;
+	border-radius: 12px;
+	font-size: 12px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	line-height: 1.6;
+}
+
+.orke-hub-badge--draft {
+	background: #fef3c7;
+	color: #92400e;
+}
+
+.orke-hub-badge--pending {
+	background: #dbeafe;
+	color: #1e40af;
+}
+
+.orke-hub-badge--completed {
+	background: #d1fae5;
+	color: #065f46;
+}
+
+.orke-hub-badge--manual {
+	background: #ede9fe;
+	color: #5b21b6;
+}
+
+.orke-hub-badge--revoked {
+	background: #fee2e2;
+	color: #991b1b;
+}
+
+/* --------------------------------------------------------------------------
+   4. Tables
+   -------------------------------------------------------------------------- */
+
+.orke-hub-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 16px;
+}
+
+.orke-hub-table th,
+.orke-hub-table td {
+	padding: 10px 12px;
+	text-align: left;
+	border-bottom: 1px solid #e5e7eb;
+}
+
+.orke-hub-table th {
+	background: #f9fafb;
+	font-weight: 600;
+}
+
+.orke-hub-table tr:hover td {
+	background: #f3f4f6;
+}
+
+.orke-hub-table .numeric {
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+}
+
+.orke-hub-table tfoot td {
+	font-weight: 700;
+	border-top: 2px solid #d1d5db;
+}
+
+/* --------------------------------------------------------------------------
+   5. Tabs (Briefing Form)
+   -------------------------------------------------------------------------- */
+
+.orke-hub-tabs {
+	margin-bottom: 20px;
+}
+
+.orke-hub-tabs-nav {
+	display: flex;
+	border-bottom: 2px solid #e5e7eb;
+	margin-bottom: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.orke-hub-tabs-nav li {
+	margin: 0;
+}
+
+.orke-hub-tabs-nav a {
+	display: block;
+	padding: 12px 20px;
+	text-decoration: none;
+	color: #6b7280;
+	font-weight: 500;
+	border-bottom: 2px solid transparent;
+	margin-bottom: -2px;
+	transition: color 0.2s, border-color 0.2s;
+}
+
+.orke-hub-tabs-nav a:hover {
+	color: #374151;
+}
+
+.orke-hub-tabs-nav .active a {
+	color: #1a365d;
+	border-bottom-color: #1a365d;
+}
+
+.orke-hub-tab-panel {
+	display: none;
+	padding: 20px 0;
+}
+
+.orke-hub-tab-panel.active {
+	display: block;
+}
+
+/* --------------------------------------------------------------------------
+   6. Form Fields
+   -------------------------------------------------------------------------- */
+
+.orke-hub-field {
+	margin-bottom: 16px;
+}
+
+.orke-hub-field label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 4px;
+	color: #374151;
+}
+
+.orke-hub-field input[type="text"],
+.orke-hub-field input[type="url"],
+.orke-hub-field input[type="number"],
+.orke-hub-field input[type="color"],
+.orke-hub-field select,
+.orke-hub-field textarea {
+	width: 100%;
+	max-width: 600px;
+}
+
+.orke-hub-field .description {
+	color: #6b7280;
+	font-size: 13px;
+	margin-top: 4px;
+}
+
+.orke-hub-field .error {
+	color: #dc2626;
+	font-size: 13px;
+	margin-top: 4px;
+	font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   7. Buttons
+   -------------------------------------------------------------------------- */
+
+.orke-hub-button {
+	display: inline-block;
+	padding: 8px 18px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	text-decoration: none;
+	line-height: 1.4;
+	transition: background 0.2s;
+}
+
+.orke-hub-button--primary {
+	background: #1a365d;
+	color: #fff;
+}
+
+.orke-hub-button--primary:hover,
+.orke-hub-button--primary:focus {
+	background: #2a4a7f;
+	color: #fff;
+}
+
+.orke-hub-button--secondary {
+	background: #f3f4f6;
+	color: #374151;
+	border: 1px solid #d1d5db;
+}
+
+.orke-hub-button--secondary:hover {
+	background: #e5e7eb;
+}
+
+.orke-hub-button--danger {
+	background: #dc2626;
+	color: #fff;
+}
+
+.orke-hub-button--danger:hover {
+	background: #b91c1c;
+	color: #fff;
+}
+
+.orke-hub-button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   8. Asset Preview
+   -------------------------------------------------------------------------- */
+
+.orke-hub-asset-preview {
+	max-width: 200px;
+	max-height: 200px;
+	border: 1px solid #d1d5db;
+	border-radius: 4px;
+	padding: 4px;
+	background: #f9fafb;
+}
+
+.orke-hub-asset-preview svg {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   9. JSON Preview
+   -------------------------------------------------------------------------- */
+
+.orke-hub-json-preview {
+	background: #1e293b;
+	color: #e2e8f0;
+	padding: 16px;
+	border-radius: 4px;
+	overflow-x: auto;
+	font-family: 'Courier New', Consolas, monospace;
+	font-size: 13px;
+	line-height: 1.5;
+	white-space: pre-wrap;
+	word-break: break-all;
+	max-height: 500px;
+	overflow-y: auto;
+}
+
+/* --------------------------------------------------------------------------
+   10. Notices
+   -------------------------------------------------------------------------- */
+
+.orke-hub-notice {
+	padding: 12px 16px;
+	border-left: 4px solid;
+	margin: 16px 0;
+	border-radius: 0 4px 4px 0;
+}
+
+.orke-hub-notice--info {
+	background: #eff6ff;
+	border-color: #3b82f6;
+}
+
+.orke-hub-notice--success {
+	background: #f0fdf4;
+	border-color: #22c55e;
+}
+
+.orke-hub-notice--warning {
+	background: #fffbeb;
+	border-color: #f59e0b;
+}
+
+.orke-hub-notice--error {
+	background: #fef2f2;
+	border-color: #ef4444;
+}
+
+/* --------------------------------------------------------------------------
+   11. Modal / Dialog
+   -------------------------------------------------------------------------- */
+
+.orke-hub-modal-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.orke-hub-modal {
+	background: #fff;
+	border-radius: 8px;
+	padding: 24px;
+	max-width: 480px;
+	width: 90%;
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+.orke-hub-modal h3 {
+	margin-top: 0;
+}
+
+.orke-hub-modal-actions {
+	margin-top: 20px;
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+}
+
+/* --------------------------------------------------------------------------
+   12. Meta Box Enhancements
+   -------------------------------------------------------------------------- */
+
+.orke-hub-meta-row {
+	display: flex;
+	padding: 8px 0;
+	border-bottom: 1px solid #f3f4f6;
+}
+
+.orke-hub-meta-row:last-child {
+	border-bottom: none;
+}
+
+.orke-hub-meta-label {
+	font-weight: 600;
+	min-width: 140px;
+	color: #374151;
+}
+
+.orke-hub-meta-value {
+	flex: 1;
+	color: #6b7280;
+	word-break: break-all;
+}

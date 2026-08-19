@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "1.0.0",
+  "verticalKey": "legales-5",
+  "name": "Legales 5.0",
+  "description": "Estudio Jurídico de alta gama enfocado en derecho corporativo y civil.",
+  "brand": {
+    "siteName": "OrkestOne Legal",
+    "tagline": "AURA: Excelencia Jurídica y Estrategia Legal",
+    "logo": "assets/img/verticals/legales-5/logo.svg",
+    "primaryColor": "#0A1D37",
+    "secondaryColor": "#C5A059",
+    "accentColor": "#F4F7FA",
+    "fontHeading": "Georgia",
+    "fontBody": "Inter"
+  },
+  "navigation": {
+    "primary": [
+      { "label": "Inicio", "url_slug": "inicio" },
+      { "label": "Servicios", "url_slug": "servicios" },
+      { "label": "Nosotros", "url_slug": "nosotros" },
+      { "label": "Contacto", "url_slug": "contacto" }
+    ]
+  },
+  "pages": [
+    {
+      "key": "home",
+      "title": "Inicio",
+      "slug": "inicio",
+      "template": "front-page",
+      "sections": ["hero", "services-grid", "process", "testimonials", "faq", "stats", "video", "cta-final"],
+      "hero": {
+        "eyebrow": "AURA Legal - OrkestOne",
+        "title": "Defensa Estratégica y Soluciones Legales de Alto Impacto",
+        "subtitle": "Protegemos sus activos y aseguramos su futuro con la precisión y el prestigio que su caso merece.",
+        "primaryCta": "Agendar Consulta",
+        "primaryUrl": "/contacto",
+        "image_url": "assets/img/verticals/legales-5/hero-main.svg"
+      },
+      "stats": {
+        "items": [
+          {
+            "value": "20+",
+            "label": "Años de Experiencia",
+            "icon": "award",
+            "description": "Trayectoria en derecho corporativo y civil"
+          },
+          {
+            "value": "95%",
+            "label": "Casos Ganados",
+            "icon": "yes",
+            "description": "Tasa de éxito en litigios"
+          },
+          {
+            "value": "500+",
+            "label": "Clientes Satisfechos",
+            "icon": "groups",
+            "description": "Empresas y particulares representados"
+          },
+          {
+            "value": "24/7",
+            "label": "Disponibilidad",
+            "icon": "clock",
+            "description": "Atención para emergencias legales"
+          }
+        ]
+      },
+      "video": {
+        "heading": "Nuestra Firma en Acción",
+        "subtitle": "Conozca cómo defendemos sus intereses",
+        "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "video_type": "youtube",
+        "cta_text": "Agendar Consulta",
+        "cta_url": "/contacto"
+      }
+    },
+    {
+      "key": "services",
+      "title": "Servicios Legales",
+      "slug": "servicios",
+      "template": "page",
+      "sections": ["hero-centered", "services-grid", "cta-final"],
+      "hero-centered": {
+        "title": "Especialidades Jurídicas",
+        "subtitle": "Asesoría integral en las áreas más críticas del derecho moderno."
+      }
+    },
+    {
+      "key": "about",
+      "title": "Sobre el Estudio",
+      "slug": "nosotros",
+      "template": "page",
+      "sections": ["hero-centered", "benefits", "process"],
+      "hero-centered": {
+        "title": "Compromiso, Ética y Resultados",
+        "subtitle": "Más de dos décadas transformando la práctica legal en la región."
+      }
+    },
+    {
+      "key": "contact",
+      "title": "Contacto",
+      "slug": "contacto",
+      "template": "page",
+      "sections": ["hero-centered", "contact-section"],
+      "hero-centered": {
+        "title": "Hablemos de su Caso",
+        "subtitle": "Nuestro equipo de expertos está listo para brindarle la mejor asesoría."
+      }
+    }
+  ],
+  "sections": {
+    "benefits": {
+      "items": [
+        {
+          "icon": "lock",
+          "title": "Confidencialidad Absoluta",
+          "description": "Atención personalizada bajo estricto secreto profesional en cada caso."
+        },
+        {
+          "icon": "book",
+          "title": "Jurisprudencia Actualizada",
+          "description": "Estrategias basadas en la jurisprudencia más reciente y criterios de tribunales superiores."
+        },
+        {
+          "icon": "calculator",
+          "title": "Transparencia Total",
+          "description": "Honorarios claros desde el inicio: cuotas fijas, porcentajes por éxito o retenciones mensuales."
+        }
+      ]
+    },
+    "process": {
+      "steps": [
+        { "title": "Consulta Inicial", "text": "Analizamos su caso detalladamente para entender cada variable." },
+        { "title": "Estrategia", "text": "Diseñamos la hoja de ruta legal más eficiente para su objetivo." },
+        { "title": "Ejecución", "text": "Representación activa y defensa rigurosa en todas las instancias." }
+      ]
+    },
+    "faq": {
+      "items": [
+        { "q": "¿Cómo se calculan los honorarios?", "a": "Ofrecemos esquemas flexibles: cuotas fijas, porcentajes por éxito o retenciones mensuales." },
+        { "q": "¿Tienen especialidad en derecho internacional?", "a": "Sí, gestionamos contratos y disputas transfronterizas con aliados globales." }
+      ]
+    }
+  },
+  "contentModels": {
+    "service": {
+      "label": "Servicios",
+      "singular": "Servicio",
+      "items": [
+        {
+          "title": "Derecho Corporativo",
+          "summary": "Constitución de sociedades, fusiones, adquisiciones y gobernanza empresarial.",
+          "icon": "briefcase",
+          "ctaText": "Saber más",
+          "ctaUrl": "/servicios/corporativo"
+        },
+        {
+          "title": "Litigio Civil",
+          "summary": "Resolución de conflictos contractuales, propiedad y responsabilidad civil.",
+          "icon": "scale",
+          "ctaText": "Saber más",
+          "ctaUrl": "/servicios/civil"
+        },
+        {
+          "title": "Propiedad Intelectual",
+          "summary": "Registro de marcas, patentes y protección de activos intangibles.",
+          "icon": "shield",
+          "ctaText": "Saber más",
+          "ctaUrl": "/servicios/propiedad-intelectual"
+        }
+      ]
+    }
+  },
+  "cta": {
+    "final": {
+      "text": "¿Necesita una representación legal de primer nivel?",
+      "buttonText": "Solicitar Consulta",
+      "buttonUrl": "/contacto"
+    }
+  },
+  "contact": {
+    "email": "estudio@aura-legal.com",
+    "phone": "+54 11 4567-8900"
+  },
+  "graphics": {
+    "images": [
+      { "url": "assets/img/verticals/legales-5/hero-main.svg", "title": "Oficina Moderna", "role": "hero-main" },
+      { "url": "assets/img/verticals/legales-5/about-image.svg", "title": "Abogado Profesional", "role": "about-image" },
+      { "url": "assets/img/verticals/legales-5/services-1.svg", "title": "Justicia", "role": "services-1" },
+      { "url": "assets/img/verticals/legales-5/services-2.svg", "title": "Contratos", "role": "services-2" },
+      { "url": "assets/img/verticals/legales-5/services-3.svg", "title": "Acuerdo", "role": "services-3" }
+    ]
+  },
+  "seoDefaults": {
+    "titlePattern": "%page% | OrkestOne Legal",
+    "metaDescription": "AURA Legal: Estudio jurídico de élite especializado en derecho corporativo y civil."
+  }
+}

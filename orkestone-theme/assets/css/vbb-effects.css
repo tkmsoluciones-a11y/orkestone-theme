@@ -1,0 +1,88 @@
+/**
+ * VBB Scroll Effects — CSS transitions & keyframes
+ *
+ * @package VerticalBlockBase
+ */
+
+/* ── Base: hidden until triggered ── */
+.vbb-effect {
+	opacity: 0;
+	transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.vbb-effect.vbb-visible {
+	opacity: 1;
+	transform: none;
+}
+
+/* ── Fade in ── */
+.vbb-effect-fade {
+	transition: opacity 0.6s ease-out;
+}
+.vbb-effect-fade.vbb-visible {
+	opacity: 1;
+}
+
+/* ── Slide up ── */
+.vbb-effect-slide-up {
+	transform: translateY(40px);
+}
+
+/* ── Slide left ── */
+.vbb-effect-slide-left {
+	transform: translateX(-40px);
+}
+
+/* ── Slide right ── */
+.vbb-effect-slide-right {
+	transform: translateX(40px);
+}
+
+/* ── Zoom in ── */
+.vbb-effect-zoom {
+	transform: scale(0.85);
+}
+
+/* ── Flip ── */
+.vbb-effect-flip {
+	transform: perspective(600px) rotateX(15deg);
+	transform-origin: center top;
+}
+.vbb-effect-flip.vbb-visible {
+	transform: perspective(600px) rotateX(0);
+}
+
+/* ── Stagger: child delay support ── */
+.vbb-effect-stagger > * {
+	opacity: 0;
+	transform: translateY(24px);
+	transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.vbb-effect-stagger.vbb-visible > * {
+	opacity: 1;
+	transform: none;
+}
+.vbb-effect-stagger.vbb-visible > *:nth-child(1)  { transition-delay: 0.05s; }
+.vbb-effect-stagger.vbb-visible > *:nth-child(2)  { transition-delay: 0.10s; }
+.vbb-effect-stagger.vbb-visible > *:nth-child(3)  { transition-delay: 0.15s; }
+.vbb-effect-stagger.vbb-visible > *:nth-child(4)  { transition-delay: 0.20s; }
+.vbb-effect-stagger.vbb-visible > *:nth-child(5)  { transition-delay: 0.25s; }
+.vbb-effect-stagger.vbb-visible > *:nth-child(6)  { transition-delay: 0.30s; }
+.vbb-effect-stagger.vbb-visible > *:nth-child(7)  { transition-delay: 0.35s; }
+.vbb-effect-stagger.vbb-visible > *:nth-child(8)  { transition-delay: 0.40s; }
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+	.vbb-effect,
+	.vbb-effect-fade,
+	.vbb-effect-slide-up,
+	.vbb-effect-slide-left,
+	.vbb-effect-slide-right,
+	.vbb-effect-zoom,
+	.vbb-effect-flip,
+	.vbb-effect-stagger > * {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}

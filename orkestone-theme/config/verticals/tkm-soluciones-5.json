@@ -1,0 +1,309 @@
+{
+  "schemaVersion": "1.0.0",
+  "verticalKey": "tkm-soluciones-5",
+  "name": "TKM Soluciones 5.0",
+  "description": "Sistemas digitales productizados de alta gama en modo dark, diseñados para escalabilidad, automatización e IA aplicada.",
+  "brand": {
+    "siteName": "TKM Soluciones 5.0",
+    "tagline": "Sistemas digitales productizados para negocios que operan sin fricción.",
+    "logo": "assets/img/verticals/tkm-soluciones-5/logo.svg",
+    "primaryColor": "#3B82F6",
+    "secondaryColor": "#10B981",
+    "accentColor": "#1E293B",
+    "base": "#0B1120",
+    "contrast": "#F8FAFC",
+    "fontHeading": "Inter",
+    "fontBody": "Inter"
+  },
+  "navigation": {
+    "primary": [
+      { "label": "Inicio", "url": "/" },
+      { 
+        "label": "Sistemas 5.0", 
+        "url": "/sistemas/",
+        "children": [
+          { "label": "🛒 E-commerce Nicho 5.0", "url": "/sistemas/ecommerce-nicho-5/" },
+          { "label": "⚖️ Profesionales 5.0", "url": "/sistemas/profesionales-5/" },
+          { "label": "🩺 Salud & Bienestar 5.0", "url": "/sistemas/salud-bienestar-5/" }
+        ]
+      },
+      { "label": "Cómo funciona", "url": "/como-funciona/" },
+      { "label": "Casos", "url": "/casos/" },
+      { "label": "Nosotros", "url": "/nosotros/" }
+    ]
+  },
+  "pages": [
+    {
+      "key": "home",
+      "title": "Inicio",
+      "slug": "inicio",
+      "template": "front-page",
+      "sections": ["hero", "problem", "services-grid", "benefits", "process", "testimonials", "divider", "blog", "cta-final"],
+      "hero": {
+        "eyebrow": "TKM SOLUCIONES 5.0 • DARK ARCHITECTURE",
+        "title": "Construimos sistemas digitales para que tu negocio crezca sin depender de más trabajo manual.",
+        "subtitle": "WordPress, IA, automatización, marketing y SEO integrados en sistemas productizados de alta gama para e-commerce, profesionales y salud & bienestar.",
+        "primaryCta": "Solicitar Diagnóstico",
+        "primaryUrl": "/diagnostico",
+        "secondaryCta": "Explorar Sistemas",
+        "secondaryUrl": "/sistemas/",
+        "image_url": "assets/img/verticals/tkm-soluciones-5/hero-architecture.svg",
+        "style": "A"
+      },
+      "problem": {
+        "eyebrow": "ARQUITECTURA DISCONEXA VS SISTEMA",
+        "title": "Tu negocio no necesita otra herramienta aislada",
+        "description": "Tener web, redes, formularios, WhatsApp, anuncios, CRM e IA funcionando de forma dispersa genera fricción operativa y pérdida de conversión.",
+        "solution": "Conectamos todas las piezas en un sistema operativo comercial digital unificado y automatizado."
+      },
+      "services-grid": {
+        "heading": "Sistemas Productizados 5.0",
+        "subtitle": "Soluciones verticales pre-configuradas con IA, automatización y embudos de conversión de alta performance."
+      },
+      "benefits": {
+        "heading": "El Motor Tecnológico TKM",
+        "subtitle": "Capas integradas que trabajan como un único engranaje comercial."
+      },
+      "process": {
+        "heading": "Metodología de Implementación",
+        "subtitle": "De la auditoría inicial al despliegue y optimización continua sin empezar de cero."
+      },
+      "testimonials": {
+        "heading": "Casos de Éxito & Resultados",
+        "subtitle": "Cómo nuestros sistemas transformaron la operación y rentabilidad de nuestros clientes."
+      },
+      "blog": {
+        "heading": "Últimas del Ecosistema 5.0",
+        "category": "",
+        "limit": 6,
+        "layout": "grid",
+        "showExcerpt": true,
+        "showDate": true,
+        "showAuthor": true
+      },
+      "comparison": {
+        "heading": "Comparativa de Sistemas 5.0",
+        "rows": [
+          { "feature": "WordPress Ultra-speed", "plan1": "✓", "plan2": "✓", "plan3": "✓", "highlight": false },
+          { "feature": "IA Generativa Integrada", "plan1": "—", "plan2": "✓", "plan3": "✓", "highlight": false },
+          { "feature": "Automatización Comercial", "plan1": "—", "plan2": "✓", "plan3": "✓", "highlight": false },
+          { "feature": "CRM + Embudos IA", "plan1": "—", "plan2": "—", "plan3": "✓", "highlight": true },
+          { "feature": "Soporte 24/7 Prioritario", "plan1": "—", "plan2": "—", "plan3": "✓", "highlight": false }
+        ]
+      },
+      "divider": {
+        "type": "wave",
+        "color": "#1E293B",
+        "thickness": 3,
+        "margin": 60
+      }
+    },
+    {
+      "key": "sistemas",
+      "title": "Sistemas 5.0",
+      "slug": "sistemas",
+      "template": "page",
+      "sections": ["hero-centered", "services-grid", "benefits", "comparison", "cta-final"],
+      "hero-centered": {
+        "title": "Catálogo de Sistemas 5.0",
+        "subtitle": "Elegí el sistema exacto que se adapta a tu modelo de negocio y comenzá a operar con estándares de élite."
+      }
+    },
+    {
+      "key": "ecommerce-nicho-5",
+      "title": "E-commerce Nicho 5.0",
+      "slug": "ecommerce-nicho-5",
+      "template": "landing",
+      "sections": ["hero-centered", "benefits", "process", "faq", "cta-final"],
+      "hero-centered": {
+        "title": "E-commerce Nicho 5.0",
+        "subtitle": "El ecosistema definitivo de venta online: Catálogo optimizado, SEO avanzado, IA de recomendación y automatización post-venta.",
+        "primaryCta": "Implementar E-commerce 5.0",
+        "primaryUrl": "/diagnostico"
+      }
+    },
+    {
+      "key": "profesionales-5",
+      "title": "Profesionales 5.0",
+      "slug": "profesionales-5",
+      "template": "landing",
+      "sections": ["hero-centered", "benefits", "process", "faq", "cta-final"],
+      "hero-centered": {
+        "title": "Profesionales 5.0",
+        "subtitle": "Posicionamiento de autoridad, captación de clientes de alto valor, contenido automatizado y seguimiento inteligente para firmas y profesionales.",
+        "primaryCta": "Escalar mi Firma",
+        "primaryUrl": "/diagnostico"
+      }
+    },
+    {
+      "key": "salud-bienestar-5",
+      "title": "Salud & Bienestar 5.0",
+      "slug": "salud-bienestar-5",
+      "template": "landing",
+      "sections": ["hero-centered", "benefits", "process", "faq", "cta-final"],
+      "hero-centered": {
+        "title": "Salud & Bienestar 5.0",
+        "subtitle": "Presencia digital impecable, agendamiento de turnos automatizado, gestión de pacientes y retención con IA para clínicas y profesionales del bienestar.",
+        "primaryCta": "Modernizar mi Clínica",
+        "primaryUrl": "/diagnostico"
+      }
+    },
+    {
+      "key": "penal-5",
+      "title": "Penal 5.0",
+      "slug": "penal-5",
+      "template": "landing",
+      "sections": ["hero-centered", "benefits", "cta-final"],
+      "hero-centered": {
+        "title": "Penal 5.0",
+        "subtitle": "Sistema verticalizado de alta confidencialidad, captación de casos urgentes y autoridad jurídica para estudios penalistas.",
+        "primaryCta": "Consultar Sistema Penal",
+        "primaryUrl": "/diagnostico"
+      }
+    },
+    {
+      "key": "como-funciona",
+      "title": "Cómo funciona",
+      "slug": "como-funciona",
+      "template": "page",
+      "sections": ["hero-centered", "process", "benefits", "cta-final"],
+      "hero-centered": {
+        "title": "El Estándar TKM: Sistemas sobre Medida Repetible",
+        "subtitle": "No reinventamos la rueda en cada proyecto. Desplegamos arquitectura validada que acelera tiempos y protege márgenes."
+      }
+    },
+    {
+      "key": "casos",
+      "title": "Casos",
+      "slug": "casos",
+      "template": "page",
+      "sections": ["hero-centered", "testimonials", "cta-final"],
+      "hero-centered": {
+        "title": "Evidencia Real de Crecimiento",
+        "subtitle": "Conocé cómo pasamos de procesos manuales aislados a operaciones digitales controladas y escalables."
+      }
+    },
+    {
+      "key": "nosotros",
+      "title": "Nosotros",
+      "slug": "nosotros",
+      "template": "page",
+      "sections": ["hero-centered", "benefits", "process", "cta-final"],
+      "hero-centered": {
+        "title": "Ingeniería de Sistemas y Negocios",
+        "subtitle": "Creemos en el crecimiento sin dependencia de esfuerzo artesanal infinito. Tecnología, IA y automatización al servicio de la rentabilidad."
+      }
+    },
+    {
+      "key": "diagnostico",
+      "title": "Diagnóstico",
+      "slug": "diagnostico",
+      "template": "page",
+      "sections": ["hero-centered", "contact-section"],
+      "hero-centered": {
+        "title": "¿Tu negocio necesita más herramientas o un sistema?",
+        "subtitle": "Agendá un diagnóstico de 15 minutos con nuestros arquitectos para evaluar el encaje de nuestros sistemas 5.0 en tu operación."
+      }
+    }
+  ],
+  "sections": {
+    "problem": {
+      "eyebrow": "EL CUELLO DE BOTELLA OPERATIVO",
+      "title": "Tu negocio no necesita otra herramienta aislada",
+      "description": "Acumular software sin arquitectura integrada genera caos, datos duplicados y dependencia absoluta de operación manual.",
+      "solution": "Unificamos la presencia comercial, el SEO, la IA y los embudos en un sistema coherente."
+    },
+    "benefits": {
+      "items": [
+        {
+          "icon": "layout",
+          "title": "WordPress de Alta Performance",
+          "description": "Core optimizado para velocidad extrema, seguridad robusta y edición visual avanzada."
+        },
+        {
+          "icon": "cpu",
+          "title": "IA Integrada",
+          "description": "Generación de contenido contextual, atención automatizada y clasificación inteligente de prospectos."
+        },
+        {
+          "icon": "trending-up",
+          "title": "Embudos de Conversión",
+          "description": "Diseño UX/UI enfocado obsesivamente en la tasa de cierre y LTV del cliente."
+        },
+        {
+          "icon": "zap",
+          "title": "Automatización Total",
+          "description": "Conexión nativa con pasarelas, CRMs, WhatsApp y disparadores de email marketing."
+        }
+      ]
+    },
+    "process": {
+      "steps": [
+        { "title": "1. Diagnóstico Estratégico", "text": "Mapeamos tus cuellos de botella actuales, oferta y procesos de captación." },
+        { "title": "2. Selección del Sistema", "text": "Elegimos el core pre-construido (E-commerce, Profesionales o Salud)." },
+        { "title": "3. Configuración & Skinning", "text": "Personalizamos identidad visual dark mode, copys, flujos y pasarelas." },
+        { "title": "4. Despliegue & Conexión", "text": "Activación en producción con automatizaciones e IA operando 24/7." },
+        { "title": "5. Evolución Continua", "text": "Optimización basada en métricas reales y soporte evolutivo." }
+      ]
+    },
+    "comparison": {
+      "heading": "Comparativa de Sistemas 5.0"
+    },
+    "blog": {
+      "heading": "Últimas del Ecosistema 5.0"
+    },
+    "divider": {
+      "type": "wave",
+      "color": "#1E293B",
+      "thickness": 3,
+      "margin": 60
+    },
+    "faq": {
+      "items": [
+        { "q": "¿En qué se diferencia de una agencia de diseño web tradicional?", "a": "No empezamos desde cero ni vendemos páginas sueltas. Entregamos sistemas productizados probados que integran web, IA y automatizaciones listas para generar resultados." },
+        { "q": "¿Cuánto tiempo toma implementar un Sistema 5.0?", "a": "Gracias a nuestra arquitectura modular y componentes pre-testeados, el despliegue completo se realiza en semanas, no en meses." },
+        { "q": "¿Requiere conocimientos técnicos avanzados para operarlo?", "a": "No. El sistema incluye paneles intuitivos y automatizaciones guiadas para que tu equipo gestione el día a día sin fricciones." }
+      ]
+    }
+  },
+  "contentModels": {
+    "system": {
+      "label": "Sistemas 5.0",
+      "singular": "Sistema",
+      "items": [
+        {
+          "title": "🛒 E-commerce Nicho 5.0",
+          "summary": "Catálogo optimizado, pasarelas, SEO de producto y automatización de recompra con IA.",
+          "icon": "shopping-cart",
+          "ctaText": "Ver E-commerce 5.0",
+          "ctaUrl": "/sistemas/ecommerce-nicho-5/"
+        },
+        {
+          "title": "⚖️ Profesionales 5.0",
+          "summary": "Autoridad corporativa, captación de leads cualificados y embudos de asesoría.",
+          "icon": "briefcase",
+          "ctaText": "Ver Profesionales 5.0",
+          "ctaUrl": "/sistemas/profesionales-5/"
+        },
+        {
+          "title": "🩺 Salud & Bienestar 5.0",
+          "summary": "Presencia clínica de élite, turnos online integrados y seguimiento automatizado.",
+          "icon": "heart",
+          "ctaText": "Ver Salud & Bienestar",
+          "ctaUrl": "/sistemas/salud-bienestar-5/"
+        }
+      ]
+    }
+  },
+  "cta": {
+    "final": {
+      "text": "¿Querés escalar tu operación con un sistema digital de élite?",
+      "buttonText": "Solicitar Diagnóstico TKM",
+      "buttonUrl": "/diagnostico"
+    }
+  },
+  "seoDefaults": {
+    "titlePattern": "%page% | TKM Soluciones 5.0",
+    "metaDescription": "Construimos sistemas digitales productizados en modo dark para negocios que exigen escala y automatización."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0.0",
+  "verticalKey": "test-fixture",
+  "name": "Test Fixture",
+  "brand": {
+    "siteName": "Test",
+    "tagline": "Test"
+  },
+  "navigation": {
+    "primary": [
+      { "label": "Home", "url": "/" }
+    ]
+  },
+  "pages": [
+    { "key": "home", "title": "Home", "slug": "home", "sections": ["hero"] },
+    { "key": "about", "title": "About", "slug": "about", "sections": ["hero-centered"] }
+  ],
+  "sections": {},
+  "graphics": {
+    "images": []
+  },
+  "importOptions": {
+    "homepageKey": "home",
+    "setFrontPage": false
+  }
+}

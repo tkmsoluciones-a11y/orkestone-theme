@@ -1,0 +1,232 @@
+{
+  "schemaVersion": "1.0.0",
+  "verticalKey": "agencia-5",
+  "name": "Agencia 5.0",
+  "description": "Agencia de marketing digital y crecimiento acelerado para marcas disruptivas.",
+  "brand": {
+    "siteName": "OrkestOne Creative",
+    "tagline": "AURA: Impulsando el crecimiento exponencial de tu marca",
+    "logo": "assets/img/verticals/agencia-5/logo.svg",
+    "primaryColor": "#6366f1",
+    "secondaryColor": "#facc15",
+    "accentColor": "#1e1b4b",
+    "fontHeading": "Inter",
+    "fontBody": "Inter"
+  },
+  "navigation": {
+    "primary": [
+      { "label": "Inicio", "url_slug": "inicio" },
+      { "label": "Servicios", "url_slug": "servicios" },
+      { "label": "Portafolio", "url_slug": "portafolio" },
+      { "label": "Contacto", "url_slug": "contacto" }
+    ]
+  },
+  "pages": [
+    {
+      "key": "home",
+      "title": "Inicio",
+      "slug": "inicio",
+      "template": "front-page",
+      "sections": ["hero", "services-grid", "benefits", "process", "testimonials", "stats", "gallery", "video", "newsletter", "cta-final"],
+      "hero": {
+        "eyebrow": "AURA Creative - OrkestOne",
+        "title": "Hacemos que tu marca sea imposible de ignorar",
+        "subtitle": "Estrategias de Growth Marketing, Branding y Performance diseñadas para escalar negocios al siguiente nivel.",
+        "primaryCta": "Empezar Proyecto",
+        "primaryUrl": "/contacto",
+        "image_url": "assets/img/verticals/agencia-5/hero-main.svg"
+      },
+      "stats": {
+        "items": [
+          {
+            "value": "500+",
+            "label": "Proyectos Escalados",
+            "icon": "folder",
+            "description": "Completados a tiempo y con éxito"
+          },
+          {
+            "value": "98%",
+            "label": "Retención de Clientes",
+            "icon": "heart",
+            "description": "Clientes que renuevan contratos"
+          },
+          {
+            "value": "24/7",
+            "label": "Monitoreo Activo",
+            "icon": "clock",
+            "description": "Optimización en tiempo real"
+          },
+          {
+            "value": "50+",
+            "label": "Expertos Certificados",
+            "icon": "groups",
+            "description": "Especialistas en cada canal"
+          }
+        ]
+      },
+      "gallery": {
+        "heading": "Casos de Éxito",
+        "layout": "masonry",
+        "items": [
+          {
+            "image": "assets/img/verticals/agencia-5/services-1.svg",
+            "title": "E-commerce Fashion",
+            "category": "E-commerce",
+            "url": "/portfolio/fashion-ecommerce",
+            "description": "Escalado de $10K a $500K/mes en 6 meses"
+          },
+          {
+            "image": "assets/img/verticals/agencia-5/services-2.svg",
+            "title": "SaaS B2B",
+            "category": "SaaS",
+            "url": "/portfolio/saas-b2b",
+            "description": "Reducción de CAC en 60%"
+          },
+          {
+            "image": "assets/img/verticals/agencia-5/services-3.svg",
+            "title": "App Fintech",
+            "category": "Mobile",
+            "url": "/portfolio/fintech-app",
+            "description": "100K descargas en 3 meses"
+          }
+        ]
+      },
+      "video": {
+        "heading": "Ver en Acción",
+        "subtitle": "Descubre cómo escalamos marcas",
+        "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "video_type": "youtube",
+        "cta_text": "Ver Demo",
+        "cta_url": "/contacto"
+      },
+      "newsletter": {
+        "heading": "Insights de Crecimiento",
+        "description": "Recibe estrategias semanales para escalar tu marca",
+        "placeholder": "tu@email.com",
+        "button_text": "Suscribirme",
+        "provider": "custom",
+        "listId": ""
+      }
+    },
+    {
+      "key": "services",
+      "title": "Nuestros Servicios",
+      "slug": "servicios",
+      "template": "page",
+      "sections": ["hero-centered", "services-grid", "faq", "cta-final"],
+      "hero-centered": {
+        "title": "Soluciones de Crecimiento Digital",
+        "subtitle": "Combinamos creatividad disruptiva con análisis de datos para maximizar tu ROI."
+      }
+    },
+    {
+      "key": "portfolio",
+      "title": "Casos de Éxito",
+      "slug": "portafolio",
+      "template": "page",
+      "sections": ["hero-centered", "benefits", "testimonials"],
+      "hero-centered": {
+        "title": "Resultados que Hablan",
+        "subtitle": "Marcas que hemos ayudado a escalar mediante estrategias de marketing agresivas y precisas."
+      }
+    },
+    {
+      "key": "contact",
+      "title": "Hablemos",
+      "slug": "contacto",
+      "template": "page",
+      "sections": ["hero-centered", "contact-section"],
+      "hero-centered": {
+        "title": "¿Listo para Escalar?",
+        "subtitle": "Cuéntanos tu objetivo y diseñaremos la estrategia perfecta para alcanzarlo."
+      }
+    }
+  ],
+  "sections": {
+    "benefits": {
+      "items": [
+        {
+          "icon": "chart-line",
+          "title": "Enfoque Basado en Datos",
+          "description": "Todas las decisiones se basan en KPIs reales y medibles, no en suposiciones."
+        },
+        {
+          "icon": "lightbulb",
+          "title": "Creatividad Disruptiva",
+          "description": "Rompe el ruido del mercado con campañas que generan conversación y recuerdo de marca."
+        },
+        {
+          "icon": "arrow-up",
+          "title": "Escalabilidad Rápida",
+          "description": "Sistemas diseñados para crecer sin fricción: de $1K a $100K/mes en ad spend."
+        }
+      ]
+    },
+    "process": {
+      "steps": [
+        { "title": "Auditoría", "text": "Analizamos tu estado actual, competencia y oportunidades de mercado." },
+        { "title": "Estrategia", "text": "Creamos el blueprint de crecimiento con canales y embudos optimizados." },
+        { "title": "Ejecución", "text": "Lanzamos campañas, optimizamos en tiempo real y escalamos los ganadores." }
+      ]
+    },
+    "faq": {
+      "items": [
+        { "q": "¿En cuánto tiempo veré resultados?", "a": "Depende del canal, pero implementamos 'Quick Wins' en los primeros 30 días mientras escalamos la estrategia a largo plazo." },
+        { "q": "¿Trabajan con presupuestos pequeños?", "a": "Nos enfocamos en proyectos con potencial de escala. Si tenés un producto validado, podemos ayudarte a crecer." }
+      ]
+    }
+  },
+  "contentModels": {
+    "service": {
+      "label": "Servicios",
+      "singular": "Servicio",
+      "items": [
+        {
+          "title": "Growth Hacking",
+          "summary": "Sistemas de adquisición acelerada para maximizar el crecimiento de usuarios.",
+          "icon": "rocket",
+          "ctaText": "Ver más",
+          "ctaUrl": "/servicios/growth"
+        },
+        {
+          "title": "Branding Creativo",
+          "summary": "Construcción de identidades visuales potentes que conectan emocionalmente.",
+          "icon": "palette",
+          "ctaText": "Ver más",
+          "ctaUrl": "/servicios/branding"
+        },
+        {
+          "title": "Performance Ads",
+          "summary": "Campañas de Meta, Google y TikTok Ads optimizadas para conversión directa.",
+          "icon": "chart-line",
+          "ctaText": "Ver más",
+          "ctaUrl": "/servicios/performance"
+        }
+      ]
+    }
+  },
+  "cta": {
+    "final": {
+      "text": "¿Tu marca está lista para el siguiente nivel?",
+      "buttonText": "Agendar Llamada",
+      "buttonUrl": "/contacto"
+    }
+  },
+  "contact": {
+    "email": "hello@aura-creative.com",
+    "phone": "+54 11 9999-8888"
+  },
+  "graphics": {
+    "images": [
+      { "url": "assets/img/verticals/agencia-5/hero-main.svg", "title": "Estudio Creativo", "role": "hero-main" },
+      { "url": "assets/img/verticals/agencia-5/about-image.svg", "title": "Equipo de Marketing", "role": "about-image" },
+      { "url": "assets/img/verticals/agencia-5/services-1.svg", "title": "Análisis de Datos", "role": "services-1" },
+      { "url": "assets/img/verticals/agencia-5/services-2.svg", "title": "Estrategia", "role": "services-2" },
+      { "url": "assets/img/verticals/agencia-5/services-3.svg", "title": "Colaboración", "role": "services-3" }
+    ]
+  },
+  "seoDefaults": {
+    "titlePattern": "%page% | OrkestOne Creative",
+    "metaDescription": "AURA Creative: Agencia de Growth Marketing enfocada en escalar marcas disruptivas."
+  }
+}

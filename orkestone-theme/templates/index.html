@@ -1,0 +1,61 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group">
+
+  <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+  <div class="wp-block-group vbb-section" style="padding-top:var(--wp--preset--spacing--50,1.5rem);padding-bottom:var(--wp--preset--spacing--60,2rem);">
+    <!-- wp:heading {"level":1} -->
+    <h1>Blog</h1>
+    <!-- /wp:heading -->
+
+    <!-- wp:paragraph {"className":"vbb-muted"} -->
+    <p class="vbb-muted">Últimas publicaciones ordenadas por fecha.</p>
+    <!-- /wp:paragraph -->
+  </div>
+  <!-- /wp:group -->
+
+  <!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":true},"layout":{"type":"default"}} -->
+  <div class="wp-block-query">
+    <!-- wp:post-template {"layout":{"type":"default"}} -->
+    <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+    <div class="wp-block-group">
+      <!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+      <div class="wp-block-group" style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;">
+        <!-- wp:post-featured-image {"aspectRatio":"21/9","width":"100%"} /-->
+      </div>
+      <!-- /wp:group -->
+
+      <!-- wp:post-title {"isLink":true,"level":2} /-->
+      <!-- wp:template-part {"slug":"post-meta"} /-->
+      <!-- wp:post-excerpt /-->
+
+      <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"start"}} -->
+      <div class="wp-block-buttons">
+        <!-- wp:button {"className":"is-link"} -->
+        <div class="wp-block-button is-link">
+          <a class="wp-block-button__link wp-element-button" href="<?php the_permalink(); ?>">Leer más</a>
+        </div>
+        <!-- /wp:button -->
+      </div>
+      <!-- /wp:buttons -->
+    </div>
+    <!-- /wp:group -->
+    <!-- /wp:post-template -->
+
+    <!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"}} -->
+    <!-- wp:query-pagination-previous /-->
+    <!-- wp:query-pagination-numbers /-->
+    <!-- wp:query-pagination-next /-->
+    <!-- /wp:query-pagination -->
+
+    <!-- wp:query-no-results -->
+    <!-- wp:paragraph -->
+    <p>No se encontraron contenidos.</p>
+    <!-- /wp:paragraph -->
+    <!-- /wp:query-no-results -->
+  </div>
+  <!-- /wp:query -->
+
+</main>
+<!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

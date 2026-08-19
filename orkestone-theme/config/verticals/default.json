@@ -1,0 +1,254 @@
+{
+  "schemaVersion": "1.0.0",
+  "verticalKey": "default",
+  "name": "Theme Base",
+  "description": "Vertical base neutral para sitios corporativos o de servicios.",
+  "brand": {
+    "siteName": "Vertical Block Base",
+    "tagline": "Theme base Gutenberg configurable por JSON",
+    "logo": "assets/img/verticals/default/logo.svg",
+    "primaryColor": "#102033",
+    "secondaryColor": "#B08D57",
+    "accentColor": "#E9EEF5",
+    "fontHeading": "Inter",
+    "fontBody": "Inter"
+  },
+  "navigation": {
+    "primary": [
+      {
+        "label": "Inicio",
+        "url": "/"
+      },
+      {
+        "label": "Servicios",
+        "url": "/servicios"
+      },
+      {
+        "label": "Nosotros",
+        "url": "/nosotros"
+      },
+      {
+        "label": "Blog",
+        "url": "/blog"
+      },
+      {
+        "label": "Contacto",
+        "url": "/contacto"
+      }
+    ]
+  },
+  "pages": [
+    {
+      "key": "home",
+      "title": "Inicio",
+      "slug": "inicio",
+      "template": "front-page",
+      "sections": [
+        "hero",
+        "services-grid",
+        "benefits",
+        "process",
+        "testimonials",
+        "faq",
+        "stats",
+        "gallery",
+        "video",
+        "newsletter",
+        "cta-final"
+      ],
+      "hero": {
+        "eyebrow": "Theme base configurable",
+        "title": "Un sitio base listo para adaptar por vertical",
+        "subtitle": "Cambia contenido, páginas y modelo de negocio desde JSON sin rehacer el theme.",
+        "primaryCta": "Ver servicios",
+        "primaryUrl": "/servicios",
+        "image_url": "assets/img/verticals/default/hero-main.svg"
+      },
+      "stats": {
+        "items": [
+          {
+            "value": "500+",
+            "label": "Proyectos Entregados",
+            "icon": "folder",
+            "description": "Completados a tiempo y con éxito"
+          },
+          {
+            "value": "98%",
+            "label": "Satisfacción",
+            "icon": "heart",
+            "description": "Clientes que nos recomiendan"
+          },
+          {
+            "value": "24/7",
+            "label": "Soporte",
+            "icon": "clock",
+            "description": "Disponibles cuando nos necesitas"
+          },
+          {
+            "value": "50+",
+            "label": "Equipo Experto",
+            "icon": "groups",
+            "description": "Especialistas en cada área"
+          }
+        ]
+      },
+      "gallery": {
+        "heading": "Nuestros Proyectos",
+        "layout": "masonry",
+        "items": [
+          {
+            "image": "assets/img/verticals/default/services-1.svg",
+            "title": "E-commerce Completo",
+            "category": "Web",
+            "url": "/portfolio/ecommerce",
+            "description": "Tienda online con pasarela de pagos"
+          },
+          {
+            "image": "assets/img/verticals/default/services-2.svg",
+            "title": "App Móvil",
+            "category": "Mobile",
+            "url": "/portfolio/app",
+            "description": "Aplicación nativa iOS/Android"
+          },
+          {
+            "image": "assets/img/verticals/default/services-3.svg",
+            "title": "Branding Corporativo",
+            "category": "Branding",
+            "url": "/portfolio/branding",
+            "description": "Identidad visual completa"
+          },
+          {
+            "image": "assets/img/verticals/default/services-4.svg",
+            "title": "Dashboard Analytics",
+            "category": "Web App",
+            "url": "/portfolio/dashboard",
+            "description": "Panel de métricas en tiempo real"
+          }
+        ]
+      },
+      "video": {
+        "heading": "Ver en Acción",
+        "subtitle": "Descubre cómo funciona nuestra plataforma",
+        "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "video_type": "youtube",
+        "cta_text": "Ver Demo",
+        "cta_url": "/contacto"
+      },
+      "newsletter": {
+        "heading": "Suscríbete",
+        "description": "Recibe novedades semanales y recursos exclusivos",
+        "placeholder": "tu@email.com",
+        "button_text": "Suscribirme",
+        "provider": "custom",
+        "listId": ""
+      }
+    },
+    {
+      "key": "services",
+      "title": "Servicios",
+      "slug": "servicios",
+      "template": "page",
+      "sections": [
+        "hero-centered",
+        "services-grid",
+        "cta-final"
+      ]
+    },
+    {
+      "key": "about",
+      "title": "Nosotros",
+      "slug": "nosotros",
+      "template": "page",
+      "sections": [
+        "hero-centered",
+        "benefits",
+        "process"
+      ]
+    },
+    {
+      "key": "contact",
+      "title": "Contacto",
+      "slug": "contacto",
+      "template": "page",
+      "sections": [
+        "hero-centered",
+        "contact-section"
+      ]
+    }
+  ],
+  "sections": {
+    "benefits": {
+      "items": [
+        {
+          "icon": "layout",
+          "title": "Arquitectura Reusable",
+          "description": "Estructura base que se adapta a cualquier modelo de negocio sin rehacer el theme."
+        },
+        {
+          "icon": "edit",
+          "title": "Edición Visual",
+          "description": "Cambia textos, imágenes y estilos desde el editor de bloques nativo."
+        },
+        {
+          "icon": "database",
+          "title": "Contenido por JSON",
+          "description": "Todos los textos e imágenes vienen de config/verticals/*.json versionable en Git."
+        }
+      ]
+    }
+  },
+  "contentModels": {
+    "service": {
+      "label": "Servicios",
+      "singular": "Servicio",
+      "items": [
+        {
+          "title": "Diseño base",
+          "summary": "Estructura visual reutilizable para sitios de servicios.",
+          "icon": "layout",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/servicios/diseno-base"
+        },
+        {
+          "title": "Verticalización",
+          "summary": "Adaptación de páginas, textos y secciones por vertical.",
+          "icon": "sliders",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/servicios/verticalizacion"
+        },
+        {
+          "title": "Optimización",
+          "summary": "Mejora de estructura, performance y experiencia editorial.",
+          "icon": "sparkles",
+          "ctaText": "Ver servicio",
+          "ctaUrl": "/servicios/optimizacion"
+        }
+      ]
+    }
+  },
+  "cta": {
+    "final": {
+      "text": "Convierte esta base en un sitio listo para vender",
+      "buttonText": "Contactar",
+      "buttonUrl": "/contacto"
+    }
+  },
+  "contact": {
+    "email": "contacto@example.com",
+    "phone": "+00 000 000 000"
+  },
+  "graphics": {
+    "images": [
+      { "url": "assets/img/verticals/default/hero-main.svg", "title": "Hero principal", "role": "hero-main" },
+      { "url": "assets/img/verticals/default/about-image.svg", "title": "Acerca de", "role": "about-image" },
+      { "url": "assets/img/verticals/default/services-1.svg", "title": "Servicio 1", "role": "services-1" },
+      { "url": "assets/img/verticals/default/services-2.svg", "title": "Servicio 2", "role": "services-2" },
+      { "url": "assets/img/verticals/default/services-3.svg", "title": "Servicio 3", "role": "services-3" },
+      { "url": "assets/img/verticals/default/services-4.svg", "title": "Servicio 4", "role": "services-4" }
+    ]
+  },
+  "seoDefaults": {
+    "titlePattern": "%page% | %siteName%",
+    "metaDescription": "Theme base Gutenberg configurable por vertical."
+  }
+}

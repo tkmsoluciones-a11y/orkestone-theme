@@ -1,0 +1,13 @@
+
+FullName
+--------
+F:\Proyectos\theme Orkestone\.opencode\skills\brand\templates
+F:\Proyectos\theme Orkestone\.opencode\skills\design-system\templates
+F:\Proyectos\theme Orkestone\bck\vertical-block-base\assets
+F:\Proyectos\theme Orkestone\bck\vertical-block-base\templates
+F:\Proyectos\theme Orkestone\orkestone-agency-hub\assets
+F:\Proyectos\theme Orkestone\orkestone-agency-hub\includes
+F:\Proyectos\theme Orkestone\orkestone-agency-hub\templates
+F:\Proyectos\theme Orkestone\orkestone-theme\assets
+F:\Proyectos\theme Orkestone\orkestone-theme\templates
+

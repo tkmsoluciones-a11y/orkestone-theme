@@ -1,0 +1,26 @@
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}}},"layout":{"type":"constrained"},"className":"vbb-command-center"} -->
+<div class="wp-block-group alignfull vbb-command-center">
+  <!-- wp:group {"align":"wide","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap","verticalAlignment":"center"}} -->
+  <div class="wp-block-group alignwide" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+    <div class="wp-block-group" style="display:flex;align-items:center;gap:0.75rem;">
+      <!-- wp:site-logo {"width":40} /-->
+      <!-- wp:site-title {"level":0} /-->
+    </div>
+    <!-- /wp:group -->
+
+    <!-- wp:group {"layout":{"type":"flex","justifyContent":"right","flexWrap":"wrap","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"var:preset|spacing|30"}}} -->
+    <div class="wp-block-group" style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+      <!-- wp:navigation {"layout":{"type":"flex","justifyContent":"right"},"overlayMenu":"mobile"} /-->
+<!-- wp:html -->
+<button class="vbb-dark-mode-toggle" aria-label="Cambiar modo oscuro" aria-pressed="false" type="button" onclick="var next=!document.documentElement.hasAttribute('data-theme');document.documentElement.toggleAttribute('data-theme',next);this.setAttribute('aria-pressed',String(next));">
+      <span class="vbb-status-dot" aria-hidden="true"></span>
+      <span class="vbb-dark-mode-label">Modo oscuro</span>
+</button>
+<!-- /wp:html -->
+    </div>
+    <!-- /wp:group -->
+  </div>
+  <!-- /wp:group -->
+</div>
+<!-- /wp:group -->

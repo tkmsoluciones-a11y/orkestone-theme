@@ -1,0 +1,10 @@
+
+FullName
+--------
+F:\Proyectos\theme Orkestone\openspec\changes\archive\2026-07-08-builder-completion
+F:\Proyectos\theme Orkestone\openspec\changes\archive\2026-07-09-agency-hub
+F:\Proyectos\theme Orkestone\openspec\changes\archive\2026-07-09-builder-export-templates
+F:\Proyectos\theme Orkestone\openspec\changes\archive\2026-07-09-builder-performance-optimization
+F:\Proyectos\theme Orkestone\openspec\changes\archive\2026-07-09-orkestone-engine-testing
+F:\Proyectos\theme Orkestone\openspec\changes\archive\2026-07-09-visual-enhancements-top5
+

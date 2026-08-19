@@ -275,10 +275,74 @@ function vbb_pro_default_settings() {
 			'logoUrl'   => '',
 			'siteTitle' => 'Mi Empresa',
 			'menuType'  => 'logo-title', // logo-only, logo-title, title-only
+			'textColor' => '#000000',
+			'bgColor'   => '#ffffff',
 		),
 		'menuConfig'  => array(
-			'type'  => 'standard',
-			'style' => 'modern',
+			'type'     => 'standard',
+			'style'    => 'modern',
+			'bgColor'  => '',
+			'textColor' => '',
+			'darkBtnBg'   => '',
+			'darkBtnText' => '',
+			'ctaButton'   => array(
+				'enabled'  => false,
+				'text'     => 'Contacto',
+				'url'      => '/contacto',
+				'bgColor'  => '',
+				'textColor' => '',
+			),
+		),
+		'topBar'      => array(
+			'enabled'       => false,
+			'info1'         => array(
+				'text' => 'Lun–Vie 9:00–18:00',
+				'link' => '',
+			),
+			'info2'         => array(
+				'text' => 'hola@ejemplo.com',
+				'link' => 'mailto:hola@ejemplo.com',
+			),
+			'info3'         => array(
+				'text' => '+54 11 5555-5555',
+				'link' => 'tel:+541155555555',
+			),
+			'socialFacebook'  => '',
+			'socialInstagram' => '',
+			'socialLinkedin'  => '',
+			'bgColor'       => '#1a1a2e',
+			'textColor'     => '#ffffff',
+		),
+		'footerConfig' => array(
+			'column1' => array(
+				'logoUrl'        => '',
+				'description'    => '',
+				'socialFacebook'  => '',
+				'socialInstagram' => '',
+				'socialLinkedin'  => '',
+				'socialTwitter'   => '',
+			),
+			'column2' => array(
+				'title' => 'Acceso rápido',
+				'items' => array(
+					array( 'text' => 'Inicio',     'url' => '/' ),
+					array( 'text' => 'Servicios',  'url' => '/servicios' ),
+					array( 'text' => 'Contacto',   'url' => '/contacto' ),
+					array( 'text' => 'Legal',      'url' => '/legal' ),
+				),
+			),
+			'bottomBar' => array(
+				'copyright' => '© {year} Todos los derechos reservados.',
+				'button'    => array(
+					'text' => '',
+					'url'  => '',
+				),
+			),
+			'bgColor'         => '#1a1a2e',
+			'textColor'       => '#ffffff',
+			'linkColor'       => '#b8b8d0',
+			'linkHoverColor'  => '#ffffff',
+			'bottomBarBgColor'=> '#0d0d1a',
 		),
 		'palettes'    => array(
 
@@ -376,11 +440,82 @@ function vbb_pro_sanitize_settings( $settings ) {
 		'logoUrl'   => esc_url_raw( $settings['headerConfig']['logoUrl'] ?? '' ),
 		'siteTitle' => sanitize_text_field( $settings['headerConfig']['siteTitle'] ?? $defaults['headerConfig']['siteTitle'] ),
 		'menuType'  => in_array( $settings['headerConfig']['menuType'] ?? 'logo-title', array( 'logo-only', 'logo-title', 'title-only' ), true ) ? $settings['headerConfig']['menuType'] : 'logo-title',
+		'textColor' => sanitize_hex_color( $settings['headerConfig']['textColor'] ?? '' ) ?: $defaults['headerConfig']['textColor'],
+		'bgColor'   => sanitize_hex_color( $settings['headerConfig']['bgColor'] ?? '' ) ?: $defaults['headerConfig']['bgColor'],
 	);
 	$out['menuConfig'] = array(
-		'type'  => in_array( $settings['menuConfig']['type'] ?? 'standard', array( 'standard', 'hamburger', 'sticky' ), true ) ? $settings['menuConfig']['type'] : 'standard',
-		'style' => sanitize_text_field( $settings['menuConfig']['style'] ?? $defaults['menuConfig']['style'] ),
+		'type'       => in_array( $settings['menuConfig']['type'] ?? 'standard', array( 'standard', 'hamburger', 'sticky' ), true ) ? $settings['menuConfig']['type'] : 'standard',
+		'style'      => in_array( $settings['menuConfig']['style'] ?? 'modern', array( 'modern', 'minimal', 'classic', 'pill' ), true ) ? $settings['menuConfig']['style'] : 'modern',
+		'bgColor'    => sanitize_hex_color( $settings['menuConfig']['bgColor'] ?? '' ) ?: $defaults['menuConfig']['bgColor'],
+		'textColor'  => sanitize_hex_color( $settings['menuConfig']['textColor'] ?? '' ) ?: $defaults['menuConfig']['textColor'],
+		'darkBtnBg'  => sanitize_hex_color( $settings['menuConfig']['darkBtnBg'] ?? '' ) ?: $defaults['menuConfig']['darkBtnBg'],
+		'darkBtnText'=> sanitize_hex_color( $settings['menuConfig']['darkBtnText'] ?? '' ) ?: $defaults['menuConfig']['darkBtnText'],
+		'ctaButton'  => array(
+			'enabled'   => ! empty( $settings['menuConfig']['ctaButton']['enabled'] ),
+			'text'      => sanitize_text_field( $settings['menuConfig']['ctaButton']['text'] ?? $defaults['menuConfig']['ctaButton']['text'] ),
+			'url'       => esc_url_raw( $settings['menuConfig']['ctaButton']['url'] ?? $defaults['menuConfig']['ctaButton']['url'] ),
+			'bgColor'   => sanitize_hex_color( $settings['menuConfig']['ctaButton']['bgColor'] ?? '' ) ?: $defaults['menuConfig']['ctaButton']['bgColor'],
+			'textColor' => sanitize_hex_color( $settings['menuConfig']['ctaButton']['textColor'] ?? '' ) ?: $defaults['menuConfig']['ctaButton']['textColor'],
+		),
 	);
+	$out['topBar'] = array(
+		'enabled'        => ! empty( $settings['topBar']['enabled'] ),
+		'info1'          => array(
+			'text' => sanitize_text_field( $settings['topBar']['info1']['text'] ?? $defaults['topBar']['info1']['text'] ),
+			'link' => esc_url_raw( $settings['topBar']['info1']['link'] ?? $defaults['topBar']['info1']['link'] ),
+		),
+		'info2'          => array(
+			'text' => sanitize_text_field( $settings['topBar']['info2']['text'] ?? $defaults['topBar']['info2']['text'] ),
+			'link' => esc_url_raw( $settings['topBar']['info2']['link'] ?? $defaults['topBar']['info2']['link'] ),
+		),
+		'info3'          => array(
+			'text' => sanitize_text_field( $settings['topBar']['info3']['text'] ?? $defaults['topBar']['info3']['text'] ),
+			'link' => esc_url_raw( $settings['topBar']['info3']['link'] ?? $defaults['topBar']['info3']['link'] ),
+		),
+		'socialFacebook' => esc_url_raw( $settings['topBar']['socialFacebook'] ?? '' ),
+		'socialInstagram'=> esc_url_raw( $settings['topBar']['socialInstagram'] ?? '' ),
+		'socialLinkedin' => esc_url_raw( $settings['topBar']['socialLinkedin'] ?? '' ),
+		'bgColor'        => sanitize_hex_color( $settings['topBar']['bgColor'] ?? '' ) ?: $defaults['topBar']['bgColor'],
+		'textColor'      => sanitize_hex_color( $settings['topBar']['textColor'] ?? '' ) ?: $defaults['topBar']['textColor'],
+	);
+
+	$out['footerConfig'] = array(
+		'column1' => array(
+			'logoUrl'        => esc_url_raw( $settings['footerConfig']['column1']['logoUrl'] ?? '' ),
+			'description'    => sanitize_text_field( $settings['footerConfig']['column1']['description'] ?? '' ),
+			'socialFacebook'  => esc_url_raw( $settings['footerConfig']['column1']['socialFacebook'] ?? '' ),
+			'socialInstagram' => esc_url_raw( $settings['footerConfig']['column1']['socialInstagram'] ?? '' ),
+			'socialLinkedin'  => esc_url_raw( $settings['footerConfig']['column1']['socialLinkedin'] ?? '' ),
+			'socialTwitter'   => esc_url_raw( $settings['footerConfig']['column1']['socialTwitter'] ?? '' ),
+		),
+		'column2' => array(
+			'title' => sanitize_text_field( $settings['footerConfig']['column2']['title'] ?? $defaults['footerConfig']['column2']['title'] ),
+			'items' => array(),
+		),
+		'bottomBar' => array(
+			'copyright' => sanitize_text_field( $settings['footerConfig']['bottomBar']['copyright'] ?? $defaults['footerConfig']['bottomBar']['copyright'] ),
+			'button'    => array(
+				'text' => sanitize_text_field( $settings['footerConfig']['bottomBar']['button']['text'] ?? '' ),
+				'url'  => esc_url_raw( $settings['footerConfig']['bottomBar']['button']['url'] ?? '' ),
+			),
+		),
+		'bgColor'         => sanitize_hex_color( $settings['footerConfig']['bgColor'] ?? '' ) ?: $defaults['footerConfig']['bgColor'],
+		'textColor'       => sanitize_hex_color( $settings['footerConfig']['textColor'] ?? '' ) ?: $defaults['footerConfig']['textColor'],
+		'linkColor'       => sanitize_hex_color( $settings['footerConfig']['linkColor'] ?? '' ) ?: $defaults['footerConfig']['linkColor'],
+		'linkHoverColor'  => sanitize_hex_color( $settings['footerConfig']['linkHoverColor'] ?? '' ) ?: $defaults['footerConfig']['linkHoverColor'],
+		'bottomBarBgColor'=> sanitize_hex_color( $settings['footerConfig']['bottomBarBgColor'] ?? '' ) ?: $defaults['footerConfig']['bottomBarBgColor'],
+	);
+	$raw_items = $settings['footerConfig']['column2']['items'] ?? array();
+	if ( is_array( $raw_items ) ) {
+		foreach ( $raw_items as $item ) {
+			if ( is_array( $item ) ) {
+				$out['footerConfig']['column2']['items'][] = array(
+					'text' => sanitize_text_field( $item['text'] ?? '' ),
+					'url'  => esc_url_raw( $item['url'] ?? '' ),
+				);
+			}
+		}
+	}
 
 	foreach ( array( 'light', 'dark' ) as $mode ) {
 		foreach ( $defaults['palettes'][ $mode ] as $key => $fallback ) {

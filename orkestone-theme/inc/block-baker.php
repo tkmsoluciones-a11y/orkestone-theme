@@ -36,8 +36,8 @@ function vbb_bake_section( $type, $page, $sections ) {
 		return call_user_func( $map[ $type ], $data );
 	}
 
-	// Fallback for unknown section types.
-	return vbb_bake_unknown( $type );
+    // Fallback for unknown section types.
+    return vbb_bake_unknown( $type );
 }
 
 /**
@@ -47,14 +47,14 @@ function vbb_bake_section( $type, $page, $sections ) {
  * @return string
  */
 function vbb_bake_unknown( $type ) {
-	$section_class = 'vbb-section vbb-section-' . sanitize_html_class( str_replace( '_', '-', $type ) );
-	return '<!-- wp:group {"className":"' . $section_class . '","layout":{"type":"constrained"}} -->'
-		. "\n" . '<div class="wp-block-group ' . $section_class . '">'
-		. "\n\t" . '<!-- wp:paragraph -->'
-		. "\n\t" . '<p>' . esc_html( sprintf( 'Unknown: %s', $type ) ) . '</p>'
-		. "\n\t" . '<!-- /wp:paragraph -->'
-		. "\n" . '</div>'
-		. "\n" . '<!-- /wp:group -->';
+    $section_class = 'vbb-section vbb-section-' . sanitize_html_class( str_replace( '_', '-', $type ) );
+    return '<!-- wp:group {"className":"' . $section_class . '","layout":{"type":"constrained"}} -->'
+        . "\n" . '<div class="wp-block-group ' . $section_class . '">'
+        . "\n\t" . '<!-- wp:paragraph -->'
+        . "\n\t" . '<p>' . esc_html( sprintf( 'Unknown: %s', $type ) ) . '</p>'
+        . "\n\t" . '<!-- /wp:paragraph -->'
+        . "\n" . '</div>'
+        . "\n" . '<!-- /wp:group -->';
 }
 
 /**
@@ -123,6 +123,20 @@ function vbb_render_heading_block( $text, $level = 2, $align = 'left' ) {
 }
 
 /**
+ * Get the effect CSS class from block data.
+ *
+ * @param array $data Block data.
+ * @return string CSS class or empty string.
+ */
+function vbb_get_effect_class( $data ) {
+	$effect = isset( $data['effect'] ) ? sanitize_text_field( $data['effect'] ) : 'none';
+	if ( 'none' === $effect || empty( $effect ) ) {
+		return '';
+	}
+	return ' vbb-effect-' . $effect;
+}
+
+/**
  * Bake a Hero section with eyebrow, title, subtitle, and CTA button.
  *
  * Supports three visual styles dispatched by $data['style'] (A, B, C).
@@ -134,17 +148,17 @@ function vbb_render_heading_block( $text, $level = 2, $align = 'left' ) {
  * @return string
  */
 function vbb_bake_hero( $data ) {
-	$effect    = isset( $data['effect'] ) ? sanitize_key( $data['effect'] ) : 'fade';
-	$style     = isset( $data['style'] ) ? $data['style'] : 'A';
+    $effect_class = vbb_get_effect_class( $data );
+    $style = isset( $data['style'] ) ? $data['style'] : 'A';
 
-	// Image: use placeholder — dynamic replacement will resolve image_id → attachment URL or fallback to image_url
-	$image_url_placeholder = '{{vbb_hero_image_url}}';
+    // Image: use placeholder — dynamic replacement will resolve image_id → attachment URL or fallback to image_url
+    $image_url_placeholder = '{{vbb_hero_image_url}}';
 
-	switch ( $style ) {
-		case 'B':
-			// Style B: Centered single column with background overlay
-			$output  = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-hero vbb-style-b vbb-effect-' . $effect . '","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"accent","layout":{"type":"constrained"}} -->';
-			$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-hero vbb-style-b vbb-effect-' . $effect . ' has-accent-background-color has-background">';
+    switch ( $style ) {
+    case 'B':
+        // Style B: Centered single column with background overlay
+        $output = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-hero vbb-style-b' . $effect_class . '","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"accent","layout":{"type":"constrained"}} -->';
+        $output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-hero vbb-style-b' . $effect_class . ' has-accent-background-color has-background">';
 			$output .= "\n\t" . '<div class="vbb-hero-bg-overlay"></div>';
 			$output .= "\n\t" . '<!-- wp:group {"align":"wide","layout":{"type":"constrained","contentSize":"720px"}} -->';
 			$output .= "\n\t" . '<div class="wp-block-group alignwide">';
@@ -170,10 +184,10 @@ function vbb_bake_hero( $data ) {
 			$output .= "\n" . '<!-- /wp:group -->';
 			break;
 
-		case 'C':
-			// Style C: Full-bleed background image with left-aligned content
-			$output  = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-hero vbb-style-c vbb-effect-' . $effect . '","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"layout":{"type":"constrained"}} -->';
-			$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-hero vbb-style-c vbb-effect-' . $effect . '" style="min-height:70vh;">';
+    case 'C':
+        // Style C: Full-bleed background image with left-aligned content
+        $output = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-hero vbb-style-c' . $effect_class . '","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"layout":{"type":"constrained"}} -->';
+        $output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-hero vbb-style-c' . $effect_class . '" style="min-height:70vh;">';
 			$output .= "\n\t" . '<div class="vbb-hero-bg-image" style="background-image:url(\'' . $image_url_placeholder . '\')"></div>';
 			$output .= "\n\t" . '<div class="vbb-hero-overlay"></div>';
 			$output .= "\n\t" . '<!-- wp:columns {"align":"wide","verticalAlignment":"center"} -->';
@@ -208,11 +222,11 @@ function vbb_bake_hero( $data ) {
 			$output .= "\n" . '<!-- /wp:group -->';
 			break;
 
-		case 'A':
-		default:
-			// Style A: Two-column layout (image left, content right) — current default
-			$output  = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-hero vbb-style-a vbb-effect-' . $effect . '","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"accent","layout":{"type":"constrained"}} -->';
-			$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-hero vbb-style-a vbb-effect-' . $effect . ' has-accent-background-color has-background">';
+    case 'A':
+    default:
+        // Style A: Two-column layout (image left, content right) — current default
+        $output = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-hero vbb-style-a' . $effect_class . '","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"accent","layout":{"type":"constrained"}} -->';
+        $output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-hero vbb-style-a' . $effect_class . ' has-accent-background-color has-background">';
 			$output .= "\n\t" . '<!-- wp:columns {"align":"wide"} -->';
 			$output .= "\n\t" . '<div class="wp-block-columns alignwide">';
 			$output .= "\n\t\t" . '<!-- wp:column {"verticalAlignment":"center"} -->';
@@ -268,11 +282,12 @@ function vbb_bake_hero( $data ) {
  * @return string
  */
 function vbb_bake_hero_centered( $data ) {
-	$title   = '{{vbb_hero_centered_title}}';
-	$tagline = '{{vbb_hero_centered_tagline}}';
+    $effect_class = vbb_get_effect_class( $data );
+    $title = '{{vbb_hero_centered_title}}';
+    $tagline = '{{vbb_hero_centered_tagline}}';
 
-	$output  = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-hero-centered","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"}}},"backgroundColor":"accent","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-hero-centered has-accent-background-color has-background">';
+    $output = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-hero-centered' . $effect_class . '","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"}}},"backgroundColor":"accent","layout":{"type":"constrained"}} -->';
+    $output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-hero-centered' . $effect_class . ' has-accent-background-color has-background">';
 	$output .= "\n\t" . '<!-- wp:group {"align":"wide","layout":{"type":"constrained","contentSize":"860px"}} -->';
 	$output .= "\n\t" . '<div class="wp-block-group alignwide">';
 
@@ -303,12 +318,13 @@ function vbb_bake_hero_centered( $data ) {
  * @return string
  */
 function vbb_bake_services_grid( $data ) {
-	$heading = '{{vbb_services_heading}}';
-	$items   = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
+    $effect_class = vbb_get_effect_class( $data );
+    $heading = '{{vbb_services_heading}}';
+    $items = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
 
-	// Default items when no data provided.
-	if ( empty( $items ) ) {
-		$items = array(
+    // Default items when no data provided.
+    if ( empty( $items ) ) {
+        $items = array(
 			array(
 				'title'   => __( 'Servicio principal', 'vertical-block-base' ),
 				'summary' => __( 'Describe aquí el primer servicio de la vertical.', 'vertical-block-base' ),
@@ -330,10 +346,10 @@ function vbb_bake_services_grid( $data ) {
 		);
 	}
 
-	$output  = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-services-grid","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-services-grid">';
-	$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center"} -->';
-	$output .= "\n\t" . '<h2 class="wp-block-heading has-text-align-center">' . $heading . '</h2>';
+$output = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-services-grid' . $effect_class . '","layout":{"type":"constrained"}} -->';
+$output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-services-grid' . $effect_class . '">';
+$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center"} -->';
+$output .= "\n\t" . '<h2 class="wp-block-heading has-text-align-center">' . $heading . '</h2>';
 	$output .= "\n\t" . '<!-- /wp:heading -->';
 	$output .= "\n\t" . '<!-- wp:columns {"align":"wide"} -->';
 	$output .= "\n\t" . '<div class="wp-block-columns alignwide">';
@@ -388,11 +404,12 @@ function vbb_bake_services_grid( $data ) {
  * @return string
  */
 function vbb_bake_benefits( $data ) {
-	$heading = '{{vbb_benefits_heading}}';
-	$items   = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
+    $effect_class = vbb_get_effect_class( $data );
+    $heading = '{{vbb_benefits_heading}}';
+    $items = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
 
-	if ( empty( $items ) ) {
-		$items = array(
+    if ( empty( $items ) ) {
+        $items = array(
 			array(
 				'icon'        => 'layout',
 				'title'       => __( 'Arquitectura reusable por vertical.', 'vertical-block-base' ),
@@ -411,9 +428,9 @@ function vbb_bake_benefits( $data ) {
 		);
 	}
 
-	$output  = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-benefits","backgroundColor":"primary","textColor":"base","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-benefits has-base-color has-primary-background-color has-text-color has-background">';
-	$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center","textColor":"base"} -->';
+$output = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-benefits' . $effect_class . '","backgroundColor":"primary","textColor":"base","layout":{"type":"constrained"}} -->';
+$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-benefits' . $effect_class . ' has-base-color has-primary-background-color has-text-color has-background">';
+$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center","textColor":"base"} -->';
 	$output .= "\n\t" . '<h2 class="wp-block-heading has-text-align-center has-base-color has-text-color">' . $heading . '</h2>';
 	$output .= "\n\t" . '<!-- /wp:heading -->';
 	$output .= "\n\t" . '<!-- wp:columns {"align":"wide"} -->';
@@ -474,62 +491,64 @@ function vbb_bake_benefits( $data ) {
  * @return string
  */
 function vbb_bake_process( $data ) {
-	$heading = '{{vbb_process_heading}}';
-	$steps   = isset( $data['steps'] ) && is_array( $data['steps'] ) ? $data['steps'] : array();
+	$heading = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	// Read from 'items' array (canonical), fall back to 'steps' (legacy).
+	$steps = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : ( isset( $data['steps'] ) && is_array( $data['steps'] ) ? $data['steps'] : array() );
 
 	if ( empty( $steps ) ) {
 		$steps = array(
-			array(
-				'title'       => __( '1. Diagnóstico', 'vertical-block-base' ),
-				'description' => __( 'Entendemos el caso, negocio o necesidad de la vertical.', 'vertical-block-base' ),
-			),
-			array(
-				'title'       => __( '2. Estrategia', 'vertical-block-base' ),
-				'description' => __( 'Definimos páginas, secciones, mensajes y llamados a la acción.', 'vertical-block-base' ),
-			),
-			array(
-				'title'       => __( '3. Publicación', 'vertical-block-base' ),
-				'description' => __( 'Activamos la vertical y ajustamos el sitio desde el editor.', 'vertical-block-base' ),
-			),
+			array( 'number' => '1', 'title' => __( 'Diagnóstico', 'vertical-block-base' ), 'description' => __( 'Entendemos el caso, negocio o necesidad de la vertical.', 'vertical-block-base' ) ),
+			array( 'number' => '2', 'title' => __( 'Estrategia', 'vertical-block-base' ), 'description' => __( 'Definimos páginas, secciones, mensajes y llamados a la acción.', 'vertical-block-base' ) ),
+			array( 'number' => '3', 'title' => __( 'Publicación', 'vertical-block-base' ), 'description' => __( 'Activamos la vertical y ajustamos el sitio desde el editor.', 'vertical-block-base' ) ),
 		);
 	}
 
-		$output  = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-process","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-process">';
-	$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center"} -->';
-	$output .= "\n\t" . '<h2 class="wp-block-heading has-text-align-center">' . $heading . '</h2>';
-	$output .= "\n\t" . '<!-- /wp:heading -->';
-	$output .= "\n\t" . '<!-- wp:columns -->';
-	$output .= "\n\t" . '<div class="wp-block-columns">';
+	$effect_class = vbb_get_effect_class( $data );
+	$html  = '<!-- wp:group {"className":"vbb-section vbb-process' . $effect_class . '"} -->';
+	$html .= '<div class="vbb-section vbb-process' . $effect_class . '">';
 
-	foreach ( $steps as $step ) {
-		$step_title   = isset( $step['title'] ) ? vbb_esc_text( $step['title'] ) : '';
-		$description  = isset( $step['description'] ) ? vbb_esc_text( $step['description'] ) : '';
-
-		$output .= "\n\t\t" . '<!-- wp:column -->';
-		$output .= "\n\t\t" . '<div class="wp-block-column">';
-
-		if ( '' !== $step_title ) {
-			$output .= "\n\t\t\t" . '<!-- wp:heading {"level":3} -->';
-			$output .= "\n\t\t\t" . '<h3 class="wp-block-heading">' . $step_title . '</h3>';
-			$output .= "\n\t\t\t" . '<!-- /wp:heading -->';
-		}
-
-		if ( '' !== $description ) {
-			$output .= "\n\t\t\t" . '<!-- wp:paragraph -->';
-			$output .= "\n\t\t\t" . '<p>' . $description . '</p>';
-			$output .= "\n\t\t\t" . '<!-- /wp:paragraph -->';
-		}
-
-		$output .= "\n\t\t" . '</div>';
-		$output .= "\n\t\t" . '<!-- /wp:column -->';
+	if ( $heading ) {
+		$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
+		$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
+		$html .= '<!-- /wp:heading -->';
 	}
-	$output .= "\n\t" . '</div>';
-	$output .= "\n\t" . '<!-- /wp:columns -->';
-	$output .= "\n" . '</div>';
-	$output .= "\n" . '<!-- /wp:group -->';
 
-	return $output;
+	if ( ! empty( $steps ) ) {
+		$html .= '<!-- wp:columns {"className":"vbb-process-grid"} -->';
+		$html .= '<div class="wp-block-columns vbb-process-grid">';
+		foreach ( $steps as $step ) {
+			$step_number  = isset( $step['number'] ) ? esc_html( $step['number'] ) : '';
+			$step_title   = isset( $step['title'] ) ? esc_html( $step['title'] ) : '';
+			$description  = isset( $step['description'] ) ? esc_html( $step['description'] ) : '';
+			$icon         = isset( $step['icon'] ) ? esc_html( $step['icon'] ) : '';
+
+			$html .= '<!-- wp:column {"className":"vbb-process-step"} -->';
+			$html .= '<div class="wp-block-column vbb-process-step">';
+
+			if ( $icon ) {
+				$html .= '<span class="dashicons dashicons-' . $icon . ' vbb-process-step-icon"></span>';
+			}
+			if ( $step_number ) {
+				$html .= '<span class="vbb-process-step-number">' . $step_number . '</span>';
+			}
+			if ( $step_title ) {
+				$html .= '<h3 class="vbb-process-step-title">' . $step_title . '</h3>';
+			}
+			if ( $description ) {
+				$html .= '<p class="vbb-process-step-description">' . $description . '</p>';
+			}
+
+			$html .= '</div>';
+			$html .= '<!-- /wp:column -->';
+		}
+		$html .= '</div>';
+		$html .= '<!-- /wp:columns -->';
+	}
+
+	$html .= '</div>';
+	$html .= '<!-- /wp:group -->';
+
+	return $html;
 }
 
 /**
@@ -539,11 +558,12 @@ function vbb_bake_process( $data ) {
  * @return string
  */
 function vbb_bake_testimonials( $data ) {
-	$heading = '{{vbb_testimonials_heading}}';
-	$items   = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
-	$style   = isset( $data['style'] ) ? $data['style'] : 'A';
+    $effect_class = vbb_get_effect_class( $data );
+    $heading = '{{vbb_testimonials_heading}}';
+    $items = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
+    $style = isset( $data['style'] ) ? $data['style'] : 'A';
 
-	if ( empty( $items ) ) {
+    if ( empty( $items ) ) {
 		$items = array(
 			array(
 				'quote'  => __( 'Una experiencia clara, profesional y enfocada en resolver.', 'vertical-block-base' ),
@@ -553,16 +573,17 @@ function vbb_bake_testimonials( $data ) {
 	}
 
 	switch ( $style ) {
-		case 'B':
-			// Style B: Three-column grid with avatar + rating cards
-			$output  = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-testimonials vbb-style-b","backgroundColor":"background","layout":{"type":"constrained"}} -->';
-			$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-testimonials vbb-style-b has-background-background-color has-background">';
+case 'B':
+        // Style B: Three-column grid with avatar + rating cards
+        $output = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-testimonials vbb-style-b' . $effect_class . '","backgroundColor":"background","layout":{"type":"constrained"}} -->';
+        $output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-testimonials vbb-style-b' . $effect_class . ' has-background-background-color has-background">';
 			$output .= "\n\t" . vbb_render_heading_block( $heading, 2, 'center' );
 			$output .= "\n\t" . '<!-- wp:columns {"align":"wide"} -->';
 			$output .= "\n\t" . '<div class="wp-block-columns alignwide">';
 			foreach ( array_slice( $items, 0, 3 ) as $item ) {
 				$quote  = isset( $item['quote'] ) ? vbb_esc_text( $item['quote'] ) : '';
 				$author = isset( $item['author'] ) ? vbb_esc_text( $item['author'] ) : '';
+				$role   = isset( $item['role'] ) ? vbb_esc_text( $item['role'] ) : '';
 				$avatar = isset( $item['avatar'] ) ? $item['avatar'] : '';
 				$rating = isset( $item['rating'] ) ? (int) $item['rating'] : 0;
 
@@ -590,6 +611,11 @@ function vbb_bake_testimonials( $data ) {
 					$output .= "\n\t\t\t\t" . '<p class="has-small-font-size"><strong>' . $author . '</strong></p>';
 					$output .= "\n\t\t\t\t" . '<!-- /wp:paragraph -->';
 				}
+				if ( '' !== $role ) {
+					$output .= "\n\t\t\t\t" . '<!-- wp:paragraph {"fontSize":"small","className":"vbb-testimonial-role"} -->';
+					$output .= "\n\t\t\t\t" . '<p class="has-small-font-size vbb-testimonial-role">' . $role . '</p>';
+					$output .= "\n\t\t\t\t" . '<!-- /wp:paragraph -->';
+				}
 				$output .= "\n\t\t\t" . '</div>';
 				$output .= "\n\t\t\t" . '<!-- /wp:group -->';
 				$output .= "\n\t\t" . '</div>';
@@ -614,6 +640,7 @@ function vbb_bake_testimonials( $data ) {
 			$featured = ! empty( $items[0] ) ? $items[0] : array();
 			$f_quote  = isset( $featured['quote'] ) ? vbb_esc_text( $featured['quote'] ) : '';
 			$f_author = isset( $featured['author'] ) ? vbb_esc_text( $featured['author'] ) : '';
+			$f_role   = isset( $featured['role'] ) ? vbb_esc_text( $featured['role'] ) : '';
 			$f_avatar = isset( $featured['avatar'] ) ? $featured['avatar'] : '';
 			$output .= "\n\t\t\t" . '<!-- wp:group {"style":{"spacing":{"padding":"20px"},"border":{"radius":"12px"}},"backgroundColor":"accent","className":"vbb-testimonial-featured"} -->';
 			$output .= "\n\t\t\t" . '<div class="wp-block-group vbb-testimonial-featured has-accent-background-color has-background" style="border-radius:12px;padding:20px;">';
@@ -632,6 +659,11 @@ function vbb_bake_testimonials( $data ) {
 				$output .= "\n\t\t\t\t" . '<p><strong>' . $f_author . '</strong></p>';
 				$output .= "\n\t\t\t\t" . '<!-- /wp:paragraph -->';
 			}
+			if ( '' !== $f_role ) {
+				$output .= "\n\t\t\t\t" . '<!-- wp:paragraph {"fontSize":"small","className":"vbb-testimonial-role"} -->';
+				$output .= "\n\t\t\t\t" . '<p class="has-small-font-size vbb-testimonial-role">' . $f_role . '</p>';
+				$output .= "\n\t\t\t\t" . '<!-- /wp:paragraph -->';
+			}
 			$output .= "\n\t\t\t" . '</div>';
 			$output .= "\n\t\t\t" . '<!-- /wp:group -->';
 			$output .= "\n\t\t" . '</div>';
@@ -643,6 +675,7 @@ function vbb_bake_testimonials( $data ) {
 			foreach ( $supporting as $s_item ) {
 				$s_quote  = isset( $s_item['quote'] ) ? vbb_esc_text( $s_item['quote'] ) : '';
 				$s_author = isset( $s_item['author'] ) ? vbb_esc_text( $s_item['author'] ) : '';
+				$s_role   = isset( $s_item['role'] ) ? vbb_esc_text( $s_item['role'] ) : '';
 				$output .= "\n\t\t\t" . '<!-- wp:group {"style":{"spacing":{"padding":"16px"},"border":{"radius":"8px"}},"backgroundColor":"surface"} -->';
 				$output .= "\n\t\t\t" . '<div class="wp-block-group has-surface-background-color has-background" style="border-radius:8px;padding:16px;">';
 				if ( '' !== $s_quote ) {
@@ -653,6 +686,11 @@ function vbb_bake_testimonials( $data ) {
 				if ( '' !== $s_author ) {
 					$output .= "\n\t\t\t\t" . '<!-- wp:paragraph {"fontSize":"small"} -->';
 					$output .= "\n\t\t\t\t" . '<p class="has-small-font-size"><strong>' . $s_author . '</strong></p>';
+					$output .= "\n\t\t\t\t" . '<!-- /wp:paragraph -->';
+				}
+				if ( '' !== $s_role ) {
+					$output .= "\n\t\t\t\t" . '<!-- wp:paragraph {"fontSize":"small","className":"vbb-testimonial-role"} -->';
+					$output .= "\n\t\t\t\t" . '<p class="has-small-font-size vbb-testimonial-role">' . $s_role . '</p>';
 					$output .= "\n\t\t\t\t" . '<!-- /wp:paragraph -->';
 				}
 				$output .= "\n\t\t\t" . '</div>';
@@ -666,37 +704,42 @@ function vbb_bake_testimonials( $data ) {
 			$output .= "\n" . '<!-- /wp:group -->';
 			break;
 
-		case 'A':
-		default:
-			// Style A: Stacked quote blocks on accent background (current default)
-			$output  = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-testimonials vbb-style-a","backgroundColor":"accent","layout":{"type":"constrained"}} -->';
-			$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-testimonials vbb-style-a has-accent-background-color has-background">';
+case 'A':
+default:
+    // Style A: Stacked quote blocks on accent background (current default)
+    $output = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-testimonials vbb-style-a' . $effect_class . '","backgroundColor":"accent","layout":{"type":"constrained"}} -->';
+    $output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-testimonials vbb-style-a' . $effect_class . ' has-accent-background-color has-background">';
 			$output .= "\n\t" . vbb_render_heading_block( $heading, 2, 'center' );
 
-			foreach ( array_slice( $items, 0, 3 ) as $item ) {
-				$quote  = isset( $item['quote'] ) ? vbb_esc_text( $item['quote'] ) : '';
-				$author = isset( $item['author'] ) ? vbb_esc_text( $item['author'] ) : '';
+		foreach ( array_slice( $items, 0, 3 ) as $item ) {
+			$quote  = isset( $item['quote'] ) ? vbb_esc_text( $item['quote'] ) : '';
+			$author = isset( $item['author'] ) ? vbb_esc_text( $item['author'] ) : '';
+			$role   = isset( $item['role'] ) ? vbb_esc_text( $item['role'] ) : '';
 
-				$output .= "\n\t" . '<!-- wp:quote {"align":"center"} -->';
-				$output .= "\n\t" . '<blockquote class="wp-block-quote has-text-align-center">';
+			$output .= "\n\t" . '<!-- wp:quote {"align":"center"} -->';
+			$output .= "\n\t" . '<blockquote class="wp-block-quote has-text-align-center">';
 
-				if ( '' !== $quote ) {
-					$output .= "\n\t\t" . '<!-- wp:paragraph -->';
-					$output .= "\n\t\t" . '<p>' . $quote . '</p>';
-					$output .= "\n\t\t" . '<!-- /wp:paragraph -->';
-				}
-
-				if ( '' !== $author ) {
-					$output .= "\n\t\t" . '<cite>' . $author . '</cite>';
-				}
-
-				$output .= "\n\t" . '</blockquote>';
-				$output .= "\n\t" . '<!-- /wp:quote -->';
+			if ( '' !== $quote ) {
+				$output .= "\n\t\t" . '<!-- wp:paragraph -->';
+				$output .= "\n\t\t" . '<p>' . $quote . '</p>';
+				$output .= "\n\t\t" . '<!-- /wp:paragraph -->';
 			}
 
-			$output .= "\n" . '</div>';
-			$output .= "\n" . '<!-- /wp:group -->';
-			break;
+			if ( '' !== $author ) {
+				$output .= "\n\t\t" . '<cite>' . $author;
+				if ( '' !== $role ) {
+					$output .= ' <span class="vbb-testimonial-role">(' . $role . ')</span>';
+				}
+				$output .= '</cite>';
+			}
+
+			$output .= "\n\t" . '</blockquote>';
+			$output .= "\n\t" . '<!-- /wp:quote -->';
+		}
+
+		$output .= "\n" . '</div>';
+		$output .= "\n" . '<!-- /wp:group -->';
+		break;
 	}
 
 	return $output;
@@ -709,10 +752,11 @@ function vbb_bake_testimonials( $data ) {
  * @return string
  */
 function vbb_bake_faq( $data ) {
-	$heading = '{{vbb_faq_heading}}';
-	$items   = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
+    $effect_class = vbb_get_effect_class( $data );
+    $heading = '{{vbb_faq_heading}}';
+    $items = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
 
-	if ( empty( $items ) ) {
+    if ( empty( $items ) ) {
 		$items = array(
 			array(
 				'question' => __( '¿Puedo cambiar la vertical?', 'vertical-block-base' ),
@@ -725,9 +769,9 @@ function vbb_bake_faq( $data ) {
 		);
 	}
 
-	$output  = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-faq","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-faq">';
-	$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center"} -->';
+$output = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-faq' . $effect_class . '","layout":{"type":"constrained"}} -->';
+$output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-faq' . $effect_class . '">';
+$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center"} -->';
 	$output .= "\n\t" . '<h2 class="wp-block-heading has-text-align-center">' . $heading . '</h2>';
 	$output .= "\n\t" . '<!-- /wp:heading -->';
 
@@ -762,8 +806,9 @@ function vbb_bake_faq( $data ) {
  * @return string
  */
 function vbb_bake_contact_section( $data ) {
-	$heading       = isset( $data['heading'] ) ? vbb_esc_text( $data['heading'] ) : __( 'Contacto', 'vertical-block-base' );
-	$email         = '{{vbb_contact_email}}';
+    $effect_class = vbb_get_effect_class( $data );
+    $heading = isset( $data['heading'] ) ? vbb_esc_text( $data['heading'] ) : __( 'Contacto', 'vertical-block-base' );
+    $email = '{{vbb_contact_email}}';
 	$phone         = '{{vbb_contact_phone}}';
 	$address       = '{{vbb_contact_address}}';
 	$form_endpoint = isset( $data['formEndpoint'] ) ? esc_url_raw( $data['formEndpoint'] ) : admin_url( 'admin-ajax.php?action=vbb_contact_form' );
@@ -780,9 +825,9 @@ function vbb_bake_contact_section( $data ) {
 		);
 	}
 
-	$output  = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-contact-section","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-contact-section">';
-	$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center"} -->';
+$output = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-contact-section' . $effect_class . '","layout":{"type":"constrained"}} -->';
+$output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-contact-section' . $effect_class . '">';
+$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center"} -->';
 	$output .= "\n\t" . '<h2 class="wp-block-heading has-text-align-center">' . $heading . '</h2>';
 	$output .= "\n\t" . '<!-- /wp:heading -->';
 
@@ -897,16 +942,17 @@ function vbb_bake_contact_section( $data ) {
  * @return string
  */
 function vbb_bake_cta_final( $data ) {
-	$text      = '{{vbb_cta_final_text}}';
-	$btn_text  = '{{vbb_cta_final_button_text}}';
-	$btn_url   = '{{vbb_cta_final_button_url}}';
-	$style     = isset( $data['style'] ) ? $data['style'] : 'A';
+    $effect_class = vbb_get_effect_class( $data );
+    $text = '{{vbb_cta_final_text}}';
+    $btn_text = '{{vbb_cta_final_button_text}}';
+    $btn_url = '{{vbb_cta_final_button_url}}';
+    $style = isset( $data['style'] ) ? $data['style'] : 'A';
 
-	switch ( $style ) {
-		case 'B':
-			// Style B: Split two-column (heading left, button right)
-			$output  = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-cta-final vbb-style-b","backgroundColor":"accent","layout":{"type":"constrained"}} -->';
-			$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-cta-final vbb-style-b has-accent-background-color has-background">';
+    switch ( $style ) {
+    case 'B':
+        // Style B: Split two-column (heading left, button right)
+        $output = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-cta-final vbb-style-b' . $effect_class . '","backgroundColor":"accent","layout":{"type":"constrained"}} -->';
+        $output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-cta-final vbb-style-b' . $effect_class . ' has-accent-background-color has-background">';
 			$output .= "\n\t" . '<!-- wp:columns {"align":"wide","verticalAlignment":"center"} -->';
 			$output .= "\n\t" . '<div class="wp-block-columns alignwide">';
 			$output .= "\n\t\t" . '<!-- wp:column {"verticalAlignment":"center"} -->';
@@ -925,10 +971,10 @@ function vbb_bake_cta_final( $data ) {
 			$output .= "\n" . '<!-- /wp:group -->';
 			break;
 
-		case 'C':
-			// Style C: Contained card with border radius, heading + subtitle + button
-			$output  = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-cta-final vbb-style-c","layout":{"type":"constrained"}} -->';
-			$output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-cta-final vbb-style-c">';
+    case 'C':
+        // Style C: Contained card with border radius, heading + subtitle + button
+        $output = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-cta-final vbb-style-c' . $effect_class . '","layout":{"type":"constrained"}} -->';
+        $output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-cta-final vbb-style-c' . $effect_class . '">';
 			$output .= "\n\t" . '<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60","left":"var:preset|spacing|40","right":"var:preset|spacing|40"}},"border":{"radius":"16px"}},"backgroundColor":"surface","layout":{"type":"constrained","contentSize":"640px"}} -->';
 			$output .= "\n\t" . '<div class="wp-block-group has-surface-background-color has-background" style="border-radius:16px;padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);">';
 			$output .= "\n\t\t" . vbb_render_heading_block( $text, 2, 'center' );
@@ -951,11 +997,11 @@ if ( '' !== $btn_text && '' !== $btn_url ) {
 			$output .= "\n" . '<!-- /wp:group -->';
 			break;
 
-		case 'A':
-		default:
-			// Style A: Full-width primary background, centered heading + button (current default)
-			$output  = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-cta-final vbb-style-a","backgroundColor":"primary","textColor":"base","layout":{"type":"constrained"}} -->';
-			$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-cta-final vbb-style-a has-base-color has-primary-background-color has-text-color has-background">';
+    case 'A':
+default:
+    // Style A: Full-width primary background, centered heading + button (current default)
+    $output = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-cta-final vbb-style-a' . $effect_class . '","backgroundColor":"primary","textColor":"base","layout":{"type":"constrained"}} -->';
+    $output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-cta-final vbb-style-a' . $effect_class . ' has-base-color has-primary-background-color has-text-color has-background">';
 			$output .= "\n\t" . vbb_render_heading_block( $text, 2, 'center' );
 			if ( '' !== $btn_text && '' !== $btn_url ) {
 				$output .= "\n\t" . '<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->';
@@ -976,121 +1022,198 @@ if ( '' !== $btn_text && '' !== $btn_url ) {
  * Bake a Logo Cloud section.
  */
 function vbb_bake_logo_cloud( $data ) {
-	$heading = '{{vbb_logo_cloud_heading}}';
-	$subtitle = isset( $data['subtitle'] ) ? vbb_esc_text( $data['subtitle'] ) : '';
-	$logos = isset( $data['logos'] ) && is_array( $data['logos'] ) ? $data['logos'] : array();
-	
-	$output  = '<!-- wp:group {"className":"vbb-section vbb-section-logo-cloud","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group vbb-section vbb-section-logo-cloud">';
-	$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center","level":2} -->';
-	$output .= "\n\t" . '<h2 class="wp-block-heading has-text-align-center">' . $heading . '</h2>';
-	$output .= "\n\t" . '<!-- /wp:heading -->';
-	if ( '' !== $subtitle ) {
-		$output .= "\n\t" . '<!-- wp:paragraph {"align":"center"} -->';
-		$output .= "\n\t" . '<p class="has-text-align-center">' . $subtitle . '</p>';
-		$output .= "\n\t" . '<!-- /wp:paragraph -->';
+	$heading = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	// Read from 'items' array (canonical), fall back to 'logos' (legacy).
+	$logos = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : ( isset( $data['logos'] ) && is_array( $data['logos'] ) ? $data['logos'] : array() );
+
+	$effect_class = vbb_get_effect_class( $data );
+	$html  = '<!-- wp:group {"className":"vbb-section vbb-logo-cloud' . $effect_class . '"} -->';
+	$html .= '<div class="vbb-section vbb-logo-cloud' . $effect_class . '">';
+
+	if ( $heading ) {
+		$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
+		$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
+		$html .= '<!-- /wp:heading -->';
 	}
-	$output .= "\n\t" . '<!-- wp:columns {"style":{"spacing":{"margin":{"top":"40px"}}}} -->';
-	$output .= "\n\t" . '<div class="wp-block-columns" style="margin-top:40px">';
-	foreach ( array_slice( $logos, 0, 6 ) as $logo ) {
-		$url = isset( $logo['url'] ) ? vbb_esc_url_value( $logo['url'] ) : 'https://via.placeholder.com/150x50';
-		$output .= "\n\t\t" . '<!-- wp:column -->';
-		$output .= "\n\t\t" . '<div class="wp-block-column">';
-		$output .= "\n\t\t\t" . '<!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->';
-		$output .= "\n\t\t\t" . '<figure class="wp-block-image size-full"><img src="' . $url . '" alt="Partner"/></figure>';
-		$output .= "\n\t\t\t" . '<!-- /wp:image -->';
-		$output .= "\n\t\t" . '</div>';
-		$output .= "\n\t\t" . '<!-- /wp:column -->';
+
+	if ( ! empty( $logos ) ) {
+		$html .= '<!-- wp:columns {"className":"vbb-logo-grid"} -->';
+		$html .= '<div class="wp-block-columns vbb-logo-grid">';
+		foreach ( $logos as $logo_item ) {
+			$name    = isset( $logo_item['name'] ) ? esc_html( $logo_item['name'] ) : '';
+			$logo    = isset( $logo_item['logo'] ) ? esc_url( $logo_item['logo'] ) : ( isset( $logo_item['url'] ) ? esc_url( $logo_item['url'] ) : '' );
+			$link    = isset( $logo_item['url'] ) ? esc_url( $logo_item['url'] ) : '';
+			$logoUrl = isset( $logo_item['link'] ) ? esc_url( $logo_item['link'] ) : $link;
+
+			$html .= '<!-- wp:column {"className":"vbb-logo-item"} -->';
+			$html .= '<div class="wp-block-column vbb-logo-item">';
+			if ( $logoUrl ) {
+				$html .= '<a href="' . $logoUrl . '" target="_blank" rel="noopener">';
+			}
+			if ( $logo ) {
+				$html .= '<img src="' . $logo . '" alt="' . $name . '" class="vbb-logo-img" />';
+			}
+			if ( $logoUrl ) {
+				$html .= '</a>';
+			}
+			$html .= '</div>';
+			$html .= '<!-- /wp:column -->';
+		}
+		$html .= '</div>';
+		$html .= '<!-- /wp:columns -->';
 	}
-	$output .= "\n\t" . '</div>';
-	$output .= "\n\t" . '<!-- /wp:columns -->';
-	$output .= "\n" . '</div>';
-	$output .= "\n" . '<!-- /wp:group -->';
-	return $output;
+
+	$html .= '</div>';
+	$html .= '<!-- /wp:group -->';
+
+	return $html;
 }
 
 /**
  * Bake Pricing Tables section.
  */
 function vbb_bake_pricing_tables( $data ) {
-	$heading = '{{vbb_pricing_heading}}';
-	$plans = isset( $data['plans'] ) && is_array( $data['plans'] ) ? $data['plans'] : array();
-	
-	$output  = '<!-- wp:group {"className":"vbb-section vbb-section-pricing-tables","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group vbb-section vbb-section-pricing-tables">';
-	$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center","level":2} -->';
-	$output .= "\n\t" . '<h2 class="wp-block-heading has-text-align-center">' . $heading . '</h2>';
-	$output .= "\n\t" . '<!-- /wp:heading -->';
-	$output .= "\n\t" . '<!-- wp:columns {"style":{"spacing":{"margin":{"top":"40px"}}}} -->';
-	$output .= "\n\t" . '<div class="wp-block-columns" style="margin-top:40px">';
-	foreach ( array_slice( $plans, 0, 3 ) as $plan ) {
-		$title = isset( $plan['title'] ) ? vbb_esc_text( $plan['title'] ) : 'Plan';
-		$price = isset( $plan['price'] ) ? vbb_esc_text( $plan['price'] ) : '0';
-		$featured = isset( $plan['featured'] ) && $plan['featured'] ? ' featured' : '';
-		$output .= "\n\t\t" . '<!-- wp:column {"className":"pricing-card' . $featured . '"} -->';
-		$output .= "\n\t\t" . '<div class="wp-block-column pricing-card' . $featured . '">';
-		$output .= "\n\t\t\t" . '<!-- wp:heading {"level":3,"textAlign":"center"} -->';
-		$output .= "\n\t\t\t" . '<h3 class="wp-block-heading has-text-align-center">' . $title . '</h3>';
-		$output .= "\n\t\t\t" . '<!-- /wp:heading -->';
-		$output .= "\n\t\t\t" . '<!-- wp:paragraph {"align":"center","fontSize":"large"} -->';
-		$output .= "\n\t\t\t" . '<p class="has-text-align-center has-large-font-size"><strong>' . $price . '</strong></p>';
-		$output .= "\n\t\t\t" . '<!-- /wp:paragraph -->';
-		$output .= "\n\t\t\t" . '<!-- wp:list -->';
-		$output .= "\n\t\t\t" . '<ul>';
-		if ( isset( $plan['features'] ) && is_array( $plan['features'] ) ) {
-			foreach ( $plan['features'] as $f ) {
-				$output .= "\n\t\t\t\t" . '<li>' . vbb_esc_text( $f ) . '</li>';
-			}
-		}
-		$output .= "\n\t\t\t" . '</ul>';
-		$output .= "\n\t\t\t" . '<!-- /wp:list -->';
-		$output .= "\n\t\t" . '</div>';
-		$output .= "\n\t\t" . '<!-- /wp:column -->';
+	$heading = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	// Read from 'items' array (canonical), fall back to 'plans' (legacy).
+	$plans = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : ( isset( $data['plans'] ) && is_array( $data['plans'] ) ? $data['plans'] : array() );
+
+	$effect_class = vbb_get_effect_class( $data );
+	$html  = '<!-- wp:group {"className":"vbb-section vbb-pricing' . $effect_class . '"} -->';
+	$html .= '<div class="vbb-section vbb-pricing' . $effect_class . '">';
+
+	if ( $heading ) {
+		$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
+		$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
+		$html .= '<!-- /wp:heading -->';
 	}
-	$output .= "\n\t" . '</div>';
-	$output .= "\n\t" . '<!-- /wp:columns -->';
-	$output .= "\n" . '</div>';
-	$output .= "\n" . '<!-- /wp:group -->';
-	return $output;
+
+	if ( ! empty( $plans ) ) {
+		$html .= '<!-- wp:columns {"className":"vbb-pricing-grid"} -->';
+		$html .= '<div class="wp-block-columns vbb-pricing-grid">';
+		foreach ( $plans as $plan ) {
+			$name     = isset( $plan['name'] ) ? esc_html( $plan['name'] ) : ( isset( $plan['title'] ) ? esc_html( $plan['title'] ) : '' );
+			$price    = isset( $plan['price'] ) ? esc_html( $plan['price'] ) : '';
+			$period   = isset( $plan['period'] ) ? esc_html( $plan['period'] ) : '';
+			$featured = ! empty( $plan['featured'] ) ? ' vbb-pricing-card--featured' : '';
+			$cta_text = isset( $plan['ctaText'] ) ? esc_html( $plan['ctaText'] ) : '';
+			$cta_url  = isset( $plan['ctaUrl'] ) ? esc_url( $plan['ctaUrl'] ) : '';
+
+			// Normalize features: textarea string → array if needed.
+			$features = isset( $plan['features'] ) ? $plan['features'] : array();
+			if ( is_string( $features ) ) {
+				$features = array_filter( array_map( 'trim', explode( "\n", $features ) ) );
+			}
+			if ( ! is_array( $features ) ) {
+				$features = array();
+			}
+
+			$html .= '<!-- wp:column {"className":"vbb-pricing-card' . $featured . '"} -->';
+			$html .= '<div class="wp-block-column vbb-pricing-card' . $featured . '">';
+
+			if ( $name ) {
+				$html .= '<h3 class="vbb-pricing-card-name">' . $name . '</h3>';
+			}
+			if ( $price ) {
+				$html .= '<p class="vbb-pricing-card-price"><strong>' . $price . '</strong>';
+				if ( $period ) {
+					$html .= '<span class="vbb-pricing-card-period"> ' . $period . '</span>';
+				}
+				$html .= '</p>';
+			}
+			if ( ! empty( $features ) ) {
+				$html .= '<ul class="vbb-pricing-card-features">';
+				foreach ( $features as $f ) {
+					$html .= '<li>' . esc_html( $f ) . '</li>';
+				}
+				$html .= '</ul>';
+			}
+			if ( $cta_text && $cta_url ) {
+				$html .= '<a href="' . $cta_url . '" class="vbb-pricing-card-cta">' . $cta_text . '</a>';
+			}
+
+			$html .= '</div>';
+			$html .= '<!-- /wp:column -->';
+		}
+		$html .= '</div>';
+		$html .= '<!-- /wp:columns -->';
+	}
+
+	$html .= '</div>';
+	$html .= '<!-- /wp:group -->';
+
+	return $html;
 }
 
 /**
  * Bake Team section.
  */
 function vbb_bake_team_section( $data ) {
-	$heading = '{{vbb_team_heading}}';
-	$members = isset( $data['members'] ) && is_array( $data['members'] ) ? $data['members'] : array();
-	
-	$output  = '<!-- wp:group {"className":"vbb-section vbb-section-team","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group vbb-section vbb-section-team">';
-	$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center","level":2} -->';
-	$output .= "\n\t" . '<h2 class="wp-block-heading has-text-align-center">' . $heading . '</h2>';
-	$output .= "\n\t" . '<!-- /wp:heading -->';
-	$output .= "\n\t" . '<!-- wp:columns {"style":{"spacing":{"margin":{"top":"40px"}}}} -->';
-	$output .= "\n\t" . '<div class="wp-block-columns" style="margin-top:40px">';
-	foreach ( array_slice( $members, 0, 4 ) as $member ) {
-		$name = isset( $member['name'] ) ? vbb_esc_text( $member['name'] ) : 'Experto';
-		$role = isset( $member['role'] ) ? vbb_esc_text( $member['role'] ) : 'Rol';
-		$img  = isset( $member['image'] ) ? vbb_esc_url_value( $member['image'] ) : 'https://via.placeholder.com/300';
-		$output .= "\n\t\t" . '<!-- wp:column -->';
-		$output .= "\n\t\t" . '<div class="wp-block-column">';
-		$output .= "\n\t\t\t" . '<!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->';
-		$output .= "\n\t\t\t" . '<figure class="wp-block-image size-full"><img src="' . $img . '" alt="' . $name . '" /></figure>';
-		$output .= "\n\t\t\t" . '<!-- /wp:image -->';
-		$output .= "\n\t\t\t" . '<!-- wp:heading {"textAlign":"center","level":4} -->';
-		$output .= "\n\t\t\t" . '<h4 class="wp-block-heading has-text-align-center">' . $name . '</h4>';
-		$output .= "\n\t\t\t" . '<!-- /wp:heading -->';
-		$output .= "\n\t\t\t" . '<!-- wp:paragraph {"align":"center","fontSize":"small"} -->';
-		$output .= "\n\t\t\t" . '<p class="has-text-align-center has-small-font-size">' . $role . '</p>';
-		$output .= "\n\t\t\t" . '<!-- /wp:paragraph -->';
-		$output .= "\n\t\t" . '</div>';
-		$output .= "\n\t\t" . '<!-- /wp:column -->';
+	$heading = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	// Read from 'items' array (canonical), fall back to 'members' (legacy).
+	$members = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : ( isset( $data['members'] ) && is_array( $data['members'] ) ? $data['members'] : array() );
+
+	$effect_class = vbb_get_effect_class( $data );
+	$html  = '<!-- wp:group {"className":"vbb-section vbb-team' . $effect_class . '"} -->';
+	$html .= '<div class="vbb-section vbb-team' . $effect_class . '">';
+
+	if ( $heading ) {
+		$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
+		$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
+		$html .= '<!-- /wp:heading -->';
 	}
-	$output .= "\n\t" . '</div>';
-	$output .= "\n\t" . '<!-- /wp:columns -->';
-	$output .= "\n" . '</div>';
-	$output .= "\n" . '<!-- /wp:group -->';
-return $output;
+
+	if ( ! empty( $members ) ) {
+		$html .= '<!-- wp:columns {"className":"vbb-team-grid"} -->';
+		$html .= '<div class="wp-block-columns vbb-team-grid">';
+		foreach ( $members as $member ) {
+			$name     = isset( $member['name'] ) ? esc_html( $member['name'] ) : '';
+			$role     = isset( $member['role'] ) ? esc_html( $member['role'] ) : '';
+			$bio      = isset( $member['bio'] ) ? esc_html( $member['bio'] ) : '';
+			$image    = isset( $member['image'] ) ? esc_url( $member['image'] ) : '';
+			$linkedin = isset( $member['linkedin'] ) ? esc_url( $member['linkedin'] ) : '';
+			$twitter  = isset( $member['twitter'] ) ? esc_url( $member['twitter'] ) : '';
+			$github   = isset( $member['github'] ) ? esc_url( $member['github'] ) : '';
+
+			$html .= '<!-- wp:column {"className":"vbb-team-card"} -->';
+			$html .= '<div class="wp-block-column vbb-team-card">';
+
+			if ( $image ) {
+				$html .= '<div class="vbb-team-card-image"><img src="' . $image . '" alt="' . $name . '" /></div>';
+			}
+			if ( $name ) {
+				$html .= '<h3 class="vbb-team-card-name">' . $name . '</h3>';
+			}
+			if ( $role ) {
+				$html .= '<p class="vbb-team-card-role">' . $role . '</p>';
+			}
+			if ( $bio ) {
+				$html .= '<p class="vbb-team-card-bio">' . $bio . '</p>';
+			}
+			if ( $linkedin || $twitter || $github ) {
+				$html .= '<div class="vbb-team-card-social">';
+				if ( $linkedin ) {
+					$html .= '<a href="' . $linkedin . '" class="vbb-team-social-link vbb-team-social-linkedin" target="_blank" rel="noopener">LinkedIn</a>';
+				}
+				if ( $twitter ) {
+					$html .= '<a href="' . $twitter . '" class="vbb-team-social-link vbb-team-social-twitter" target="_blank" rel="noopener">Twitter</a>';
+				}
+				if ( $github ) {
+					$html .= '<a href="' . $github . '" class="vbb-team-social-link vbb-team-social-github" target="_blank" rel="noopener">GitHub</a>';
+				}
+				$html .= '</div>';
+			}
+
+			$html .= '</div>';
+			$html .= '<!-- /wp:column -->';
+		}
+		$html .= '</div>';
+		$html .= '<!-- /wp:columns -->';
+	}
+
+	$html .= '</div>';
+	$html .= '<!-- /wp:group -->';
+
+	return $html;
 }
 
 
@@ -1101,10 +1224,11 @@ return $output;
  * @return string
  */
 function vbb_bake_stats( $data ) {
-	$heading = '{{vbb_stats_heading}}';
-	$items   = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
+    $effect_class = vbb_get_effect_class( $data );
+    $heading = '{{vbb_stats_heading}}';
+    $items = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
 
-	if ( empty( $items ) ) {
+    if ( empty( $items ) ) {
 		$items = array(
 			array(
 				'value'       => '500+',
@@ -1133,9 +1257,9 @@ function vbb_bake_stats( $data ) {
 		);
 	}
 
-	$output  = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-stats","backgroundColor":"primary","textColor":"base","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-stats has-base-color has-primary-background-color has-text-color has-background">';
-	$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center","textColor":"base"} -->';
+$output = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-stats' . $effect_class . '","backgroundColor":"primary","textColor":"base","layout":{"type":"constrained"}} -->';
+$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-stats' . $effect_class . ' has-base-color has-primary-background-color has-text-color has-background">';
+$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center","textColor":"base"} -->';
 	$output .= "\n\t" . '<h2 class="wp-block-heading has-text-align-center has-base-color has-text-color">' . $heading . '</h2>';
 	$output .= "\n\t" . '<!-- /wp:heading -->';
 	$output .= "\n\t" . '<!-- wp:columns {"align":"wide"} -->';
@@ -1194,12 +1318,13 @@ function vbb_bake_stats( $data ) {
  * @return string
  */
 function vbb_bake_gallery( $data ) {
-	$heading  = '{{vbb_gallery_heading}}';
-	$items    = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
-	$layout   = isset( $data['layout'] ) ? $data['layout'] : 'masonry'; // masonry, grid, carousel
+    $effect_class = vbb_get_effect_class( $data );
+    $heading = '{{vbb_gallery_heading}}';
+    $items = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
+    $layout = isset( $data['layout'] ) ? $data['layout'] : 'masonry'; // masonry, grid, carousel
 
-	if ( empty( $items ) ) {
-		$items = array(
+    if ( empty( $items ) ) {
+        $items = array(
 			array( 'image' => 'https://via.placeholder.com/600x400', 'title' => 'Proyecto 1', 'category' => 'Web', 'url' => '#', 'description' => 'Descripción del proyecto' ),
 			array( 'image' => 'https://via.placeholder.com/600x400', 'title' => 'Proyecto 2', 'category' => 'Mobile', 'url' => '#', 'description' => 'Descripción del proyecto' ),
 			array( 'image' => 'https://via.placeholder.com/600x400', 'title' => 'Proyecto 3', 'category' => 'Branding', 'url' => '#', 'description' => 'Descripción del proyecto' ),
@@ -1302,17 +1427,18 @@ function vbb_bake_gallery( $data ) {
  * @return string
  */
 function vbb_bake_video( $data ) {
-	$heading      = '{{vbb_video_heading}}';
-	$subtitle     = isset( $data['subtitle'] ) ? vbb_esc_text( $data['subtitle'] ) : '';
+    $effect_class = vbb_get_effect_class( $data );
+    $heading = '{{vbb_video_heading}}';
+    $subtitle = isset( $data['subtitle'] ) ? vbb_esc_text( $data['subtitle'] ) : '';
 	$video_url    = isset( $data['video_url'] ) ? esc_url_raw( $data['video_url'] ) : '';
 	$video_type   = isset( $data['video_type'] ) ? $data['video_type'] : 'youtube'; // youtube, vimeo, mp4
 	$poster       = isset( $data['poster'] ) ? esc_url_raw( $data['poster'] ) : '';
 	$cta_text     = '{{vbb_video_cta_text}}';
 	$cta_url      = '{{vbb_video_cta_url}}';
 
-	$output  = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-video","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-video">';
-	$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center","level":2} -->';
+$output = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-video' . $effect_class . '","layout":{"type":"constrained"}} -->';
+$output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-video' . $effect_class . '">';
+$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center","level":2} -->';
 	$output .= "\n\t" . '<h2 class="wp-block-heading has-text-align-center">' . $heading . '</h2>';
 	$output .= "\n\t" . '<!-- /wp:heading -->';
 
@@ -1385,16 +1511,17 @@ function vbb_bake_video( $data ) {
  * @return string
  */
 function vbb_bake_newsletter( $data ) {
-	$heading         = '{{vbb_newsletter_heading}}';
-	$description     = isset( $data['description'] ) ? vbb_esc_text( $data['description'] ) : '';
-	$placeholder     = isset( $data['placeholder'] ) ? esc_attr( $data['placeholder'] ) : 'tu@email.com';
-	$button_text     = '{{vbb_newsletter_button_text}}';
-	$success_message = '{{vbb_newsletter_success}}';
-	$provider        = isset( $data['provider'] ) ? $data['provider'] : 'custom'; // mailchimp, convertkit, custom
-	$list_id         = isset( $data['listId'] ) ? esc_attr( $data['listId'] ) : '';
+    $effect_class = vbb_get_effect_class( $data );
+    $heading = '{{vbb_newsletter_heading}}';
+    $description = isset( $data['description'] ) ? vbb_esc_text( $data['description'] ) : '';
+    $placeholder = isset( $data['placeholder'] ) ? esc_attr( $data['placeholder'] ) : 'tu@email.com';
+    $button_text = '{{vbb_newsletter_button_text}}';
+    $success_message = '{{vbb_newsletter_success}}';
+    $provider = isset( $data['provider'] ) ? $data['provider'] : 'custom'; // mailchimp, convertkit, custom
+    $list_id = isset( $data['listId'] ) ? esc_attr( $data['listId'] ) : '';
 
-	$output  = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-newsletter","backgroundColor":"secondary","textColor":"base","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-newsletter has-base-color has-secondary-background-color has-text-color has-background">';
+    $output = '<!-- wp:group {"align":"full","className":"vbb-section vbb-section-newsletter' . $effect_class . '","backgroundColor":"secondary","textColor":"base","layout":{"type":"constrained"}} -->';
+    $output .= "\n" . '<div class="wp-block-group alignfull vbb-section vbb-section-newsletter' . $effect_class . ' has-base-color has-secondary-background-color has-text-color has-background">';
 	$output .= "\n\t" . '<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->';
 	$output .= "\n\t" . '<div class="wp-block-group alignwide">';
 	$output .= "\n\t\t" . '<!-- wp:heading {"textAlign":"center","level":2} -->';
@@ -1447,17 +1574,18 @@ function vbb_bake_newsletter( $data ) {
  * @return string
  */
 function vbb_bake_map( $data ) {
-	$heading     = '{{vbb_map_heading}}';
-	$address     = '{{vbb_map_address}}';
-	$lat         = isset( $data['lat'] ) ? floatval( $data['lat'] ) : -34.6037;
-	$lng         = isset( $data['lng'] ) ? floatval( $data['lng'] ) : -58.3816;
-	$zoom        = isset( $data['zoom'] ) ? intval( $data['zoom'] ) : 15;
-	$map_type    = isset( $data['map_type'] ) ? $data['map_type'] : 'roadmap'; // roadmap, satellite, hybrid, terrain
-	$marker_title = isset( $data['marker_title'] ) ? vbb_esc_text( $data['marker_title'] ) : 'Ubicación';
+    $effect_class = vbb_get_effect_class( $data );
+    $heading = '{{vbb_map_heading}}';
+    $address = '{{vbb_map_address}}';
+    $lat = isset( $data['lat'] ) ? floatval( $data['lat'] ) : -34.6037;
+    $lng = isset( $data['lng'] ) ? floatval( $data['lng'] ) : -58.3816;
+    $zoom = isset( $data['zoom'] ) ? intval( $data['zoom'] ) : 15;
+    $map_type = isset( $data['map_type'] ) ? $data['map_type'] : 'roadmap'; // roadmap, satellite, hybrid, terrain
+    $marker_title = isset( $data['marker_title'] ) ? vbb_esc_text( $data['marker_title'] ) : 'Ubicación';
 
-	$output  = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-map","layout":{"type":"constrained"}} -->';
-	$output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-map">';
-	$output .= "\n\t" . '<!-- wp:heading {"textAlign":"center","level":2} -->';
+    $output = '<!-- wp:group {"align":"wide","className":"vbb-section vbb-section-map' . $effect_class . '","layout":{"type":"constrained"}} -->';
+    $output .= "\n" . '<div class="wp-block-group alignwide vbb-section vbb-section-map' . $effect_class . '">';
+    $output .= "\n\t" . '<!-- wp:heading {"textAlign":"center","level":2} -->';
 	$output .= "\n\t" . '<h2 class="wp-block-heading has-text-align-center">' . $heading . '</h2>';
 	$output .= "\n\t" . '<!-- /wp:heading -->';
 
@@ -1504,6 +1632,140 @@ function vbb_bake_map( $data ) {
  * @param int $page_id WordPress page ID.
  * @return void
  */
+function vbb_bake_comparison( $data ) {
+	$heading = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	$rows    = isset( $data['rows'] ) && is_array( $data['rows'] ) ? $data['rows'] : array();
+	$effect_class = vbb_get_effect_class( $data );
+
+	$html  = '<!-- wp:group {"className":"vbb-section vbb-comparison' . $effect_class . '"} -->';
+	$html .= '<div class="vbb-section vbb-comparison' . $effect_class . '">';
+
+	if ( $heading ) {
+		$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
+		$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
+		$html .= '<!-- /wp:heading -->';
+	}
+
+	if ( ! empty( $rows ) ) {
+		$html .= '<!-- wp:table -->';
+		$html .= '<table class="vbb-comparison-table"><tbody>';
+		foreach ( $rows as $row ) {
+			$highlight = ! empty( $row['highlight'] ) ? ' class="vbb-comparison-highlight"' : '';
+			$html     .= '<tr' . $highlight . '>';
+			$html     .= '<td>' . esc_html( $row['feature'] ?? '' ) . '</td>';
+			$html     .= '<td>' . esc_html( $row['plan1'] ?? '' ) . '</td>';
+			$html     .= '<td>' . esc_html( $row['plan2'] ?? '' ) . '</td>';
+			$html     .= '<td>' . esc_html( $row['plan3'] ?? '' ) . '</td>';
+			$html     .= '</tr>';
+		}
+		$html .= '</tbody></table>';
+		$html .= '<!-- /wp:table -->';
+	}
+
+	$html .= '</div>';
+	$html .= '<!-- /wp:group -->';
+
+	return $html;
+}
+
+function vbb_bake_blog( $data ) {
+	$heading  = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	$category = isset( $data['category'] ) ? sanitize_text_field( $data['category'] ) : '';
+	$limit    = isset( $data['limit'] ) ? intval( $data['limit'] ) : 6;
+	$layout   = isset( $data['layout'] ) ? sanitize_text_field( $data['layout'] ) : 'grid';
+	$effect_class = vbb_get_effect_class( $data );
+
+	$args = array(
+		'post_type'      => 'post',
+		'posts_per_page' => $limit,
+		'category_name'  => $category,
+	);
+
+	$query = new WP_Query( $args );
+
+	$html  = '<!-- wp:group {"className":"vbb-section vbb-blog' . $effect_class . '"} -->';
+	$html .= '<div class="vbb-section vbb-blog' . $effect_class . '">';
+
+	if ( $heading ) {
+		$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
+		$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
+		$html .= '<!-- /wp:heading -->';
+	}
+
+	if ( $query->have_posts() ) {
+		$html .= '<!-- wp:columns {"className":"vbb-blog-grid vbb-blog-layout-' . esc_attr( $layout ) . '"} -->';
+		$html .= '<div class="wp-block-columns vbb-blog-grid vbb-blog-layout-' . esc_attr( $layout ) . '">';
+
+		while ( $query->have_posts() ) {
+			$query->the_post();
+			$post_title  = get_the_title();
+			$post_link   = get_permalink();
+			$excerpt     = get_the_excerpt();
+			$post_date   = get_the_date();
+			$author_name = get_the_author();
+			$thumb       = get_the_post_thumbnail_url( get_the_ID(), 'medium' );
+
+			$html .= '<!-- wp:column -->';
+			$html .= '<div class="wp-block-column vbb-blog-card">';
+
+			if ( $thumb ) {
+				$html .= '<div class="vbb-blog-card-thumb"><img src="' . esc_url( $thumb ) . '" alt="' . esc_attr( $post_title ) . '" /></div>';
+			}
+
+			$html .= '<h3 class="vbb-blog-card-title"><a href="' . esc_url( $post_link ) . '">' . esc_html( $post_title ) . '</a></h3>';
+
+			if ( ! empty( $data['showDate'] ) ) {
+				$html .= '<span class="vbb-blog-card-date">' . esc_html( $post_date ) . '</span>';
+			}
+			if ( ! empty( $data['showAuthor'] ) ) {
+				$html .= '<span class="vbb-blog-card-author">' . esc_html( $author_name ) . '</span>';
+			}
+			if ( ! empty( $data['showExcerpt'] ) && $excerpt ) {
+				$html .= '<p class="vbb-blog-card-excerpt">' . esc_html( $excerpt ) . '</p>';
+			}
+
+			$html .= '</div>';
+			$html .= '<!-- /wp:column -->';
+		}
+
+		$html .= '</div>';
+		$html .= '<!-- /wp:columns -->';
+		wp_reset_postdata();
+	}
+
+	$html .= '</div>';
+	$html .= '<!-- /wp:group -->';
+
+	return $html;
+}
+
+function vbb_bake_divider( $data ) {
+	$type      = isset( $data['type'] ) ? sanitize_text_field( $data['type'] ) : 'line';
+	$color     = isset( $data['color'] ) ? sanitize_hex_color( $data['color'] ) : '';
+	$thickness = isset( $data['thickness'] ) ? intval( $data['thickness'] ) : 2;
+	$margin    = isset( $data['margin'] ) ? intval( $data['margin'] ) : 40;
+	$effect_class = vbb_get_effect_class( $data );
+
+	$style = '';
+	if ( $color ) {
+		$style .= ' border-color: ' . $color . ';';
+	}
+	if ( $thickness && 'space' !== $type ) {
+		$style .= ' border-width: ' . $thickness . 'px;';
+	}
+	if ( $margin ) {
+		$style .= ' margin-top: ' . $margin . 'px; margin-bottom: ' . $margin . 'px;';
+	}
+
+	$className = 'vbb-section vbb-divider vbb-divider-type-' . $type . $effect_class;
+
+	$html  = '<!-- wp:separator {"className":"' . $className . '"} -->';
+	$html .= '<hr class="wp-block-separator ' . $className . '" style="' . $style . '" />';
+	$html .= '<!-- /wp:separator -->';
+
+	return $html;
+}
+
 function vbb_bake_page_content( $page_id ) {
 	$page_id = (int) $page_id;
 

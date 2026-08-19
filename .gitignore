@@ -1,0 +1,32 @@
+# 1. Dependencias pesadas (El mayor cuello de botella)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+
+# 2. Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# 3. Archivos multimedia (La IA no lee imágenes)
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+*.mp4
+*.mp3
+
+# 4. Archivos comprimidos y volcados
+*.zip
+*.tar.gz
+*.rar
+*.log
+
+# 5. Carpetas de compilación o caché
+.cache/
+dist/
+build/
+.vscode/
+.idea/

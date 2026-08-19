@@ -1,0 +1,507 @@
+/**
+ * Pro Elite Frontend Styles - Uses scoped CSS variables for per-block theming.
+ * This file maps --vbb-pro-* scoped variables (set per .vbb-section-*) to all block elements.
+ */
+
+/* ==========================================================================
+   HERO (Style A, B, C)
+   ========================================================================== */
+.vbb-section-hero,
+.vbb-section-hero * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-hero .vbb-eyebrow,
+.vbb-section-hero .vbb-eyebrow * { color: var(--vbb-accent) !important; }
+
+.vbb-section-hero .wp-block-heading,
+.vbb-section-hero h1,
+.vbb-section-hero h2,
+.vbb-section-hero h3 { color: var(--vbb-text) !important; }
+
+.vbb-section-hero .vbb-muted,
+.vbb-section-hero p { color: var(--vbb-muted) !important; }
+
+.vbb-section-hero .wp-block-button__link {
+	background: var(--vbb-accent) !important;
+	color: var(--vbb-primary, var(--vbb-text)) !important;
+}
+
+.vbb-section-hero .wp-block-button__link:hover {
+	box-shadow: 0 0 0 var(--vbb-pro-glow-intensity, 8px) color-mix(in srgb, var(--vbb-accent) 60%, transparent) !important;
+}
+
+.vbb-section-hero .vbb-hero-bg-overlay { background: color-mix(in srgb, var(--vbb-accent) 20%, transparent); }
+.vbb-section-hero .vbb-hero-overlay { background: linear-gradient(90deg, var(--vbb-bg), transparent); }
+
+.vbb-section-hero .vbb-hero-bg-image {
+	background-color: var(--vbb-surface);
+}
+
+/* Hero Style A - Two column with image */
+.vbb-section-hero.vbb-style-a .wp-block-image img {
+	border-radius: var(--vbb-pro-radius);
+	box-shadow: var(--vbb-pro-shadow);
+}
+
+/* Hero Style C - Full bleed background */
+.vbb-section-hero.vbb-style-c {
+	background: var(--vbb-bg);
+}
+.vbb-section-hero.vbb-style-c .wp-block-column { z-index: 2; }
+
+/* ==========================================================================
+   HERO CENTERED
+   ========================================================================== */
+.vbb-section-hero-centered,
+.vbb-section-hero-centered * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-hero-centered .wp-block-heading { color: var(--vbb-text) !important; }
+.vbb-section-hero-centered p { color: var(--vbb-muted) !important; }
+
+/* ==========================================================================
+   SERVICES GRID
+   ========================================================================== */
+.vbb-section-services-grid,
+.vbb-section-services-grid * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-services-grid .wp-block-heading { color: var(--vbb-text) !important; }
+.vbb-section-services-grid .vbb-muted { color: var(--vbb-muted) !important; }
+
+.vbb-section-services-grid .vbb-card,
+.vbb-section-services-grid .wp-block-group.is-style-card {
+	background: var(--vbb-surface) !important;
+	border: 1px solid color-mix(in srgb, var(--vbb-accent) 30%, transparent) !important;
+	border-radius: var(--vbb-pro-radius);
+	box-shadow: var(--vbb-pro-shadow);
+	transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.vbb-section-services-grid .vbb-card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 20px 40px rgba(0,0,0,.12) !important;
+}
+
+.vbb-section-services-grid .vbb-card h3,
+.vbb-section-services-grid .wp-block-heading { color: var(--vbb-text) !important; }
+.vbb-section-services-grid .vbb-card p { color: var(--vbb-muted) !important; }
+
+.vbb-section-services-grid .wp-block-button__link {
+	background: var(--vbb-accent) !important;
+	color: var(--vbb-primary, var(--vbb-text)) !important;
+}
+
+/* ==========================================================================
+   BENEFITS
+   ========================================================================== */
+.vbb-section-benefits,
+.vbb-section-benefits * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-benefits .wp-block-heading { color: var(--vbb-text) !important; }
+.vbb-section-benefits .vbb-benefit-item {
+	background: var(--vbb-surface);
+	border-radius: var(--vbb-pro-radius);
+	padding: var(--vbb-pro-section-spacing);
+	transition: transform .2s ease;
+}
+.vbb-section-benefits .vbb-benefit-item:hover { transform: translateX(8px); }
+
+.vbb-section-benefits .vbb-benefit-icon {
+	color: var(--vbb-accent);
+	font-size: 2.5rem;
+	margin-bottom: 1rem;
+}
+.vbb-section-benefits .vbb-benefit-title { color: var(--vbb-text) !important; }
+.vbb-section-benefits .vbb-benefit-text { color: var(--vbb-muted) !important; }
+
+/* ==========================================================================
+   PROCESS
+   ========================================================================== */
+.vbb-section-process,
+.vbb-section-process * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-process .wp-block-heading { color: var(--vbb-text) !important; }
+
+.vbb-section-process .vbb-process-step {
+	background: var(--vbb-surface);
+	border-radius: var(--vbb-pro-radius);
+	padding: calc(var(--vbb-pro-section-spacing) * 1.5);
+	position: relative;
+	border-left: 4px solid var(--vbb-accent);
+}
+
+.vbb-section-process .vbb-step-number {
+	background: var(--vbb-accent);
+	color: var(--vbb-primary, var(--vbb-text));
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	font-size: 1.5rem;
+	margin-bottom: 1rem;
+}
+
+.vbb-section-process .vbb-step-title { color: var(--vbb-text) !important; }
+.vbb-section-process .vbb-step-text { color: var(--vbb-muted) !important; }
+
+/* ==========================================================================
+   TESTIMONIALS
+   ========================================================================== */
+.vbb-section-testimonials,
+.vbb-section-testimonials * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-testimonials .wp-block-heading { color: var(--vbb-text) !important; }
+
+.vbb-section-testimonials .vbb-testimonial-card {
+	background: var(--vbb-surface);
+	border-radius: var(--vbb-pro-radius);
+	padding: var(--vbb-pro-section-spacing);
+	border: 1px solid color-mix(in srgb, var(--vbb-accent) 20%, transparent);
+}
+
+.vbb-section-testimonials .vbb-testimonial-quote { color: var(--vbb-text) !important; }
+.vbb-section-testimonials .vbb-testimonial-author { color: var(--vbb-accent) !important; font-weight: 600; }
+.vbb-section-testimonials .vbb-testimonial-role { color: var(--vbb-muted) !important; font-size: 0.9rem; }
+
+.vbb-section-testimonials .vbb-testimonial-stars { color: var(--vbb-accent); }
+
+/* Testimonial Style variants */
+.vbb-section-testimonials.vbb-style-a .vbb-testimonial-card { border-top: 4px solid var(--vbb-accent); }
+.vbb-section-testimonials.vbb-style-b .vbb-testimonial-card { background: linear-gradient(135deg, var(--vbb-surface), color-mix(in srgb, var(--vbb-accent) 10%, var(--vbb-surface))); }
+.vbb-section-testimonials.vbb-style-c .vbb-testimonial-card { box-shadow: 0 0 0 1px var(--vbb-accent); }
+
+/* ==========================================================================
+   FAQ
+   ========================================================================== */
+.vbb-section-faq,
+.vbb-section-faq * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-faq .wp-block-heading { color: var(--vbb-text) !important; }
+
+.vbb-section-faq details {
+	background: var(--vbb-surface);
+	border-radius: var(--vbb-pro-radius);
+	margin-bottom: 1rem;
+	padding: 1.5rem;
+	border: 1px solid color-mix(in srgb, var(--vbb-accent) 15%, transparent);
+	transition: box-shadow .2s ease;
+}
+.vbb-section-faq details[open] {
+	box-shadow: var(--vbb-pro-shadow);
+	border-color: var(--vbb-accent);
+}
+.vbb-section-faq summary {
+	cursor: pointer;
+	font-weight: 600;
+	color: var(--vbb-text) !important;
+	list-style: none;
+}
+.vbb-section-faq summary::-webkit-details-marker { display: none; }
+.vbb-section-faq summary::after {
+	content: '+';
+	float: right;
+	color: var(--vbb-accent);
+	transition: transform .2s ease;
+}
+.vbb-section-faq details[open] summary::after { transform: rotate(45deg); }
+.vbb-section-faq .vbb-faq-answer { color: var(--vbb-muted) !important; margin-top: 1rem; line-height: 1.7; }
+
+/* ==========================================================================
+   CONTACT SECTION
+   ========================================================================== */
+.vbb-section-contact-section,
+.vbb-section-contact-section * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-contact-section .wp-block-heading { color: var(--vbb-text) !important; }
+.vbb-section-contact-section .wp-block-paragraph { color: var(--vbb-muted) !important; }
+
+.vbb-section-contact-section .wp-block-form-input__input,
+.vbb-section-contact-section .wp-block-form-textarea__textarea {
+	background: var(--vbb-bg) !important;
+	color: var(--vbb-text) !important;
+	border: 1px solid color-mix(in srgb, var(--vbb-accent) 30%, transparent) !important;
+	border-radius: var(--vbb-pro-radius);
+}
+.vbb-section-contact-section .wp-block-form-input__input:focus,
+.vbb-section-contact-section .wp-block-form-textarea__textarea:focus {
+	outline: none;
+	border-color: var(--vbb-accent) !important;
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--vbb-accent) 25%, transparent);
+}
+
+.vbb-section-contact-section .wp-block-button__link {
+	background: var(--vbb-accent) !important;
+	color: var(--vbb-primary, var(--vbb-text)) !important;
+}
+
+/* ==========================================================================
+   CTA FINAL
+   ========================================================================== */
+.vbb-section-cta-final,
+.vbb-section-cta-final * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-cta-final .wp-block-heading { color: var(--vbb-text) !important; }
+.vbb-section-cta-final p { color: var(--vbb-muted) !important; }
+
+.vbb-section-cta-final .wp-block-button__link {
+	background: var(--vbb-accent) !important;
+	color: var(--vbb-primary, var(--vbb-text)) !important;
+}
+
+/* CTA Style variants */
+.vbb-section-cta-final.vbb-style-a { background: var(--vbb-bg); }
+.vbb-section-cta-final.vbb-style-b { background: var(--vbb-accent); color: var(--vbb-primary, var(--vbb-text)); }
+.vbb-section-cta-final.vbb-style-b .wp-block-heading,
+.vbb-section-cta-final.vbb-style-b p { color: var(--vbb-primary, var(--vbb-text)) !important; }
+.vbb-section-cta-final.vbb-style-b .wp-block-button__link {
+	background: var(--vbb-primary, var(--vbb-text)) !important;
+	color: var(--vbb-accent) !important;
+}
+.vbb-section-cta-final.vbb-style-c { background: linear-gradient(135deg, var(--vbb-accent), var(--vbb-secondary)); color: var(--vbb-primary, var(--vbb-text)); }
+.vbb-section-cta-final.vbb-style-c .wp-block-heading,
+.vbb-section-cta-final.vbb-style-c p { color: var(--vbb-primary, var(--vbb-text)) !important; }
+
+/* ==========================================================================
+   LOGO CLOUD
+   ========================================================================== */
+.vbb-section-logo-cloud,
+.vbb-section-logo-cloud * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-logo-cloud .wp-block-heading { color: var(--vbb-text) !important; }
+
+.vbb-section-logo-cloud .vbb-logo-item {
+	filter: grayscale(100%) opacity(0.6);
+	transition: all .3s ease;
+	background: var(--vbb-surface);
+	padding: 1rem;
+	border-radius: var(--vbb-pro-radius);
+}
+.vbb-section-logo-cloud .vbb-logo-item:hover {
+	filter: grayscale(0%) opacity(1);
+	transform: scale(1.05);
+}
+
+/* ==========================================================================
+   PRICING TABLES
+   ========================================================================== */
+.vbb-section-pricing-tables,
+.vbb-section-pricing-tables * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-pricing-tables .wp-block-heading { color: var(--vbb-text) !important; }
+
+.vbb-section-pricing-tables .vbb-pricing-card {
+	background: var(--vbb-surface);
+	border-radius: var(--vbb-pro-radius);
+	padding: var(--vbb-pro-section-spacing);
+	border: 1px solid color-mix(in srgb, var(--vbb-accent) 20%, transparent);
+	transition: transform .2s ease, box-shadow .2s ease;
+}
+.vbb-section-pricing-tables .vbb-pricing-card:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 24px 48px rgba(0,0,0,.12);
+	border-color: var(--vbb-accent);
+}
+.vbb-section-pricing-tables .vbb-pricing-card.vbb-featured {
+	border-color: var(--vbb-accent);
+	border-width: 2px;
+}
+.vbb-section-pricing-tables .vbb-pricing-title { color: var(--vbb-text) !important; }
+.vbb-section-pricing-tables .vbb-pricing-price { color: var(--vbb-accent) !important; font-weight: 800; }
+.vbb-section-pricing-tables .vbb-pricing-features li { color: var(--vbb-muted) !important; }
+.vbb-section-pricing-tables .vbb-pricing-cta {
+	background: var(--vbb-accent) !important;
+	color: var(--vbb-primary, var(--vbb-text)) !important;
+}
+
+/* ==========================================================================
+   TEAM
+   ========================================================================== */
+.vbb-section-team,
+.vbb-section-team * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-team .wp-block-heading { color: var(--vbb-text) !important; }
+
+.vbb-section-team .vbb-team-member {
+	background: var(--vbb-surface);
+	border-radius: var(--vbb-pro-radius);
+	overflow: hidden;
+	transition: transform .2s ease, box-shadow .2s ease;
+}
+.vbb-section-team .vbb-team-member:hover {
+	transform: translateY(-8px);
+	box-shadow: var(--vbb-pro-shadow);
+}
+.vbb-section-team .vbb-member-image img {
+	width: 100%;
+	height: 300px;
+	object-fit: cover;
+}
+.vbb-section-team .vbb-member-info { padding: 1.5rem; }
+.vbb-section-team .vbb-member-name { color: var(--vbb-text) !important; }
+.vbb-section-team .vbb-member-role { color: var(--vbb-accent) !important; font-weight: 600; font-size: 0.9rem; }
+.vbb-section-team .vbb-member-bio { color: var(--vbb-muted) !important; margin-top: 0.5rem; }
+.vbb-section-team .vbb-member-socials a { color: var(--vbb-muted); transition: color .2s; }
+.vbb-section-team .vbb-member-socials a:hover { color: var(--vbb-accent); }
+
+/* ==========================================================================
+   GENERIC VBB CARD / GROUP STYLES (fallback)
+   ========================================================================== */
+.vbb-pro-card,
+.wp-block-group.is-style-card {
+	background: var(--vbb-pro-surface) !important;
+	border-radius: var(--vbb-pro-radius);
+	box-shadow: var(--vbb-pro-shadow);
+	border: 1px solid color-mix(in srgb, var(--vbb-pro-accent) 20%, transparent);
+}
+
+/* ==========================================================================
+   GLOBAL VARIABLES (light/dark mode) - Fallback for sections without scoped vars
+   ========================================================================== */
+:root {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+/* ==========================================================================
+   DARK MODE - Override scoped vars when color-mode is dark
+   ========================================================================== */
+.vbb-color-mode-dark .vbb-section-hero,
+.vbb-color-mode-dark .vbb-section-services-grid,
+.vbb-color-mode-dark .vbb-section-benefits,
+.vbb-color-mode-dark .vbb-section-process,
+.vbb-color-mode-dark .vbb-section-testimonials,
+.vbb-color-mode-dark .vbb-section-faq,
+.vbb-color-mode-dark .vbb-section-contact-section,
+.vbb-color-mode-dark .vbb-section-cta-final,
+.vbb-color-mode-dark .vbb-section-logo-cloud,
+.vbb-color-mode-dark .vbb-section-pricing-tables,
+.vbb-color-mode-dark .vbb-section-team {
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+/* ==========================================================================
+   FOOTER COMMERCIAL
+   ========================================================================== */
+.vbb-site-footer {
+	background-color: var(--vbb-footer-bg, #1a1a2e) !important;
+	color: var(--vbb-footer-text, #ffffff) !important;
+}
+.vbb-site-footer h2,
+.vbb-site-footer h3,
+.vbb-site-footer p,
+.vbb-site-footer li,
+.vbb-site-footer a {
+	color: var(--vbb-footer-text, #ffffff);
+}
+.vbb-site-footer a {
+	color: var(--vbb-footer-link, #b8b8d0);
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+.vbb-site-footer a:hover {
+	color: var(--vbb-footer-link-hover, #ffffff);
+}
+.vbb-site-footer .vbb-footer-bottom {
+	background-color: var(--vbb-footer-bottom-bg, #0d0d1a);
+}
+.vbb-site-footer .wp-block-navigation__container {
+	gap: 0.5rem;
+}
+.vbb-site-footer .vbb-footer-socials {
+	display: flex;
+	gap: 0.75rem;
+	margin-top: 1rem;
+}
+.vbb-site-footer .vbb-footer-socials a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.1);
+	color: var(--vbb-footer-text, #ffffff);
+	font-size: 0.85rem;
+}
+.vbb-site-footer .vbb-footer-socials a:hover {
+	background: rgba(255, 255, 255, 0.2);
+}
