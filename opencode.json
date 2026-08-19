@@ -481,14 +481,14 @@
 								"--browser=chromium"
 							]
 						},
-                          "mcp-puppeteer": {
-                            "type": "local",
-                            "command": [
-                              "npx",
-                              "-y",
-                              "@modelcontextprotocol/server-puppeteer"
-                            ]
-                          }
+                        "mcp-puppeteer": {
+							  "command": [
+								"npx",
+								"@modelcontextprotocol/server-puppeteer"
+							  ],
+							  "type": "local",
+							  "enabled": true
+						}
             },
     "permission":  {
                        "bash":  {

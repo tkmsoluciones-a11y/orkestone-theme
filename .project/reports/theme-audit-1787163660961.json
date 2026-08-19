@@ -1,0 +1,89 @@
+{
+  "timestamp": "2026-08-19T18:19:53.728Z",
+  "pages": [
+    {
+      "name": "home",
+      "diffPercent": "0.208",
+      "diffPixels": 4927,
+      "hasDiffFile": true
+    },
+    {
+      "name": "home-mobile",
+      "diffPercent": "1.477",
+      "diffPixels": 6259,
+      "hasDiffFile": true
+    },
+    {
+      "name": "diagnostico",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    },
+    {
+      "name": "index-php-growth-loops-vs-funnel-tradicional",
+      "diffPercent": "0.171",
+      "diffPixels": 6259,
+      "hasDiffFile": true
+    },
+    {
+      "name": "index-php-hello-world",
+      "diffPercent": "0.254",
+      "diffPixels": 5434,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-aurix-panel-v31",
+      "diffPercent": "94.267",
+      "diffPixels": 1954726,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-vbb-pro-elite",
+      "error": "page.goto: net::ERR_CONNECTION_REFUSED at https://tkmsoluciones.com/wp-admin/admin.php?page=vbb-pro-elite\nCall log:\n\u001b[2m  - navigating to \"https://tkmsoluciones.com/wp-admin/admin.php?page=vbb-pro-elite\", waiting until \"networkidle\"\u001b[22m\n"
+    },
+    {
+      "name": "admin-vbb-verticals",
+      "error": "page.goto: net::ERR_CONNECTION_REFUSED at https://tkmsoluciones.com/wp-admin/admin.php?page=vbb-verticals\nCall log:\n\u001b[2m  - navigating to \"https://tkmsoluciones.com/wp-admin/admin.php?page=vbb-verticals\", waiting until \"networkidle\"\u001b[22m\n"
+    },
+    {
+      "name": "admin-vbb-pro-elite-import-export",
+      "error": "page.goto: net::ERR_CONNECTION_TIMED_OUT at https://tkmsoluciones.com/wp-admin/admin.php?page=vbb-pro-elite-import-export\nCall log:\n\u001b[2m  - navigating to \"https://tkmsoluciones.com/wp-admin/admin.php?page=vbb-pro-elite-import-export\", waiting until \"networkidle\"\u001b[22m\n"
+    },
+    {
+      "name": "admin-vbb-command-center",
+      "error": "page.goto: net::ERR_CONNECTION_TIMED_OUT at https://tkmsoluciones.com/wp-admin/admin.php?page=vbb-command-center\nCall log:\n\u001b[2m  - navigating to \"https://tkmsoluciones.com/wp-admin/admin.php?page=vbb-command-center\", waiting until \"networkidle\"\u001b[22m\n"
+    },
+    {
+      "name": "admin-blockenberg",
+      "error": "page.goto: net::ERR_CONNECTION_REFUSED at https://tkmsoluciones.com/wp-admin/admin.php?page=blockenberg\nCall log:\n\u001b[2m  - navigating to \"https://tkmsoluciones.com/wp-admin/admin.php?page=blockenberg\", waiting until \"networkidle\"\u001b[22m\n"
+    },
+    {
+      "name": "admin-n8n-ollama-chatbot",
+      "error": "page.goto: net::ERR_CONNECTION_REFUSED at https://tkmsoluciones.com/wp-admin/admin.php?page=n8n-ollama-chatbot\nCall log:\n\u001b[2m  - navigating to \"https://tkmsoluciones.com/wp-admin/admin.php?page=n8n-ollama-chatbot\", waiting until \"networkidle\"\u001b[22m\n"
+    }
+  ],
+  "consoleErrors": [
+    {
+      "page": "diagnostico",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "page": "admin-aurix-panel-v31",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    }
+  ],
+  "networkErrors": [
+    {
+      "page": "diagnostico",
+      "url": "https://tkmsoluciones.com/diagnostico",
+      "status": 404
+    },
+    {
+      "page": "admin-aurix-panel-v31",
+      "url": "https://tkmsoluciones.com/wp-admin/admin.php?page=aurix-panel-v31",
+      "status": 503
+    }
+  ],
+  "verdict": "FAIL",
+  "loginSuccessful": true
+}
