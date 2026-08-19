@@ -1,3 +1,4 @@
+# deploy-vps.ps1 - Deploy automatizado del theme/plugin al VPS con verificacion visual, rollback, metricas y health check
 param(
     [string]$VPSHost = "157.173.108.103",
     [int]$VPSPort = 50222,
@@ -12,6 +13,7 @@ $Timestamp = Get-Date -Format "yyyy-MM-dd-HHmmss"
 $ProjectRoot = (Get-Item -Path $PSScriptRoot).Parent.FullName
 $CommitHash = git -C $ProjectRoot rev-parse HEAD
 $BranchName = git -C $ProjectRoot branch --show-current
+$DeployStatus = "UNKNOWN"
 
 function Write-DeployReport {
     param([string]$FileName, [string[]]$Lines)
@@ -64,6 +66,10 @@ $BackupPath = "/tmp/orkestone-backup-$Timestamp.tar.gz"
 ssh -p $VPSPort "${VPSUser}@${VPSHost}" "tar -czf $BackupPath -C $ThemeRemotePath ."
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[ERROR] Backup fallo. Abortando." -ForegroundColor Red
+    $DeployStatus = "FAILED"
+    Write-DeployReport "DEPLOY-$Timestamp-FAILED.md" @(
+        "# Deploy $Timestamp - FAILED", "", "## Error", "Backup remoto fallo", "", "## Accion", "Verificar conexion SSH al VPS"
+    )
     exit 1
 }
 
@@ -72,6 +78,7 @@ $ThemeOk = Sync-ToVps -LocalFolder "orkestone-theme" -RemotePath $ThemeRemotePat
 if (-not $ThemeOk) {
     Write-Host "[ERROR] Sync de theme fallo. Rollback..." -ForegroundColor Red
     ssh -p $VPSPort "${VPSUser}@${VPSHost}" "tar -xzf $BackupPath -C $ThemeRemotePath"
+    $DeployStatus = "FAILED"
     Write-DeployReport "DEPLOY-$Timestamp-FAILED.md" @(
         "# Deploy $Timestamp - FAILED", "", "## Error", "Fallo la sincronizacion del theme", "", "## Rollback", "Restaurado desde backup $BackupPath"
     )
@@ -104,47 +111,82 @@ Pop-Location
 $AuditJson = Get-ChildItem "$ProjectRoot\.project\reports\theme-audit-*.json" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 $Report = Get-Content $AuditJson.FullName -Raw | ConvertFrom-Json
 
-# 9. Decision PASS o ROLLBACK
-if ($Report.verdict -eq "PASS") {
+# 9. Verificar HTTP status (health check)
+Write-Host "[DEPLOY] Verificando HTTP status..." -ForegroundColor Cyan
+$HealthCheckOk = $false
+try {
+    $response = Invoke-WebRequest -Uri "https://tkmsoluciones.com" -TimeoutSec 10 -UseBasicParsing
+    if ($response.StatusCode -eq 200) {
+        Write-Host "[OK] Sitio responde HTTP 200" -ForegroundColor Green
+        $HealthCheckOk = $true
+    } else {
+        Write-Host "[ERROR] Sitio devuelve HTTP $($response.StatusCode)" -ForegroundColor Red
+    }
+} catch {
+    Write-Host "[ERROR] No se puede conectar al sitio: $($_.Exception.Message)" -ForegroundColor Red
+}
+
+# 10. Decision PASS o ROLLBACK
+if ($Report.loginSuccessful -eq $false) {
+    Write-Host "[ERROR] Login de WordPress fallo. Rollback..." -ForegroundColor Red
+    ssh -p $VPSPort "${VPSUser}@${VPSHost}" "tar -xzf $BackupPath -C $ThemeRemotePath"
+    $DeployStatus = "ROLLBACK"
+    Write-DeployReport "DEPLOY-$Timestamp-ROLLBACK.md" @(
+        "# Deploy $Timestamp - ROLLBACK", "", "## Error", "Login de WordPress fallo (timeout o credenciales incorrectas)", "",
+        "## Rollback", "Restaurado desde backup $BackupPath", "", "## Accion", "Reintentar deploy o verificar credenciales en verification/.env"
+    )
+} elseif ($Report.verdict -eq "PASS" -and $HealthCheckOk) {
     Write-Host "[OK] Deploy exitoso - PASS" -ForegroundColor Green
+    $DeployStatus = "SUCCESS"
     Write-DeployReport "DEPLOY-$Timestamp.md" @(
         "# Deploy $Timestamp", "", "## Contexto", "- Commit: $CommitHash", "- Branch: $BranchName", "- VPS: ${VPSUser}@${VPSHost}", "",
         "## Auditoria", "- Verdict: PASS", "- Console: $($Report.consoleErrors.Count)", "- Network: $($Report.networkErrors.Count)", "",
-        "## Resultado", "Deploy exitoso sin regresiones visuales"
+        "## Health Check", "- HTTP Status: 200 OK", "", "## Resultado", "Deploy exitoso sin regresiones visuales"
     )
-} elseif ($AcceptVisualChanges) {
+} elseif ($AcceptVisualChanges -and $HealthCheckOk) {
     Write-Host "[DEPLOY] Cambios visuales INTENCIONALES aceptados." -ForegroundColor Yellow
     Write-Host "[DEPLOY] Recapturando baseline con el nuevo estado..." -ForegroundColor Yellow
     Push-Location "$ProjectRoot\verification"
     npm run baseline
     Pop-Location
     $DiffPages = @($Report.pages | Where-Object { [double]$_.diffPercent -gt 0.5 }).Count
+    $DeployStatus = "VISUAL_CHANGES"
     Write-DeployReport "DEPLOY-$Timestamp-VISUAL-CHANGES.md" @(
         "# Deploy $Timestamp - Cambios visuales aceptados", "",
         "## Contexto", "- Commit: $CommitHash", "- Branch: $BranchName", "- VPS: ${VPSUser}@${VPSHost}", "",
         "## Auditoria vs baseline anterior", "- Verdict: $($Report.verdict)", "- Paginas con diff: $DiffPages", "",
+        "## Health Check", "- HTTP Status: 200 OK", "",
         "## Accion", "Cambios visuales intencionales aprobados por el usuario. Baseline recapturado con el nuevo estado."
     )
     Write-Host "[OK] Deploy completado con baseline actualizado" -ForegroundColor Green
 } else {
-    Write-Host "[ERROR] Auditoria $($Report.verdict). Rollback..." -ForegroundColor Red
+    Write-Host "[ERROR] Deploy fallo - $($Report.verdict). Rollback..." -ForegroundColor Red
     ssh -p $VPSPort "${VPSUser}@${VPSHost}" "tar -xzf $BackupPath -C $ThemeRemotePath"
     $DiffPages = @($Report.pages | Where-Object { [double]$_.diffPercent -gt 0.5 }).Count
+    $DeployStatus = "ROLLBACK"
     Write-DeployReport "DEPLOY-$Timestamp-ROLLBACK.md" @(
         "# Deploy $Timestamp - ROLLBACK", "", "## Auditoria", "- Verdict: $($Report.verdict)", "- Paginas con diff > 0.5%: $DiffPages", "",
-        "## Rollback", "Restaurado desde backup $BackupPath", "", "## Motivo", "Regresiones visuales detectadas. Revisar .project/reports/diff-screenshots/"
+        "## Health Check", "- HTTP Status: $(if ($HealthCheckOk) { '200 OK' } else { 'FAILED' })", "",
+        "## Rollback", "Restaurado desde backup $BackupPath", "", "## Motivo", "Regresiones visuales detectadas o health check fallo. Revisar .project/reports/diff-screenshots/"
     )
 }
 
+# 11. Trackear metricas de deploy
+$metricsFile = Join-Path $ProjectRoot ".project\deploy\metrics.json"
+if (!(Test-Path $metricsFile)) {
+    @{ success = 0; rollback = 0; visual_changes = 0; failed = 0 } | ConvertTo-Json | Set-Content $metricsFile -Encoding UTF8
+}
+
+$metrics = Get-Content $metricsFile -Raw | ConvertFrom-Json
+if ($DeployStatus -eq "SUCCESS") { $metrics.success++ }
+elseif ($DeployStatus -eq "ROLLBACK") { $metrics.rollback++ }
+elseif ($DeployStatus -eq "VISUAL_CHANGES") { $metrics.visual_changes++ }
+elseif ($DeployStatus -eq "FAILED") { $metrics | Add-Member -NotePropertyName "failed" -NotePropertyValue 1 -ErrorAction SilentlyContinue; if ($metrics.failed) { $metrics.failed++ } }
+$metrics | ConvertTo-Json | Set-Content $metricsFile -Encoding UTF8
+
 Write-Host ""
 Write-Host "========== RESUMEN ==========" -ForegroundColor Cyan
+Write-Host "Status: $DeployStatus" -ForegroundColor $(if ($DeployStatus -eq "SUCCESS") { "Green" } elseif ($DeployStatus -eq "ROLLBACK" -or $DeployStatus -eq "FAILED") { "Red" } else { "Yellow" })
+Write-Host "Metricas: $($metrics.success) exitosos, $($metrics.rollback) rollbacks, $($metrics.visual_changes) cambios visuales"
 Write-Host "Reportes en: .project/deploy/"
 Write-Host "============================="
-# Enviar notificación a Discord/Slack
-if ($env:DEPLOY_WEBHOOK) {
-    $payload = @{
-        text = "Deploy $DeployStatus - Commit $CommitHash`nBranch: $BranchName`nReport: .project/deploy/DEPLOY-$Timestamp.md"
-    } | ConvertTo-Json
-    
-    Invoke-RestMethod -Uri $env:DEPLOY_WEBHOOK -Method Post -Body $payload -ContentType "application/json"
-}
