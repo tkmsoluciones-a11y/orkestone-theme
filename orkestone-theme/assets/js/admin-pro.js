@@ -70,11 +70,8 @@
         return;
       }
 
-      // 2. INSTANTLY kill the loading text regardless of API state
+      // 2. Show skeletons for cards while data loads
       CC._showSkeletons();
-      if (CC.el.pageSelector) {
-        CC.el.pageSelector.innerHTML = '<p class="vbb-cc-loading">Loading pages…</p>';
-      }
       
       console.log('VBB Command Center: UI cleaned, starting data load.');
 
@@ -85,7 +82,6 @@
       CC.el.resetBtn = document.getElementById('vbb-cc-reset');
       CC.el.regenerateBtn = document.getElementById('vbb-cc-regenerate');
       CC.el.hiddenForm = document.getElementById('vbb-cc-hidden-form');
-      CC.el.pageSelector = document.getElementById('vbb-page-selector');
       CC.el.statusBar = document.getElementById('vbb-cc-status-bar');
       CC.el.toastContainer = document.getElementById('vbb-cc-toast-container');
       CC.el.previewViewport = document.getElementById('vbb-cc-preview-viewport');

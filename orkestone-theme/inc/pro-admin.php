@@ -606,7 +606,7 @@ function vbb_pro_render_command_center() {
 
 		<div class="vbb-cc-layout">
 			<div class="vbb-cc-page-selector" id="vbb-page-selector">
-				<p>Loading pages…</p>
+				<p class="vbb-cc-loading"><?php esc_html_e( 'Loading pages…', 'orkest-one' ); ?></p>
 			</div>
 
 			<!-- Global status bar — spans full grid width -->
