@@ -1,0 +1,66 @@
+[
+  {
+    "name": "home",
+    "path": "/",
+    "private": false
+  },
+  {
+    "name": "home-mobile",
+    "path": "/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "private": false
+  },
+  {
+    "name": "diagnostico",
+    "path": "/diagnostico",
+    "private": false
+  },
+  {
+    "name": "index-php-growth-loops-vs-funnel-tradicional",
+    "path": "/index.php/growth-loops-vs-funnel-tradicional/",
+    "private": false
+  },
+  {
+    "name": "index-php-hello-world",
+    "path": "/index.php/hello-world/",
+    "private": false
+  },
+  {
+    "name": "admin-aurix-panel-v31",
+    "path": "/wp-admin/admin.php?page=aurix-panel-v31",
+    "private": true
+  },
+  {
+    "name": "admin-vbb-pro-elite",
+    "path": "/wp-admin/admin.php?page=vbb-pro-elite",
+    "private": true
+  },
+  {
+    "name": "admin-vbb-verticals",
+    "path": "/wp-admin/admin.php?page=vbb-verticals",
+    "private": true
+  },
+  {
+    "name": "admin-vbb-pro-elite-import-export",
+    "path": "/wp-admin/admin.php?page=vbb-pro-elite-import-export",
+    "private": true
+  },
+  {
+    "name": "admin-vbb-command-center",
+    "path": "/wp-admin/admin.php?page=vbb-command-center",
+    "private": true
+  },
+  {
+    "name": "admin-blockenberg",
+    "path": "/wp-admin/admin.php?page=blockenberg",
+    "private": true
+  },
+  {
+    "name": "admin-n8n-ollama-chatbot",
+    "path": "/wp-admin/admin.php?page=n8n-ollama-chatbot",
+    "private": true
+  }
+]
