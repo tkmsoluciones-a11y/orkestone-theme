@@ -1,146 +1,142 @@
-# deploy-vps.ps1 — Deploy automatizado del theme/plugin al VPS con verificación visual
 param(
     [string]$VPSHost = "157.173.108.103",
     [int]$VPSPort = 50222,
     [string]$VPSUser = "root",
     [string]$ThemeRemotePath = "/var/www/tkmsoluciones.com/wp-content/themes/orkestone-theme",
-    [string]$HubRemotePath = "/var/www/tkmsoluciones.com/wp-content/plugins/orkestone-agency-hub"
+    [string]$HubRemotePath = "/var/www/tkmsoluciones.com/wp-content/plugins/orkestone-agency-hub",
+    [switch]$AcceptVisualChanges
 )
 
 $ErrorActionPreference = "Stop"
 $Timestamp = Get-Date -Format "yyyy-MM-dd-HHmmss"
 $ProjectRoot = (Get-Item -Path $PSScriptRoot).Parent.FullName
+$CommitHash = git -C $ProjectRoot rev-parse HEAD
+$BranchName = git -C $ProjectRoot branch --show-current
 
-Write-Host "🚀 Deploy to VPS — $Timestamp" -ForegroundColor Cyan
+function Write-DeployReport {
+    param([string]$FileName, [string[]]$Lines)
+    ($Lines -join "`n") | Set-Content (Join-Path $ProjectRoot ".project\deploy\$FileName") -Encoding UTF8
+}
 
-# Convertir rutas de Windows a formato Unix para rsync
-$ThemeLocalPath = $ProjectRoot.Replace('\', '/') + "/orkestone-theme"
-$HubLocalPath = $ProjectRoot.Replace('\', '/') + "/orkestone-agency-hub"
+function Sync-ToVps {
+    param([string]$LocalFolder, [string]$RemotePath, [string]$Label)
 
-# 1. Capturar baseline pre-deploy (si no existe)
-if (!(Test-Path "$ProjectRoot\verification\baseline") -or (Get-ChildItem "$ProjectRoot\verification\baseline\*.png").Count -eq 0) {
-    Write-Host "📸 Capturando baseline pre-deploy..." -ForegroundColor Yellow
+    Write-Host "[DEPLOY] Empaquetando $Label..." -ForegroundColor Cyan
+    $TarName = "orkestone-$Label-$Timestamp.tar.gz"
+    $LocalTar = Join-Path $env:TEMP $TarName
+    tar -czf $LocalTar --exclude=node_modules --exclude=.git -C $ProjectRoot $LocalFolder
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[ERROR] Fallo el empaquetado de $Label" -ForegroundColor Red
+        return $false
+    }
+
+    Write-Host "[DEPLOY] Subiendo $Label al VPS..." -ForegroundColor Cyan
+    scp -P $VPSPort $LocalTar "${VPSUser}@${VPSHost}:/tmp/$TarName"
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[ERROR] Fallo el scp de $Label" -ForegroundColor Red
+        return $false
+    }
+
+    Write-Host "[DEPLOY] Extrayendo $Label en VPS..." -ForegroundColor Cyan
+    ssh -p $VPSPort "${VPSUser}@${VPSHost}" "rm -rf $RemotePath && mkdir -p $RemotePath && tar -xzf /tmp/$TarName -C $RemotePath --strip-components=1 && rm -f /tmp/$TarName"
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[ERROR] Fallo la extraccion de $Label" -ForegroundColor Red
+        return $false
+    }
+
+    Remove-Item $LocalTar -ErrorAction SilentlyContinue
+    return $true
+}
+
+Write-Host "[DEPLOY] Deploy to VPS - $Timestamp" -ForegroundColor Cyan
+
+# 1. Baseline (si no existe)
+if (!(Test-Path "$ProjectRoot\verification\baseline") -or @(Get-ChildItem "$ProjectRoot\verification\baseline\*.png").Count -eq 0) {
+    Write-Host "[DEPLOY] Capturando baseline..." -ForegroundColor Yellow
     Push-Location "$ProjectRoot\verification"
     npm run baseline
     Pop-Location
 }
 
 # 2. Backup remoto del theme actual
-Write-Host "💾 Backup remoto del theme actual..." -ForegroundColor Yellow
+Write-Host "[DEPLOY] Backup remoto..." -ForegroundColor Yellow
 $BackupPath = "/tmp/orkestone-backup-$Timestamp.tar.gz"
 ssh -p $VPSPort "${VPSUser}@${VPSHost}" "tar -czf $BackupPath -C $ThemeRemotePath ."
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Error en backup remoto. Abortando deploy." -ForegroundColor Red
+    Write-Host "[ERROR] Backup fallo. Abortando." -ForegroundColor Red
     exit 1
 }
 
-# 3. Rsync del theme
-Write-Host "📤 Sincronizando theme..." -ForegroundColor Cyan
-rsync -avz --delete --exclude='node_modules' --exclude='.git' --exclude='.project' --exclude='verification' --exclude='logs' --exclude='openspec' --exclude='migration-audit' --exclude='*.md' -e "ssh -p $VPSPort" "$ThemeLocalPath/" "${VPSUser}@${VPSHost}:$ThemeRemotePath"
-$RsyncThemeResult = $LASTEXITCODE
-
-if ($RsyncThemeResult -ne 0) {
-    Write-Host "❌ Error en rsync del theme (código: $RsyncThemeResult). Rollback..." -ForegroundColor Red
+# 3. Sync theme (tar + scp, sin rsync)
+$ThemeOk = Sync-ToVps -LocalFolder "orkestone-theme" -RemotePath $ThemeRemotePath -Label "theme"
+if (-not $ThemeOk) {
+    Write-Host "[ERROR] Sync de theme fallo. Rollback..." -ForegroundColor Red
     ssh -p $VPSPort "${VPSUser}@${VPSHost}" "tar -xzf $BackupPath -C $ThemeRemotePath"
-    
-    $DeployReport = @"
-# Deploy $Timestamp — FAILED (rsync error)
-
-## Contexto
-- Commit: $(git rev-parse HEAD)
-- Branch: $(git branch --show-current)
-- VPS: ${VPSUser}@${VPSHost}:$ThemeRemotePath
-
-## Error
-rsync falló con código $RsyncThemeResult. Verificar:
-- Permisos SSH
-- Espacio en disco del VPS
-- Conexión de red
-
-## Rollback
-✅ Restaurado desde backup $BackupPath
-"@
-    $DeployReport | Set-Content "$ProjectRoot\.project\deploy\DEPLOY-$Timestamp-FAILED.md" -Encoding UTF8
+    Write-DeployReport "DEPLOY-$Timestamp-FAILED.md" @(
+        "# Deploy $Timestamp - FAILED", "", "## Error", "Fallo la sincronizacion del theme", "", "## Rollback", "Restaurado desde backup $BackupPath"
+    )
     exit 1
 }
 
-# 4. Rsync del plugin (si existe)
+# 4. Sync plugin (si existe)
 if (Test-Path "$ProjectRoot\orkestone-agency-hub") {
-    Write-Host "📤 Sincronizando plugin..." -ForegroundColor Cyan
-    rsync -avz --delete --exclude='node_modules' --exclude='.git' --exclude='.project' --exclude='verification' --exclude='logs' --exclude='openspec' --exclude='migration-audit' --exclude='*.md' -e "ssh -p $VPSPort" "$HubLocalPath/" "${VPSUser}@${VPSHost}:$HubRemotePath"
-    $RsyncHubResult = $LASTEXITCODE
-    
-    if ($RsyncHubResult -ne 0) {
-        Write-Host "⚠️ Error en rsync del plugin (código: $RsyncHubResult). Continuando con theme..." -ForegroundColor Yellow
+    $HubOk = Sync-ToVps -LocalFolder "orkestone-agency-hub" -RemotePath $HubRemotePath -Label "hub"
+    if (-not $HubOk) {
+        Write-Host "[WARN] Sync de plugin fallo. Continuando solo con theme..." -ForegroundColor Yellow
     }
 }
 
-# 5. Limpiar cache de WordPress
-Write-Host "🧹 Limpiando cache de WordPress..." -ForegroundColor Yellow
-ssh -p $VPSPort "${VPSUser}@${VPSHost}" "cd /var/www/tkmsoluciones.com && wp cache flush --allow-root 2>/dev/null || echo 'WP-CLI no disponible, cache manual requerido'"
+# 5. Permisos WordPress (www-data)
+Write-Host "[DEPLOY] Ajustando permisos..." -ForegroundColor Yellow
+ssh -p $VPSPort "${VPSUser}@${VPSHost}" "chown -R www-data:www-data $ThemeRemotePath $HubRemotePath 2>/dev/null || true"
 
-# 6. Auditoría visual post-deploy
-Write-Host "🔍 Auditoría visual post-deploy..." -ForegroundColor Cyan
+# 6. Cache WordPress
+Write-Host "[DEPLOY] Limpiando cache..." -ForegroundColor Yellow
+ssh -p $VPSPort "${VPSUser}@${VPSHost}" "cd /var/www/tkmsoluciones.com && wp cache flush --allow-root 2>/dev/null || echo 'Cache manual'"
+
+# 7. Auditoria visual post-deploy
+Write-Host "[DEPLOY] Auditoria visual..." -ForegroundColor Cyan
 Push-Location "$ProjectRoot\verification"
 npm run audit
 Pop-Location
 
-# 7. Parsear resultado
+# 8. Parsear resultado
 $AuditJson = Get-ChildItem "$ProjectRoot\.project\reports\theme-audit-*.json" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
-$Report = Get-Content $AuditJson.FullName | ConvertFrom-Json
+$Report = Get-Content $AuditJson.FullName -Raw | ConvertFrom-Json
 
-# 8. Decisión: PASS o ROLLBACK
+# 9. Decision PASS o ROLLBACK
 if ($Report.verdict -eq "PASS") {
-    Write-Host "✅ Deploy exitoso — auditoría PASS" -ForegroundColor Green
-    $DeployStatus = "SUCCESS"
-    
-    $DeployReport = @"
-# Deploy $Timestamp
-
-## Contexto
-- Commit: $(git rev-parse HEAD)
-- Branch: $(git branch --show-current)
-- VPS: ${VPSUser}@${VPSHost}:$ThemeRemotePath
-
-## Auditoría visual
-- Verdict: PASS
-- Console errors: $($Report.consoleErrors.Count)
-- Network errors: $($Report.networkErrors.Count)
-
-## Resultado
-✅ Deploy exitoso sin regresiones visuales
-"@
-    $DeployReport | Set-Content "$ProjectRoot\.project\deploy\DEPLOY-$Timestamp.md" -Encoding UTF8
+    Write-Host "[OK] Deploy exitoso - PASS" -ForegroundColor Green
+    Write-DeployReport "DEPLOY-$Timestamp.md" @(
+        "# Deploy $Timestamp", "", "## Contexto", "- Commit: $CommitHash", "- Branch: $BranchName", "- VPS: ${VPSUser}@${VPSHost}", "",
+        "## Auditoria", "- Verdict: PASS", "- Console: $($Report.consoleErrors.Count)", "- Network: $($Report.networkErrors.Count)", "",
+        "## Resultado", "Deploy exitoso sin regresiones visuales"
+    )
+} elseif ($AcceptVisualChanges) {
+    Write-Host "[DEPLOY] Cambios visuales INTENCIONALES aceptados." -ForegroundColor Yellow
+    Write-Host "[DEPLOY] Recapturando baseline con el nuevo estado..." -ForegroundColor Yellow
+    Push-Location "$ProjectRoot\verification"
+    npm run baseline
+    Pop-Location
+    $DiffPages = @($Report.pages | Where-Object { [double]$_.diffPercent -gt 0.5 }).Count
+    Write-DeployReport "DEPLOY-$Timestamp-VISUAL-CHANGES.md" @(
+        "# Deploy $Timestamp - Cambios visuales aceptados", "",
+        "## Contexto", "- Commit: $CommitHash", "- Branch: $BranchName", "- VPS: ${VPSUser}@${VPSHost}", "",
+        "## Auditoria vs baseline anterior", "- Verdict: $($Report.verdict)", "- Paginas con diff: $DiffPages", "",
+        "## Accion", "Cambios visuales intencionales aprobados por el usuario. Baseline recapturado con el nuevo estado."
+    )
+    Write-Host "[OK] Deploy completado con baseline actualizado" -ForegroundColor Green
 } else {
-    Write-Host "❌ Deploy falló — auditoría $($Report.verdict). Rollback..." -ForegroundColor Red
+    Write-Host "[ERROR] Auditoria $($Report.verdict). Rollback..." -ForegroundColor Red
     ssh -p $VPSPort "${VPSUser}@${VPSHost}" "tar -xzf $BackupPath -C $ThemeRemotePath"
-    $DeployStatus = "ROLLBACK"
-    
-    $DeployReport = @"
-# Deploy $Timestamp — ROLLBACK
-
-## Contexto
-- Commit: $(git rev-parse HEAD)
-- Branch: $(git branch --show-current)
-- VPS: ${VPSUser}@${VPSHost}:$ThemeRemotePath
-
-## Auditoría visual
-- Verdict: $($Report.verdict)
-- Páginas con diff > 0.5%: $(($Report.pages | Where-Object { $_.diffPercent -gt 0.5 }).Count)
-- Console errors: $($Report.consoleErrors.Count)
-- Network errors: $($Report.networkErrors.Count)
-
-## Rollback
-✅ Restaurado desde backup $BackupPath
-
-## Motivo
-La auditoría visual detectó regresiones. Revisar .project/reports/diff-screenshots/ para identificar el componente problemático.
-"@
-    $DeployReport | Set-Content "$ProjectRoot\.project\deploy\DEPLOY-$Timestamp-ROLLBACK.md" -Encoding UTF8
+    $DiffPages = @($Report.pages | Where-Object { [double]$_.diffPercent -gt 0.5 }).Count
+    Write-DeployReport "DEPLOY-$Timestamp-ROLLBACK.md" @(
+        "# Deploy $Timestamp - ROLLBACK", "", "## Auditoria", "- Verdict: $($Report.verdict)", "- Paginas con diff > 0.5%: $DiffPages", "",
+        "## Rollback", "Restaurado desde backup $BackupPath", "", "## Motivo", "Regresiones visuales detectadas. Revisar .project/reports/diff-screenshots/"
+    )
 }
 
 Write-Host ""
 Write-Host "========== RESUMEN ==========" -ForegroundColor Cyan
-Write-Host "Status: $DeployStatus"
-Write-Host "Report: .project/deploy/DEPLOY-$Timestamp.md"
+Write-Host "Reportes en: .project/deploy/"
 Write-Host "============================="
