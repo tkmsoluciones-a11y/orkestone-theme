@@ -1,0 +1,50 @@
+name: Visual Smoke Test
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  visual-smoke:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: verification/package-lock.json
+
+      - name: Install dependencies
+        working-directory: verification
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: verification
+        run: npx playwright install chromium
+
+      - name: Create .env from secrets
+        working-directory: verification
+        shell: pwsh
+        run: |
+          "SITE_URL=${{ secrets.SITE_URL }}" | Out-File .env -Encoding utf8
+          "WP_URL=${{ secrets.WP_URL }}" | Out-File .env -Append -Encoding utf8
+          "WP_USER=${{ secrets.WP_USER }}" | Out-File .env -Append -Encoding utf8
+          "WP_PASS=${{ secrets.WP_PASS }}" | Out-File .env -Append -Encoding utf8
+
+      - name: Capture screenshots (smoke test)
+        working-directory: verification
+        run: npm run baseline
+
+      - name: Upload screenshots as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-screenshots-${{ github.run_number }}
+          path: verification/baseline/*.png
+          retention-days: 7
