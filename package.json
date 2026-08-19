@@ -1,0 +1,6 @@
+"scripts": {
+  "deploy": "powershell -File scripts/deploy-vps.ps1",
+  "deploy:accept": "powershell -File scripts/deploy-vps.ps1 -AcceptVisualChanges",
+  "audit": "cd verification && npm run audit",
+  "baseline": "cd verification && npm run baseline"
+}

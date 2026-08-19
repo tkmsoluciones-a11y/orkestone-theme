@@ -1,0 +1,149 @@
+{
+  "timestamp": "2026-08-19T15:23:08.441Z",
+  "pages": [
+    {
+      "name": "home",
+      "diffPercent": "22.999",
+      "diffPixels": 544023,
+      "hasDiffFile": true
+    },
+    {
+      "name": "home-mobile",
+      "diffPercent": "43.473",
+      "diffPixels": 184215,
+      "hasDiffFile": true
+    },
+    {
+      "name": "diagnostico",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    },
+    {
+      "name": "index-php-growth-loops-vs-funnel-tradicional",
+      "diffPercent": "16.046",
+      "diffPixels": 587503,
+      "hasDiffFile": true
+    },
+    {
+      "name": "index-php-hello-world",
+      "diffPercent": "16.086",
+      "diffPixels": 344670,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-aurix-panel-v31",
+      "diffPercent": "2.304",
+      "diffPixels": 47766,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-vbb-pro-elite",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    },
+    {
+      "name": "admin-vbb-verticals",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    },
+    {
+      "name": "admin-vbb-pro-elite-import-export",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    },
+    {
+      "name": "admin-vbb-command-center",
+      "diffPercent": "1.307",
+      "diffPixels": 237807,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-blockenberg",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    },
+    {
+      "name": "admin-n8n-ollama-chatbot",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    }
+  ],
+  "consoleErrors": [
+    {
+      "page": "home",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "page": "home-mobile",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "page": "diagnostico",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "page": "index-php-growth-loops-vs-funnel-tradicional",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "page": "index-php-hello-world",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "page": "admin-vbb-pro-elite",
+      "text": "VBB Command Center: Required DOM elements not found."
+    },
+    {
+      "page": "admin-vbb-verticals",
+      "text": "VBB Command Center: Required DOM elements not found."
+    },
+    {
+      "page": "admin-vbb-pro-elite-import-export",
+      "text": "VBB Command Center: Required DOM elements not found."
+    },
+    {
+      "page": "admin-vbb-command-center",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    }
+  ],
+  "networkErrors": [
+    {
+      "page": "home",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 400
+    },
+    {
+      "page": "home-mobile",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 400
+    },
+    {
+      "page": "diagnostico",
+      "url": "https://tkmsoluciones.com/diagnostico",
+      "status": 404
+    },
+    {
+      "page": "index-php-growth-loops-vs-funnel-tradicional",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 400
+    },
+    {
+      "page": "index-php-hello-world",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 400
+    },
+    {
+      "page": "admin-vbb-command-center",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 400
+    }
+  ],
+  "verdict": "FAIL",
+  "loginSuccessful": true
+}

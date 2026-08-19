@@ -140,3 +140,11 @@ Write-Host ""
 Write-Host "========== RESUMEN ==========" -ForegroundColor Cyan
 Write-Host "Reportes en: .project/deploy/"
 Write-Host "============================="
+# Enviar notificación a Discord/Slack
+if ($env:DEPLOY_WEBHOOK) {
+    $payload = @{
+        text = "Deploy $DeployStatus - Commit $CommitHash`nBranch: $BranchName`nReport: .project/deploy/DEPLOY-$Timestamp.md"
+    } | ConvertTo-Json
+    
+    Invoke-RestMethod -Uri $env:DEPLOY_WEBHOOK -Method Post -Body $payload -ContentType "application/json"
+}

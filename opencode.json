@@ -44,6 +44,7 @@
 							},
 							"task": {
 							  "*": "deny",
+							  "playwright-verifier": "allow",
 							  "jd-fix-agent": "allow",
 							  "jd-judge-a": "allow",
 							  "jd-judge-b": "allow",
