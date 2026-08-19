@@ -58,7 +58,7 @@
 
     /* ── Initialisation ─────────────────────── */
 
-    init: function () {
+    init: function (retries) {
       console.log('VBB Command Center: Initialising...');
       
       // 1. Immediate element check
@@ -66,7 +66,12 @@
       CC.el.pageSelector = document.getElementById('vbb-page-selector');
       
       if (!CC.el.cards || !CC.el.pageSelector) {
-        console.error('VBB Command Center: Required DOM elements not found.');
+        retries = (typeof retries === 'number') ? retries + 1 : 1;
+        if (retries > 20) {
+          console.error('VBB Command Center: Required DOM elements not found after retries.');
+          return;
+        }
+        setTimeout(function() { CC.init(retries); }, 100);
         return;
       }
 
