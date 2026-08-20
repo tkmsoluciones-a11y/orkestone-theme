@@ -55,3 +55,27 @@
 - **Problema:** Si el toggle no estaba configurado, el bloque se ocultaba (comportamiento contraintuitivo).
 - **Solución:** Solo ocultar si nabled === false explícitamente; por defecto mostrar.
 - **Regla:** En lógica de visibilidad, el default debe ser "mostrar", no "ocultar".
+
+### AP-010: Usar rsync de cwrsync en Windows para deploy a VPS Linux
+- **Contexto:** Script de deploy intentaba usar cwrsync instalado por Chocolatey.
+- **Problema:** cwrsync interpreta rutas con `:` (ej: `F:\Proyectos`) como host remoto → error "source and destination cannot both be remote".
+- **Solución:** Usar `tar` + `scp` + `ssh` (herramientas nativas que ya funcionan).
+- **Regla:** En Windows, preferir tar+scp sobre rsync para deploy a Linux.
+
+### AP-011: Here-strings de PowerShell con emojis en Windows PowerShell 5.1
+- **Contexto:** Script de deploy usaba here-strings (`@" "@`) con emojis (🚀, ✅, ❌).
+- **Problema:** PowerShell 5.1 corrompe el encoding de emojis dentro de here-strings → "Unexpected token" al parsear.
+- **Solución:** Usar texto plano (`[DEPLOY]`, `[OK]`, `[ERROR]`) o arrays `@()` en lugar de here-strings.
+- **Regla:** En PS 5.1, evitar emojis dentro de here-strings. Usar arrays para construir texto multi-línea.
+
+### AP-012: CI intentando deployar al VPS sin credenciales SSH
+- **Contexto:** Workflow inicial intentaba ejecutar el deploy completo desde GitHub Actions.
+- **Problema:** CI no tiene acceso SSH al VPS, ni credenciales WP, ni baseline guardado, ni lógica de rollback.
+- **Solución:** CI solo hace smoke test (captura screenshots). El deploy real queda local con rollback automático.
+- **Regla:** El deploy verificado con rollback vive donde tiene acceso SSH. CI es observador, no ejecutor.
+
+### AP-013: Auditoría visual de páginas dinámicas o ajenas al theme
+- **Contexto:** `pages.json` tenía 12 páginas incluyendo `admin-aurix-panel-v31` (del proyecto aurix-core-dev) y plugins terceros.
+- **Problema:** 94% diff en páginas con nonces dinámicos o contenido de otros proyectos → falsos FAIL.
+- **Solución:** Auditar solo páginas controladas por el theme (7 páginas: home, mobile, diagnostico, 4 admin VBB).
+- **Regla:** El auditor visual solo verifica páginas cuyo estado visual es determinista y pertenece al proyecto.
