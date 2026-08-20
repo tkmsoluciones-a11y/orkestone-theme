@@ -60,28 +60,31 @@
 
     init: function (retries) {
       console.log('VBB Command Center: Initialising...');
-      
-      // 1. Immediate element check
-      CC.el.cards = document.getElementById('vbb-cc-cards');
-      CC.el.pageSelector = document.getElementById('vbb-page-selector');
-      
-      if (!CC.el.cards || !CC.el.pageSelector) {
-        retries = (typeof retries === 'number') ? retries + 1 : 1;
-        if (retries > 20) {
-          console.error('VBB Command Center: Required DOM elements not found after retries.');
+      try {
+        // 1. Immediate element check
+        CC.el.cards = document.getElementById('vbb-cc-cards');
+        CC.el.pageSelector = document.getElementById('vbb-page-selector');
+        
+        if (!CC.el.cards || !CC.el.pageSelector) {
+          retries = (typeof retries === 'number') ? retries + 1 : 1;
+          if (retries > 20) {
+            console.error('VBB Command Center: Required DOM elements not found after retries.');
+            if (CC.el && CC.el.cards) {
+              CC.el.cards.innerHTML = '<div class="notice notice-error"><p>Error: Required DOM elements (#vbb-cc-cards, #vbb-page-selector) not found.</p></div>';
+            }
+            return;
+          }
+          setTimeout(function() { CC.init(retries); }, 100);
           return;
         }
-        setTimeout(function() { CC.init(retries); }, 100);
-        return;
-      }
 
-      // 2. INSTANTLY kill the loading text regardless of API state
-      CC._showSkeletons();
-      if (CC.el.pageSelector) {
-        CC.el.pageSelector.innerHTML = '<p class="vbb-cc-loading">Loading pages…</p>';
-      }
-      
-      console.log('VBB Command Center: UI cleaned, starting data load.');
+        // 2. INSTANTLY kill the loading text regardless of API state
+        CC._showSkeletons();
+        if (CC.el.pageSelector) {
+          CC.el.pageSelector.innerHTML = '<p class="vbb-cc-loading">Loading pages…</p>';
+        }
+        
+        console.log('VBB Command Center: UI cleaned, starting data load.');
 
       // 3. Assign remaining elements (simple null assignments)
       CC.el.iframe = document.getElementById('vbb-cc-iframe');
@@ -334,6 +337,12 @@
 
       // 7. Dark mode toggle
       CC.initDarkMode();
+      } catch (e) {
+        console.error('VBB Command Center Init Error:', e);
+        if (CC.el && CC.el.cards) {
+          CC.el.cards.innerHTML = '<div class="notice notice-error"><p>Init Error: ' + e.message + '</p></div>';
+        }
+      }
     },
 
     /* ── API helpers ────────────────────────── */
