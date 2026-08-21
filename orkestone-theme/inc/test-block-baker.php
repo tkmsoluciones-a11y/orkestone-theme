@@ -385,6 +385,16 @@ assert_contains( $faq, 'A1.', 'FAQ includes a1' );
 assert_contains( $faq, 'Q2?', 'FAQ includes q2' );
 assert_contains( $faq, 'wp:details', 'FAQ uses wp:details' );
 
+// Legacy short keys from vertical JSONs ("q"/"a") must resolve like "question"/"answer".
+$faq_short = vbb_bake_faq( array(
+	'heading' => 'FAQ',
+	'items'   => array(
+		array( 'q' => 'Short Q1?', 'a' => 'Short A1.' ),
+	),
+) );
+assert_contains( $faq_short, 'Short Q1?', 'FAQ resolves legacy q key' );
+assert_contains( $faq_short, 'Short A1.', 'FAQ resolves legacy a key' );
+
 echo "\n=== vbb_bake_contact_section() ===\n";
 $contact = vbb_bake_contact_section( array(
 	'heading' => 'Get in Touch',

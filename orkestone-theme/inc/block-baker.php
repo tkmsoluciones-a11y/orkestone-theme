@@ -797,8 +797,8 @@ $output .= "\n\t" . '<!-- wp:heading {"textAlign":"center"} -->';
 	$output .= "\n\t" . '<!-- /wp:heading -->';
 
 	foreach ( $items as $item ) {
-		$question = isset( $item['question'] ) ? vbb_esc_text( $item['question'] ) : '';
-		$answer   = isset( $item['answer'] ) ? vbb_esc_text( $item['answer'] ) : '';
+		$question = isset( $item['question'] ) ? vbb_esc_text( $item['question'] ) : ( isset( $item['q'] ) ? vbb_esc_text( $item['q'] ) : '' );
+		$answer   = isset( $item['answer'] ) ? vbb_esc_text( $item['answer'] ) : ( isset( $item['a'] ) ? vbb_esc_text( $item['a'] ) : '' );
 
 		if ( '' === $question ) {
 			continue;
