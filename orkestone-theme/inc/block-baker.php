@@ -514,7 +514,7 @@ $output .= "\n\t" . '<!-- wp:heading {"textAlign":"center","textColor":"base"} -
  * @return string
  */
 function vbb_bake_process( $data ) {
-	$heading = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	$heading = '{{vbb_process_heading}}';
 	// Read from 'items' array (canonical), fall back to 'steps' (legacy).
 	$steps = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : ( isset( $data['steps'] ) && is_array( $data['steps'] ) ? $data['steps'] : array() );
 
@@ -530,11 +530,9 @@ function vbb_bake_process( $data ) {
 	$html  = '<!-- wp:group {"className":"vbb-section vbb-process' . $effect_class . '"} -->';
 	$html .= '<div class="vbb-section vbb-process' . $effect_class . '">';
 
-	if ( $heading ) {
-		$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
-		$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
-		$html .= '<!-- /wp:heading -->';
-	}
+	$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
+	$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
+	$html .= '<!-- /wp:heading -->';
 
 	if ( ! empty( $steps ) ) {
 		$html .= '<!-- wp:columns {"className":"vbb-process-grid"} -->';
@@ -1045,7 +1043,7 @@ default:
  * Bake a Logo Cloud section.
  */
 function vbb_bake_logo_cloud( $data ) {
-	$heading = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	$heading = '{{vbb_logo_cloud_heading}}';
 	// Read from 'items' array (canonical), fall back to 'logos' (legacy).
 	$logos = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : ( isset( $data['logos'] ) && is_array( $data['logos'] ) ? $data['logos'] : array() );
 
@@ -1053,10 +1051,15 @@ function vbb_bake_logo_cloud( $data ) {
 	$html  = '<!-- wp:group {"className":"vbb-section vbb-logo-cloud' . $effect_class . '"} -->';
 	$html .= '<div class="vbb-section vbb-logo-cloud' . $effect_class . '">';
 
-	if ( $heading ) {
-		$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
-		$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
-		$html .= '<!-- /wp:heading -->';
+	$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
+	$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
+	$html .= '<!-- /wp:heading -->';
+
+	$subtitle = isset( $data['subtitle'] ) ? esc_html( $data['subtitle'] ) : '';
+	if ( $subtitle ) {
+		$html .= '<!-- wp:paragraph {"align":"center","className":"vbb-logo-cloud-subtitle"} -->';
+		$html .= '<p class="has-text-align-center vbb-logo-cloud-subtitle">' . $subtitle . '</p>';
+		$html .= '<!-- /wp:paragraph -->';
 	}
 
 	if ( ! empty( $logos ) ) {
@@ -1096,7 +1099,7 @@ function vbb_bake_logo_cloud( $data ) {
  * Bake Pricing Tables section.
  */
 function vbb_bake_pricing_tables( $data ) {
-	$heading = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	$heading = '{{vbb_pricing_heading}}';
 	// Read from 'items' array (canonical), fall back to 'plans' (legacy).
 	$plans = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : ( isset( $data['plans'] ) && is_array( $data['plans'] ) ? $data['plans'] : array() );
 
@@ -1104,11 +1107,9 @@ function vbb_bake_pricing_tables( $data ) {
 	$html  = '<!-- wp:group {"className":"vbb-section vbb-pricing' . $effect_class . '"} -->';
 	$html .= '<div class="vbb-section vbb-pricing' . $effect_class . '">';
 
-	if ( $heading ) {
-		$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
-		$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
-		$html .= '<!-- /wp:heading -->';
-	}
+	$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
+	$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
+	$html .= '<!-- /wp:heading -->';
 
 	if ( ! empty( $plans ) ) {
 		$html .= '<!-- wp:columns {"className":"vbb-pricing-grid"} -->';
@@ -1171,7 +1172,7 @@ function vbb_bake_pricing_tables( $data ) {
  * Bake Team section.
  */
 function vbb_bake_team_section( $data ) {
-	$heading = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	$heading = '{{vbb_team_heading}}';
 	// Read from 'items' array (canonical), fall back to 'members' (legacy).
 	$members = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : ( isset( $data['members'] ) && is_array( $data['members'] ) ? $data['members'] : array() );
 
@@ -1179,11 +1180,9 @@ function vbb_bake_team_section( $data ) {
 	$html  = '<!-- wp:group {"className":"vbb-section vbb-team' . $effect_class . '"} -->';
 	$html .= '<div class="vbb-section vbb-team' . $effect_class . '">';
 
-	if ( $heading ) {
-		$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
-		$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
-		$html .= '<!-- /wp:heading -->';
-	}
+	$html .= '<!-- wp:heading {"className":"vbb-section-title"} -->';
+	$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
+	$html .= '<!-- /wp:heading -->';
 
 	if ( ! empty( $members ) ) {
 		$html .= '<!-- wp:columns {"className":"vbb-team-grid"} -->';
