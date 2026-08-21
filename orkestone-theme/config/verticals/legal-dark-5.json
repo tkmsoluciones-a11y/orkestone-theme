@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "1.0.0",
+  "verticalKey": "legal-dark-5",
+  "name": "Legal Dark 5.0",
+  "description": "Estudio jurídico premium en modo oscuro: elegancia, autoridad y resultados.",
+  "brand": {
+    "siteName": "Legal 5.0",
+    "tagline": "Estrategia Legal de Alto Impacto",
+    "colorMode": "dark",
+    "palettes": {
+      "light": {
+        "primary": "#0F1B2D",
+        "secondary": "#C9A227",
+        "accent": "#F4F1EC",
+        "background": "#FFFFFF",
+        "surface": "#F5F2EA",
+        "text": "#141E30",
+        "mutedText": "#667085"
+      },
+      "dark": {
+        "primary": "#E8D9A8",
+        "secondary": "#C9A227",
+        "accent": "#16233A",
+        "background": "#0B1220",
+        "surface": "#121C2E",
+        "text": "#EAEFF7",
+        "mutedText": "#9AA7BC"
+      }
+    },
+    "fontHeading": "Georgia",
+    "fontBody": "Inter"
+  },
+  "navigation": {
+    "primary": [
+      { "label": "Inicio", "url_slug": "inicio" },
+      { "label": "Servicios", "url_slug": "servicios" },
+      { "label": "Nosotros", "url_slug": "nosotros" },
+      { "label": "Contacto", "url_slug": "contacto" }
+    ]
+  },
+  "pages": [
+    {
+      "key": "home",
+      "title": "Inicio",
+      "slug": "inicio",
+      "template": "front-page",
+      "sections": ["hero", "logo_cloud", "problem", "benefits", "process", "stats", "testimonials", "faq", "cta-final"],
+      "hero": {
+        "eyebrow": "Legal 5.0 · Estudio Jurídico",
+        "title": "Defensa Legal Estratégica Cuando Más Importa",
+        "subtitle": "Combinamos trayectoria, precisión y tecnología para proteger sus intereses con resultados medibles.",
+        "primaryCta": "Consulta Confidencial",
+        "primaryUrl": "/contacto",
+        "image_url": ""
+      },
+      "logo_cloud": {
+        "heading": "Confían en Nosotros",
+        "subtitle": "Empresas y particulares que eligieron nuestra defensa",
+        "items": [
+          { "name": "Grupo Andes", "logo": "" },
+          { "name": "TechNova SA", "logo": "" },
+          { "name": "Estudio Meridiano", "logo": "" },
+          { "name": "Finanzas del Sur", "logo": "" }
+        ]
+      },
+      "stats": {
+        "items": [
+          { "value": "20+", "label": "Años de Experiencia", "icon": "awards", "description": "Trayectoria en derecho corporativo y civil" },
+          { "value": "92%", "label": "Casos Favorables", "icon": "yes", "description": "Resoluciones exitosas en litigios" },
+          { "value": "800+", "label": "Clientes Asistidos", "icon": "groups", "description": "Empresas y particulares representados" },
+          { "value": "24/7", "label": "Disponibilidad", "icon": "clock", "description": "Atención ante urgencias legales" }
+        ]
+      }
+    },
+    {
+      "key": "services",
+      "title": "Servicios Legales",
+      "slug": "servicios",
+      "template": "page",
+      "sections": ["hero-centered", "benefits", "cta-final"],
+      "hero-centered": {
+        "title": "Especialidades Jurídicas",
+        "subtitle": "Asesoría integral en las áreas críticas del derecho moderno."
+      }
+    },
+    {
+      "key": "about",
+      "title": "Sobre el Estudio",
+      "slug": "nosotros",
+      "template": "page",
+      "sections": ["hero-centered", "process", "stats"],
+      "hero-centered": {
+        "title": "Compromiso, Ética y Resultados",
+        "subtitle": "Dos décadas transformando la práctica legal con estándares de élite."
+      }
+    },
+    {
+      "key": "contact",
+      "title": "Contacto",
+      "slug": "contacto",
+      "template": "page",
+      "sections": ["hero-centered", "contact-section"],
+      "hero-centered": {
+        "title": "Hablemos de su Caso",
+        "subtitle": "Primera consulta confidencial sin cargo. Respondemos en menos de 24 horas."
+      }
+    }
+  ],
+  "sections": {
+    "problem": {
+      "eyebrow": "El Problema",
+      "title": "Un Error Legal Puede Costar Décadas",
+      "description": "Los casos mal manejados desde el inicio se vuelven irreversibles: plazos perdidos, pruebas inadmisibles y acuerdos desfavorables.",
+      "solution": "Nuestro equipo interviene desde el primer día con una estrategia diseñada a medida, auditoría completa del caso y comunicación transparente en cada instancia."
+    },
+    "benefits": {
+      "heading": "Por Qué Elegirnos",
+      "items": [
+        {
+          "icon": "lock",
+          "title": "Confidencialidad Absoluta",
+          "description": "Cada caso se maneja bajo estricto secreto profesional desde la primera consulta."
+        },
+        {
+          "icon": "awards",
+          "title": "Trayectoria Comprobable",
+          "description": "Más de 20 años litigando en derecho corporativo y civil con tasa de éxito superior al 90%."
+        },
+        {
+          "icon": "calculator",
+          "title": "Honorarios Transparentes",
+          "description": "Esquemas claros desde el inicio: cuotas fijas o porcentaje por éxito, sin sorpresas."
+        }
+      ]
+    },
+    "process": {
+      "heading": "Cómo Trabajamos",
+      "steps": [
+        { "number": "1", "title": "Consulta Inicial", "description": "Analizamos su caso en profundidad y evaluamos todas las variables." },
+        { "number": "2", "title": "Estrategia", "description": "Diseñamos la hoja de ruta legal más eficiente para su objetivo." },
+        { "number": "3", "title": "Ejecución", "description": "Representación activa y defensa rigurosa en todas las instancias." }
+      ]
+    },
+    "testimonials": {
+      "heading": "Lo Que Dicen Nuestros Clientes",
+      "items": [
+        { "quote": "Resolvieron en tres meses un conflicto corporativo que llevaba años estancado.", "author": "M. Fernández", "role": "CEO, TechNova SA" },
+        { "quote": "Profesionalismo absoluto. Siempre supimos qué estaba pasando con nuestro caso.", "author": "L. Gutiérrez", "role": "Directora, Grupo Andes" }
+      ]
+    },
+    "faq": {
+      "heading": "Preguntas Frecuentes",
+      "items": [
+        { "q": "¿Cómo se calculan los honorarios?", "a": "Ofrecemos cuotas fijas por etapa o porcentaje por éxito. Todo queda acordado por escrito antes de comenzar." },
+        { "q": "¿Atienden casos en otras provincias?", "a": "Sí, contamos con corresponsales y capacidad de litigio remoto en todo el país." }
+      ]
+    }
+  },
+  "contentModels": {
+    "service": {
+      "label": "Servicios",
+      "singular": "Servicio",
+      "items": [
+        { "title": "Derecho Corporativo", "summary": "Constitución de sociedades, fusiones, adquisiciones y gobernanza empresarial.", "icon": "briefcase", "ctaText": "Saber más", "ctaUrl": "/servicios" },
+        { "title": "Litigio Civil", "summary": "Resolución de conflictos contractuales, propiedad y responsabilidad civil.", "icon": "scale", "ctaText": "Saber más", "ctaUrl": "/servicios" },
+        { "title": "Propiedad Intelectual", "summary": "Registro de marcas, patentes y protección de activos intangibles.", "icon": "shield", "ctaText": "Saber más", "ctaUrl": "/servicios" }
+      ]
+    }
+  },
+  "cta": {
+    "final": {
+      "text": "¿Necesita una defensa legal de primer nivel?",
+      "buttonText": "Agendar Consulta",
+      "buttonUrl": "/contacto"
+    }
+  },
+  "contact": {
+    "email": "consultas@legal50.com",
+    "phone": "+54 11 5000-2020"
+  },
+  "seoDefaults": {
+    "titlePattern": "%page% | Legal 5.0",
+    "metaDescription": "Legal 5.0: estudio jurídico premium especializado en derecho corporativo y civil."
+  }
+}
