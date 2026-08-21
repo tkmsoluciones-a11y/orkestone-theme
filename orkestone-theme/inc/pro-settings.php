@@ -1078,7 +1078,7 @@ function vbb_pro_filter_sections( $sections, $page_id = 0 ) {
 	$settings = vbb_pro_get_page_settings( $page_id );
 	
 	foreach ( $sections as $section ) {
-		$section_slug = sanitize_key( (string) $section );
+		$section_slug = function_exists( 'vbb_normalize_section_type' ) ? vbb_normalize_section_type( $section ) : sanitize_key( (string) $section );
 		
 		if ( '' === $section_slug ) {
 			continue;

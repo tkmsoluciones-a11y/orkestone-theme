@@ -144,3 +144,21 @@ function vbb_resolve_image_url( $image_id, $remote_url ) {
 
 	return vbb_svg_placeholder();
 }
+
+/**
+ * Normalize a section type identifier to canonical kebab-case.
+ *
+ * Vertical JSONs may declare sections in camelCase ("heroStyleD"),
+ * snake_case ("hero_style_d") or kebab-case ("hero-style-d"). The baker
+ * map and block registry are keyed in kebab-case, so every entry point
+ * must canonicalize before lookup. sanitize_key() alone is lossy for
+ * camelCase ("heroStyleD" becomes "herostyled"), which breaks matching.
+ *
+ * @param string $type Raw section type from JSON or stored content.
+ * @return string Canonical kebab-case slug.
+ */
+function vbb_normalize_section_type( $type ) {
+	$type  = str_replace( array( '_', ' ' ), '-', trim( (string) $type ) );
+	$kebab = strtolower( preg_replace( '/([a-z0-9])([A-Z])/', '$1-$2', $type ) );
+	return sanitize_key( $kebab );
+}
