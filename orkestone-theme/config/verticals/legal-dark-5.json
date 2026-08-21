@@ -88,7 +88,7 @@
       "title": "Sobre el Estudio",
       "slug": "nosotros",
       "template": "page",
-      "sections": ["hero-centered", "process", "stats"],
+      "sections": ["hero-centered", "benefits", "process"],
       "hero-centered": {
         "title": "Compromiso, Ética y Resultados",
         "subtitle": "Dos décadas transformando la práctica legal con estándares de élite."
