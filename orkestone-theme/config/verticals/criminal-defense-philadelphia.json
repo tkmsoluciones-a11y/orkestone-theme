@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "1.0.0",
+  "verticalKey": "criminal-defense-philadelphia",
+  "name": "Goldstein Mehta Criminal Defense Vertical",
+  "description": "Top-rated Philadelphia criminal defense law firm vertical with Hero Style D, trust badges, practice grid, and contact map.",
+  "brand": {
+    "siteName": "Goldstein Mehta LLC",
+    "tagline": "Award-winning Philadelphia criminal defense lawyers",
+    "logo": "//images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1495045374380-605A8RB799HZE3MDEENA/Webp.net-resizeimage.png",
+    "primaryColor": "#000000",
+    "secondaryColor": "#D4A843",
+    "accentColor": "#FFFFFF",
+    "fontHeading": "Georgia",
+    "fontBody": "Inter"
+  },
+  "navigation": {
+    "primary": [
+      {
+        "label": "Attorneys",
+        "url_slug": "attorneys",
+        "children": [
+          { "label": "Zak T. Goldstein", "url_slug": "zaktgoldstein" },
+          { "label": "Demetra Mehta", "url_slug": "demetra-mehta" },
+          { "label": "Thomas C. Clemens", "url_slug": "thomas-c-clemens" },
+          { "label": "Charles Foltz", "url_slug": "charles-foltz" }
+        ]
+      },
+      {
+        "label": "Appeals",
+        "url_slug": "appeals-1",
+        "children": [
+          { "label": "Criminal Appeals", "url_slug": "appeals" },
+          { "label": "Post-Conviction Relief Act", "url_slug": "post-conviction-relief-act" },
+          { "label": "Federal Habeas Corpus Petitions", "url_slug": "federal-habeas-corpus-petitions-28-usc-2254" }
+        ]
+      },
+      {
+        "label": "Criminal Defense",
+        "url_slug": "cases-handled-1",
+        "children": [
+          { "label": "Violent Crimes", "url_slug": "philadelphia-homicide-and-violent-crime-defense" },
+          { "label": "Sex Crimes", "url_slug": "philadelphia-sex-crimes-lawyer" },
+          { "label": "Theft Crimes", "url_slug": "philadelphia-theft-lawyers" },
+          { "label": "Juvenile Crimes", "url_slug": "juvenile-delinquency-representation" },
+          { "label": "Misdemeanors", "url_slug": "philadelphia-misdemeanor-criminal-defense-attorneys" },
+          { "label": "White Collar", "url_slug": "white-collar-crimes" },
+          { "label": "Drug Charges", "url_slug": "philadelphia-drug-lawyer/drug-charges" },
+          { "label": "Gun Charges", "url_slug": "criminal-defense/gun-charges-lawyer" }
+        ]
+      },
+      { "label": "Blog", "url_slug": "blog" },
+      { "label": "RESULTS", "url_slug": "results" }
+    ]
+  },
+  "pages": [
+    {
+      "key": "home",
+      "title": "Philadelphia Criminal Defense Lawyers | Goldstein Mehta LLC",
+      "slug": "inicio",
+      "template": "front-page",
+      "sections": [
+        "heroStyleD",
+        "trustBadgesStrip",
+        "practiceGrid",
+        "contactFormMap"
+      ],
+      "heroStyleD": {
+        "heading": "Fight Back Against Unfair Criminal Charges With Our Award-Winning Philadelphia Criminal Defense Lawyers",
+        "highlightText": "Fight Back Against Unfair Criminal Charges",
+        "subhead": "We know the criminal justice system and how to get results. Call 267-225-2545 today.",
+        "primaryCtaText": "Call Now",
+        "primaryCtaUrl": "tel:+12672252545",
+        "secondaryCtaText": "Get Help Now",
+        "secondaryCtaUrl": "tel:+12672252545",
+        "bgImage": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1698088277069-UBXF6RSMXOJUMI58SH2U/Potential+Banner+Photo.jpg",
+        "overlayOpacity": 0.0
+      },
+      "trustBadgesStrip": {
+        "stripImage": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/daccd796-4cba-44ee-b531-9db84ac0b993/Updated+Badges_Transparent.jpg"
+      },
+      "practiceGrid": {
+        "heading": "Criminal Defense Practice Areas",
+        "items": [
+          {
+            "title": "Violent Crimes",
+            "image": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1625055725492-C3JXDZC3HXNCRCBKKLE2/punching+mugger.jpeg",
+            "url": "/philadelphia-homicide-and-violent-crime-defense"
+          },
+          {
+            "title": "DUI Defense",
+            "image": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1620312515196-HCJV84K7ABYKFFXNUAP7/dui+checkpoint.jpeg",
+            "url": "/dui-charges/philadelphia-dui-defense-lawyer"
+          },
+          {
+            "title": "Theft",
+            "image": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1556288892887-U00TCKL0QAWQVXEKIDXF/Theft+Lawyer+Near+Me",
+            "url": "/philadelphia-theft-lawyers"
+          },
+          {
+            "title": "Gun Charges",
+            "image": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1556288838629-9BPHVMHTSAP9BPZDEOAU/Gun-Charges-Defense.jpg",
+            "url": "/criminal-defense/gun-charges-lawyer"
+          },
+          {
+            "title": "Burglary and Trespass",
+            "image": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1556288924097-BBSHGN9ABGBDCATOVF96/Burglary-Defense-Attorney.jpg",
+            "url": "/burglary-defense-lawyers"
+          },
+          {
+            "title": "Probation Violations and Detainers",
+            "image": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1556288948983-7XSWX7NKA7NSSHQAR32D/Probation-Violation-Lawyer-Philadelphia.jpg",
+            "url": "/violation-of-probation-lawyers-in-philadelphia"
+          },
+          {
+            "title": "Criminal Appeals and PCRAs",
+            "image": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1596030328635-B8H08838FHDXRGJ0YVSD/image-asset-9.jpeg",
+            "url": "/appeals"
+          },
+          {
+            "title": "Drug Charges",
+            "image": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1556288861648-0KJGPKE6GRARCOGMR177/Drug+Charges+Defense",
+            "url": "/philadelphia-drug-lawyer/drug-charges"
+          },
+          {
+            "title": "White Collar Criminal Defense",
+            "image": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1556288974640-HDELA9EPNICGGNM6QRNI/White-Collar-Criminal-Defense.jpg",
+            "url": "/white-collar-crimes"
+          },
+          {
+            "title": "Homicide",
+            "image": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1521308549651-E8TVFV7RJSWGKCQUNFWH/Defenses-to-Homicide-Charges.jpg",
+            "url": "/homicide-defense-lawyer"
+          },
+          {
+            "title": "Sex Crimes",
+            "image": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1556288906841-4E77KESWP702XJNTZH4A/Sex-Crimes-Defense-Attorney.jpg",
+            "url": "/philadelphia-sex-crimes-lawyer"
+          },
+          {
+            "title": "Robbery",
+            "image": "https://images.squarespace-cdn.com/content/v1/56b4be6ec2ea51ac0c6598a4/1556288961556-379H3834ASW8V2FZFUQA/Robbery-Defense.jpg",
+            "url": "/philadelphia-robbery-defense-lawyers"
+          }
+        ]
+      },
+      "contactFormMap": {
+        "heading": "Contact A Philadelphia Criminal Lawyer Today",
+        "address": "1717 Arch Street, Suite 320\nPhiladelphia, PA 19103",
+        "phone": "(267) 225-2545",
+        "email": "ztg@goldsteinmehta.com",
+        "lat": "39.9555899",
+        "lng": "-75.1690718"
+      }
+    }
+  ],
+  "contentModels": {
+    "service": {
+      "label": "Practice Areas",
+      "singular": "Practice Area",
+      "items": [
+        { "title": "Violent Crimes", "summary": "Homicide, assault, and other violent offense defense.", "icon": "scale", "ctaText": "Learn more", "ctaUrl": "/philadelphia-homicide-and-violent-crime-defense" },
+        { "title": "DUI Defense", "summary": "DUI checkpoints, breathalyzer challenges, and license hearings.", "icon": "shield", "ctaText": "Learn more", "ctaUrl": "/dui-charges/philadelphia-dui-defense-lawyer" },
+        { "title": "Theft", "summary": "Retail theft, robbery, and property crime representation.", "icon": "briefcase", "ctaText": "Learn more", "ctaUrl": "/philadelphia-theft-lawyers" },
+        { "title": "Gun Charges", "summary": "Illegal possession and firearm-related offense defense.", "icon": "shield", "ctaText": "Learn more", "ctaUrl": "/criminal-defense/gun-charges-lawyer" },
+        { "title": "Drug Charges", "summary": "Possession, distribution, and trafficking defense.", "icon": "briefcase", "ctaText": "Learn more", "ctaUrl": "/philadelphia-drug-lawyer/drug-charges" },
+        { "title": "White Collar", "summary": "Fraud, embezzlement, and financial crime defense.", "icon": "scale", "ctaText": "Learn more", "ctaUrl": "/white-collar-crimes" }
+      ]
+    }
+  }
+}
