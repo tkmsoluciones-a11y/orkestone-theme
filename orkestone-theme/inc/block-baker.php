@@ -26,12 +26,28 @@ function vbb_bake_section( $type, $page, $sections ) {
 	$canonical = function_exists( 'vbb_normalize_section_type' ) ? vbb_normalize_section_type( $type ) : sanitize_key( $type );
 
 	// Merge data: sections-level first (base defaults), then page-level (overrides).
-	// Look up by canonical key first, then raw type, so verticals using camelCase
-	// or snake_case section keys still resolve their per-section data.
-	$data = array_merge(
-		isset( $sections[ $canonical ] ) && is_array( $sections[ $canonical ] ) ? $sections[ $canonical ] : ( isset( $sections[ $type ] ) && is_array( $sections[ $type ] ) ? $sections[ $type ] : array() ),
-		isset( $page[ $canonical ] ) && is_array( $page[ $canonical ] ) ? $page[ $canonical ] : ( isset( $page[ $type ] ) && is_array( $page[ $type ] ) ? $page[ $type ] : array() )
-	);
+	// Probe every plausible key spelling so verticals using camelCase, snake_case
+	// or kebab-case section keys all resolve their per-section data.
+	$data = array();
+	if ( function_exists( 'vbb_section_type_variants' ) ) {
+		foreach ( vbb_section_type_variants( $type ) as $variant ) {
+			if ( empty( $data ) && isset( $sections[ $variant ] ) && is_array( $sections[ $variant ] ) ) {
+				$data = $sections[ $variant ];
+				break;
+			}
+		}
+		foreach ( vbb_section_type_variants( $type ) as $variant ) {
+			if ( isset( $page[ $variant ] ) && is_array( $page[ $variant ] ) ) {
+				$data = array_merge( $data, $page[ $variant ] );
+				break;
+			}
+		}
+	} else {
+		$data = array_merge(
+			isset( $sections[ $canonical ] ) && is_array( $sections[ $canonical ] ) ? $sections[ $canonical ] : array(),
+			isset( $page[ $canonical ] ) && is_array( $page[ $canonical ] ) ? $page[ $canonical ] : array()
+		);
+	}
 
 	$map = vbb_get_baker_map();
 

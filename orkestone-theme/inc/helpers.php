@@ -162,3 +162,33 @@ function vbb_normalize_section_type( $type ) {
 	$kebab = strtolower( preg_replace( '/([a-z0-9])([A-Z])/', '$1-$2', $type ) );
 	return sanitize_key( $kebab );
 }
+
+/**
+ * Return every plausible array-key spelling of a section type.
+ *
+ * Section data in vertical JSONs may be keyed camelCase ("heroStyleD")
+ * while the dispatcher receives the canonical kebab form ("hero-style-d"),
+ * or vice versa. Callers looking up per-section data should probe all
+ * variants so content resolves regardless of which casing the JSON uses.
+ *
+ * @param string $type Raw or canonical section type.
+ * @return string[] Unique candidate keys.
+ */
+function vbb_section_type_variants( $type ) {
+	$canonical = vbb_normalize_section_type( $type );
+	$variants  = array( $canonical );
+
+	// kebab-case → camelCase ("hero-style-d" → "heroStyleD").
+	$camel = lcfirst( str_replace( '-', '', ucwords( $canonical, '-' ) ) );
+	if ( '' !== $camel ) {
+		$variants[] = $camel;
+	}
+
+	// Preserve the incoming spelling as-is (may be snake_case or other).
+	$raw = trim( (string) $type );
+	if ( '' !== $raw ) {
+		$variants[] = $raw;
+	}
+
+	return array_values( array_unique( $variants ) );
+}

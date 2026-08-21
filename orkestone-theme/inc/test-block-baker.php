@@ -263,6 +263,24 @@ $unknown = vbb_bake_section( 'custom_x', array(), array() );
 assert_contains( $unknown, 'Unknown: custom_x', 'Unknown type returns fallback' );
 assert_contains( $unknown, 'wp:paragraph', 'Fallback uses wp:paragraph' );
 
+// Canonical type resolves camelCase page-level section data (regression: baked
+// sections came out empty when the JSON keyed data as "heroStyleD").
+$camel_page = array(
+	'heroStyleD' => array(
+		'heading'         => 'Camel Data Hero',
+		'subhead'         => 'Resolved from camelCase key',
+		'primaryCtaText'  => 'Call Now',
+		'primaryCtaUrl'   => 'tel:+15555555555',
+	),
+);
+$camel_result = vbb_bake_section( 'hero-style-d', $camel_page, array() );
+assert_contains( $camel_result, 'Camel Data Hero', 'Kebab type resolves camelCase page data' );
+assert_contains( $camel_result, 'tel:+15555555555', 'CamelCase data CTAs resolve' );
+
+// Inverse: raw camelCase type also resolves.
+$camel_result2 = vbb_bake_section( 'heroStyleD', $camel_page, array() );
+assert_contains( $camel_result2, 'Camel Data Hero', 'Camel type resolves camelCase page data' );
+
 echo "\n=== vbb_bake_hero() ===\n";
 $hero = vbb_bake_hero( array(
 	'eyebrow'    => 'Welcome to',
