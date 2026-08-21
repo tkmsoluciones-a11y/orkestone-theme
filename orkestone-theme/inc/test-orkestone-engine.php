@@ -1096,6 +1096,61 @@ assert_true( count( $query_calls ) <= 3, 'S6: no WP_Query calls beyond reset (me
 
 $GLOBALS['vbb_test_theme_file_path_fail'] = false;
 
+echo "\n=== Brand colorMode and palettes in defaults ===\n";
+if ( ! function_exists( 'sanitize_hex_color' ) ) {
+	function sanitize_hex_color( $color ) {
+		return ( is_string( $color ) && preg_match( '/^#([A-Fa-f0-9]{3}){1,2}$/', $color ) ) ? $color : '';
+	}
+}
+if ( ! function_exists( 'get_option' ) ) {
+	function get_option( $name, $default = false ) {
+		return $default;
+	}
+}
+require_once __DIR__ . '/pro-settings.php';
+
+// Dark-by-default vertical resolves dark mode and custom dark palette.
+$GLOBALS['vbb_test_vertical_config'] = array(
+	'verticalKey' => 'legal-dark-5',
+	'pages'       => array(),
+	'sections'    => array(),
+	'navigation'  => array( 'primary' => array() ),
+	'importOptions' => array( 'homepageKey' => 'home', 'setFrontPage' => false ),
+	'brand'       => array(
+		'colorMode' => 'dark',
+		'palettes'  => array(
+			'dark' => array(
+				'background' => '#0B1220',
+				'surface'    => '#121C2E',
+				'text'       => '#EAEFF7',
+				'mutedText'  => '#9AA7BC',
+				'primary'    => '#E8D9A8',
+				'secondary'  => '#C9A227',
+				'accent'     => '#16233A',
+			),
+		),
+	),
+);
+$s = vbb_pro_default_settings();
+assert_true( 'dark' === $s['colorMode'], 'brand.colorMode=dark propagates to defaults' );
+assert_equals( '#0B1220', $s['palettes']['dark']['background'], 'custom dark background overrides default' );
+assert_equals( '#EAEFF7', $s['palettes']['dark']['text'], 'custom dark text overrides default' );
+assert_true( '' !== $s['palettes']['dark']['mutedText'], 'non-overridden dark keys still resolve' );
+
+// Vertical without brand keys keeps today's behavior.
+$GLOBALS['vbb_test_vertical_config'] = array(
+	'verticalKey' => 'plain',
+	'pages'       => array(),
+	'sections'    => array(),
+	'navigation'  => array( 'primary' => array() ),
+	'importOptions' => array( 'homepageKey' => 'home', 'setFrontPage' => false ),
+);
+$s2 = vbb_pro_default_settings();
+assert_true( 'light' === $s2['colorMode'], 'missing brand.colorMode defaults to light' );
+
+// Restore original config for any subsequent assertions.
+unset( $GLOBALS['vbb_test_vertical_config'] );
+
 // ===== Summary =====
 
 $total = $passed + $failed;

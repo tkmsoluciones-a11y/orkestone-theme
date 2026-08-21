@@ -152,6 +152,18 @@ function vbb_pro_default_settings() {
 	$light_accent     = $brand['accentColor'] ?? '#F4F1EC';
 	$light_background = $brand['backgroundColor'] ?? '#FFFFFF';
 
+	$brand_color_mode = isset( $brand['colorMode'] ) ? (string) $brand['colorMode'] : 'light';
+	$brand_palettes   = isset( $brand['palettes'] ) && is_array( $brand['palettes'] ) ? $brand['palettes'] : array();
+	$dark_defaults    = array(
+		'primary'    => '#F4E6C8',
+		'secondary'  => $light_secondary,
+		'accent'     => '#1E2A3A',
+		'background' => '#0F1724',
+		'surface'    => '#152033',
+		'text'       => '#E7EDF5',
+		'mutedText'  => '#A8B3C4',
+	);
+
 	// Extract content data from vertical JSON home page for block defaults.
 	$vertical_hero_data = array();
 	$vertical_cta_final = array();
@@ -266,7 +278,7 @@ function vbb_pro_default_settings() {
 	}
 
 	return array(
-'colorMode'   => 'light',
+		'colorMode'   => in_array( $brand_color_mode, array( 'light', 'dark', 'auto' ), true ) ? $brand_color_mode : 'light',
 		'siteConfig'  => array(
 			'type' => 'landing',
 		),
@@ -345,23 +357,21 @@ function vbb_pro_default_settings() {
 		),
 		'palettes'    => array(
 
-			'light' => array(
-				'primary'    => $light_primary,
-				'secondary'  => $light_secondary,
-				'accent'     => $light_accent,
-				'background' => $light_background,
-				'surface'    => '#F7F3ED',
-				'text'       => '#172033',
-				'mutedText'  => '#667085',
+			'light' => array_merge(
+				array(
+					'primary'    => $light_primary,
+					'secondary'  => $light_secondary,
+					'accent'     => $light_accent,
+					'background' => $light_background,
+					'surface'    => '#F7F3ED',
+					'text'       => '#172033',
+					'mutedText'  => '#667085',
+				),
+				isset( $brand_palettes['light'] ) && is_array( $brand_palettes['light'] ) ? $brand_palettes['light'] : array()
 			),
-			'dark'  => array(
-				'primary'    => '#F4E6C8',
-				'secondary'  => $light_secondary,
-				'accent'     => '#1E2A3A',
-				'background' => '#0F1724',
-				'surface'    => '#152033',
-				'text'       => '#E7EDF5',
-				'mutedText'  => '#A8B3C4',
+			'dark'  => array_merge(
+				$dark_defaults,
+				isset( $brand_palettes['dark'] ) && is_array( $brand_palettes['dark'] ) ? $brand_palettes['dark'] : array()
 			),
 		),
 		'colors'      => array(
