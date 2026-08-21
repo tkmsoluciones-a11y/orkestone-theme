@@ -1,0 +1,87 @@
+{
+  "timestamp": "2026-08-21T21:15:54.978Z",
+  "pages": [
+    {
+      "name": "home",
+      "diffPercent": "56.864",
+      "diffPixels": 1607119,
+      "hasDiffFile": true
+    },
+    {
+      "name": "home-mobile",
+      "diffPercent": "69.896",
+      "diffPixels": 409414,
+      "hasDiffFile": true
+    },
+    {
+      "name": "diagnostico",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    },
+    {
+      "name": "index-php-growth-loops-vs-funnel-tradicional",
+      "diffPercent": "18.019",
+      "diffPixels": 659768,
+      "hasDiffFile": true
+    },
+    {
+      "name": "index-php-hello-world",
+      "diffPercent": "14.216",
+      "diffPixels": 304599,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-aurix-panel-v31",
+      "diffPercent": "0.073",
+      "diffPixels": 1522,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-vbb-pro-elite",
+      "diffPercent": "0.006",
+      "diffPixels": 116,
+      "hasDiffFile": false
+    },
+    {
+      "name": "admin-vbb-verticals",
+      "diffPercent": "1.985",
+      "diffPixels": 51380,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-vbb-pro-elite-import-export",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    },
+    {
+      "name": "admin-vbb-command-center",
+      "diffPercent": "11.789",
+      "diffPixels": 402886,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-blockenberg",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    },
+    {
+      "name": "admin-n8n-ollama-chatbot",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    }
+  ],
+  "consoleErrors": [],
+  "networkErrors": [
+    {
+      "page": "diagnostico",
+      "url": "https://tkmsoluciones.com/diagnostico",
+      "status": 404
+    }
+  ],
+  "verdict": "FAIL",
+  "loginSuccessful": true
+}
