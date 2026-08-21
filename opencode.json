@@ -557,7 +557,41 @@
                                     "options":  {
                                                     "baseURL":  "http://127.0.0.1:11434/v1"
                                                 }
-                                }
+                                },
+	"freedeepseek": {
+      "name": "DeepSeek Free (pool)",
+	  "enabled": false,
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:50099/v1"
+      },
+      "models": {
+        "nemotron-3.5-lightning": {
+          "name": "nemotron-3.5-lightning"
+        },
+        "nemotron-3-ultra": {
+          "name": "nemotron-3-ultra"
+        },
+        "deepseek-v4-flash-free": {
+          "name": "deepseek-v4-flash-free"
+        },
+        "laguna-s-2.1-free": {
+          "name": "laguna-s-2.1-free"
+        },
+		"mimo-v2.5": {
+          "name": "mimo-v2.5"
+        },
+        "gemini-flash-latest": {
+          "name": "gemini-flash-latest"
+        },
+        "muse-spark-1.2-contributor": {
+          "name": "muse-spark-1.2-contributor"
+        },
+        "hy3": {
+          "name": "hy3"
+        }
+      }
+    }
                  },
     "share":  "disabled"
 }

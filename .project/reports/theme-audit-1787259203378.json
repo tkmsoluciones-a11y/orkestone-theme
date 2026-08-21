@@ -1,0 +1,141 @@
+{
+  "timestamp": "2026-08-20T20:52:05.810Z",
+  "pages": [
+    {
+      "name": "home",
+      "diffPercent": "0.001",
+      "diffPixels": 19,
+      "hasDiffFile": false
+    },
+    {
+      "name": "home-mobile",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    },
+    {
+      "name": "diagnostico",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    },
+    {
+      "name": "index-php-growth-loops-vs-funnel-tradicional",
+      "diffPercent": "0.326",
+      "diffPixels": 11952,
+      "hasDiffFile": true
+    },
+    {
+      "name": "index-php-hello-world",
+      "diffPercent": "0.562",
+      "diffPixels": 12043,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-aurix-panel-v31",
+      "diffPercent": "0.005",
+      "diffPixels": 100,
+      "hasDiffFile": false
+    },
+    {
+      "name": "admin-vbb-pro-elite",
+      "diffPercent": "0.188",
+      "diffPixels": 3903,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-vbb-verticals",
+      "diffPercent": "0.039",
+      "diffPixels": 974,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-vbb-pro-elite-import-export",
+      "diffPercent": "0.047",
+      "diffPixels": 976,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-vbb-command-center",
+      "diffPercent": "2.485",
+      "diffPixels": 452128,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-blockenberg",
+      "diffPercent": "0.005",
+      "diffPixels": 974,
+      "hasDiffFile": false
+    },
+    {
+      "name": "admin-n8n-ollama-chatbot",
+      "diffPercent": "0.047",
+      "diffPixels": 976,
+      "hasDiffFile": true
+    }
+  ],
+  "consoleErrors": [
+    {
+      "page": "home",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "page": "home-mobile",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "page": "diagnostico",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "page": "index-php-growth-loops-vs-funnel-tradicional",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "page": "index-php-hello-world",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "page": "admin-vbb-command-center",
+      "text": "VBB Command Center Init Error: TypeError: Cannot read properties of undefined (reading 'length')\n    at Object._updateUndoRedoButtons (https://tkmsoluciones.com/wp-content/themes/orkestone-theme/assets/js/admin-pro.js?ver=0.5.3-1787259090:1005:49)\n    at Object._bindUndoRedo (https://tkmsoluciones.com/wp-content/themes/orkestone-theme/assets/js/admin-pro.js?ver=0.5.3-1787259090:998:10)\n    at Object.init (https://tkmsoluciones.com/wp-content/themes/orkestone-theme/assets/js/admin-pro.js?ver=0.5.3-1787259090:353:10)\n    at HTMLDocument.boot (https://tkmsoluciones.com/wp-content/themes/orkestone-theme/assets/js/admin-pro.js?ver=0.5.3-1787259090:4939:10)"
+    },
+    {
+      "page": "admin-vbb-command-center",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    }
+  ],
+  "networkErrors": [
+    {
+      "page": "home",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 400
+    },
+    {
+      "page": "home-mobile",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 400
+    },
+    {
+      "page": "diagnostico",
+      "url": "https://tkmsoluciones.com/diagnostico",
+      "status": 404
+    },
+    {
+      "page": "index-php-growth-loops-vs-funnel-tradicional",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 400
+    },
+    {
+      "page": "index-php-hello-world",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 400
+    },
+    {
+      "page": "admin-vbb-command-center",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 400
+    }
+  ],
+  "verdict": "FAIL",
+  "loginSuccessful": true
+}

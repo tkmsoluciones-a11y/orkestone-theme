@@ -1,0 +1,110 @@
+{
+  "timestamp": "2026-08-20T01:02:51.356Z",
+  "pages": [
+    {
+      "name": "home",
+      "diffPercent": "0.208",
+      "diffPixels": 4927,
+      "hasDiffFile": true
+    },
+    {
+      "name": "home-mobile",
+      "diffPercent": "1.213",
+      "diffPixels": 5412,
+      "hasDiffFile": true
+    },
+    {
+      "name": "diagnostico",
+      "diffPercent": "0.000",
+      "diffPixels": 0,
+      "hasDiffFile": false
+    },
+    {
+      "name": "index-php-growth-loops-vs-funnel-tradicional",
+      "diffPercent": "0.498",
+      "diffPixels": 18224,
+      "hasDiffFile": true
+    },
+    {
+      "name": "index-php-hello-world",
+      "diffPercent": "0.816",
+      "diffPixels": 17490,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-aurix-panel-v31",
+      "diffPercent": "13.300",
+      "diffPixels": 284981,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-vbb-pro-elite",
+      "diffPercent": "0.048",
+      "diffPixels": 989,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-vbb-verticals",
+      "diffPercent": "0.040",
+      "diffPixels": 987,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-vbb-pro-elite-import-export",
+      "diffPercent": "0.048",
+      "diffPixels": 989,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-vbb-command-center",
+      "diffPercent": "3.832",
+      "diffPixels": 697108,
+      "hasDiffFile": true
+    },
+    {
+      "name": "admin-blockenberg",
+      "diffPercent": "0.005",
+      "diffPixels": 987,
+      "hasDiffFile": false
+    },
+    {
+      "name": "admin-n8n-ollama-chatbot",
+      "diffPercent": "0.048",
+      "diffPixels": 989,
+      "hasDiffFile": true
+    }
+  ],
+  "consoleErrors": [
+    {
+      "page": "diagnostico",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "page": "admin-aurix-panel-v31",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "page": "admin-aurix-panel-v31",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    }
+  ],
+  "networkErrors": [
+    {
+      "page": "diagnostico",
+      "url": "https://tkmsoluciones.com/diagnostico",
+      "status": 404
+    },
+    {
+      "page": "admin-aurix-panel-v31",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 503
+    },
+    {
+      "page": "admin-aurix-panel-v31",
+      "url": "https://tkmsoluciones.com/wp-admin/admin-ajax.php",
+      "status": 503
+    }
+  ],
+  "verdict": "FAIL",
+  "loginSuccessful": true
+}
