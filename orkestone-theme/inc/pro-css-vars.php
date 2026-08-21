@@ -242,45 +242,6 @@ function vbb_pro_print_css_vars() {
 }
 add_action( 'wp_head', 'vbb_pro_print_css_vars', 30 );
 
-/**
- * Inline script that listens for postMessage from the CC admin preview.
- * Handles vbb:css-vars (live style updates) and vbb:dark-preview (dark overlay).
- */
-function vbb_pro_preview_message_listener() {
-	// Only needed when loaded inside the CC preview iframe
-	if ( empty( $_GET['vbb_preview'] ) && empty( $_GET['vbb_no_admin'] ) ) {
-		return;
-	}
-	?>
-	<script id="vbb-preview-message-listener">
-	(function() {
-		var styleTag = null;
-		window.addEventListener('message', function(event) {
-			var data = event.data;
-			if (!data || typeof data !== 'object' || !data.type) return;
-
-			if (data.type === 'vbb:css-vars' && data.styleTag) {
-				if (!styleTag) {
-					styleTag = document.createElement('style');
-					styleTag.id = 'vbb-cc-preview-vars';
-					document.head.appendChild(styleTag);
-				}
-				styleTag.textContent = data.styleTag;
-			}
-
-			if (data.type === 'vbb:dark-preview') {
-				document.documentElement.classList.toggle('vbb-dark-preview', !!data.enabled);
-			}
-		});
-	})();
-	</script>
-	<style id="vbb-dark-preview-style">
-	html.vbb-dark-preview{filter:invert(1) hue-rotate(180deg)}html.vbb-dark-preview img,html.vbb-dark-preview video,html.vbb-dark-preview iframe,html.vbb-dark-preview canvas,html.vbb-dark-preview [style*="background-image"]{filter:invert(1) hue-rotate(180deg)}
-	</style>
-	<?php
-}
-add_action( 'wp_head', 'vbb_pro_preview_message_listener', 31 );
-
 function vbb_pro_body_classes( $classes ) {
 	$s = vbb_pro_get_settings();
 	foreach ( $s['blocks'] as $block => $val ) {

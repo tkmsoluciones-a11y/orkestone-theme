@@ -1121,12 +1121,13 @@ function vbb_rest_activate_config( WP_REST_Request $request ) {
 	// Step 9: Return success report.
 	return new WP_REST_Response(
 		array(
-			'success'       => true,
-			'message'       => __( 'Configuration activated successfully.', 'vertical-block-base' ),
-			'verticalKey'   => $vertical_key,
-			'pagesCreated'  => isset( $import_report['pages'] ) ? count( $import_report['pages'] ) : 0,
-			'mediaImported' => isset( $import_report['media'] ) ? count( $import_report['media'] ) : 0,
-			'report'        => $import_report,
+			'success'             => true,
+			'message'             => __( 'Configuration activated successfully.', 'vertical-block-base' ),
+			'verticalKey'         => $vertical_key,
+			'pagesCreated'        => isset( $import_report['pages'] ) ? count( $import_report['pages'] ) : 0,
+			'mediaImported'       => isset( $import_report['media'] ) ? count( $import_report['media'] ) : 0,
+			'urls_remapped_count' => isset( $import_report['report']['urls_remapped_count'] ) ? $import_report['report']['urls_remapped_count'] : 0,
+			'report'              => $import_report,
 		),
 		200
 	);

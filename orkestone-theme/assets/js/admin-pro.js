@@ -14,6 +14,7 @@
   var CC = (window.vbbCommandCenter = {
     state: {
       settings: {},
+      savedSettings: {},
       dirty: false,
       undoRedoStack: [],
       redoStack: [],
@@ -59,13 +60,18 @@
     /* ── Initialisation ─────────────────────── */
 
     init: function (retries) {
-      console.log('VBB Command Center: Initialising...');
+      console.log('--- VBB COMMAND CENTER INIT CALLED (retry:', retries, ') ---');
       try {
         // 1. Immediate element check
         CC.el.cards = document.getElementById('vbb-cc-cards');
         CC.el.pageSelector = document.getElementById('vbb-page-selector');
-        
+
         if (!CC.el.cards || !CC.el.pageSelector) {
+          // Not a Command Center page (e.g. vbb-verticals): bail once, no retry loop.
+          if (!retries) {
+            console.log('VBB Command Center: DOM not present on this page, skipping init.');
+            return;
+          }
           retries = (typeof retries === 'number') ? retries + 1 : 1;
           if (retries > 20) {
             console.error('VBB Command Center: Required DOM elements not found after retries.');
@@ -104,6 +110,10 @@
       CC.el.darkPreviewBtn = document.getElementById('vbb-cc-dark-preview-btn');
       CC.el.presetSelect = document.getElementById('vbb-cc-preset-select');
       CC.el.presetApplyBtn = document.getElementById('vbb-cc-preset-apply');
+      CC.el.compareBtn = document.getElementById('vbb-cc-compare-btn');
+      CC.el.undoRedoBtns = document.querySelectorAll('.vbb-cc-undo-btn, .vbb-cc-redo-btn');
+      CC.el.exportProfileBtn = document.getElementById('vbb-cc-export-profile');
+      CC.el.importProfileBtn = document.getElementById('vbb-cc-import-profile');
 
       // 4. Data & API setup
       CC.state.ajaxUrl = (window.vbbCommandCenterData && window.vbbCommandCenterData.restUrl) || '/wp-json/orkestone/v1/';
@@ -130,6 +140,14 @@
       // 6. Event listeners (all guarded by existence check)
       if (CC.el.saveProfileBtn) CC.el.saveProfileBtn.addEventListener('click', CC.saveAsProfile);
       if (CC.el.exportBtn) CC.el.exportBtn.addEventListener('click', CC.exportSite);
+      if (CC.el.exportProfileBtn) CC.el.exportProfileBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        CC.exportProfile();
+      });
+      if (CC.el.importProfileBtn) CC.el.importProfileBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        CC.importProfile();
+      });
       if (CC.el.resetBtn) CC.el.resetBtn.addEventListener('click', CC.resetSettings);
       if (CC.el.regenerateBtn) CC.el.regenerateBtn.addEventListener('click', CC.regeneratePages);
       if (CC.el.presetBtns && CC.el.presetBtns.length) {
@@ -190,6 +208,13 @@
               CC.postMessage({ type: 'vbb:css-vars', styleTag: darkVars });
             }
             CC.postMessage({ type: 'vbb:dark-preview', enabled: true });
+          }
+          // Comparison mode: show baseline (saved) state instead of current
+          if (CC.state.comparisonMode === 'before' && CC.state.savedSettings) {
+            var baselineCssVars = CC.buildCssVarsFromSettings(CC.state.savedSettings);
+            if (baselineCssVars) {
+              CC.postMessage({ type: 'vbb:css-vars', styleTag: baselineCssVars });
+            }
           }
         });
         CC.el.iframe.addEventListener('error', function () {
@@ -329,11 +354,11 @@
       // Keyboard shortcuts
       CC._bindKeyboardShortcuts();
 
-      // Initialize undo/redo buttons state
-      CC._initUndoRedoButtons();
+      // Bind undo/redo button handlers
+      CC._bindUndoRedo();
 
-      // Initialize comparison mode
-      CC._initComparisonMode();
+      // Render comparison mode button and restore state
+      CC.renderComparisonButton();
 
       // 7. Dark mode toggle
       CC.initDarkMode();
@@ -566,6 +591,7 @@
 
     saveSettings: function (callback) {
       CC.state.dirty = false;
+      CC.state.saving = true;
       CC.showStatus('saving');
 
       // When a specific page is selected, split settings:
@@ -606,6 +632,7 @@
           console.log('[VBB Save] REST RESPONSE hero data:', JSON.stringify(data && data.settings && data.settings.blocks && data.settings.blocks.hero, null, 2));
           if (data && data.settings) {
             CC.state.settings = data.settings;
+            CC.state.savedSettings = JSON.parse(JSON.stringify(data.settings));
           }
 
           // If page-specific, also save page overrides (only enabled toggles)
@@ -644,27 +671,19 @@
       CC.showStatus('saved');
       CC.showToast('Settings saved successfully!', 'success');
       CC._flashChangedField();
-      if (!CC._isContentChange(CC._lastChangedPath)) {
-        if (CC.supportsPostMessage && CC.el.iframe && CC.el.iframe.contentWindow) {
-          var cssVars = CC.buildCssVars();
-          if (cssVars) {
-            CC.postMessage({ type: 'vbb:css-vars', styleTag: cssVars });
-          }
-        } else {
-          CC.refreshPreview();
-        }
-      }
       if (typeof callback === 'function') {
         callback({ success: true });
       }
+      setTimeout(function () {
+        CC.showStatus('idle');
+      }, 2000);
       // Reset unsaved visual indicator
       CC.state.dirty = false;
+      CC.state.saving = false;
       if (CC._needsRegeneration) {
         CC.regenerateAndRefresh();
-      } else {
-        CC.showStatus('idle');
       }
-      CC._needsRegeneration = false; // Reset flag
+      CC._needsRegeneration = false;
     },
 
     xhr: function (url, method, body, onSuccess, onError) {
@@ -712,6 +731,7 @@
       var isImmediate = options.immediate === true;
 
       CC.state.dirty = true;
+      CC._updateUnsavedIndicator();
 
       if (CC.debounceTimer) {
         clearTimeout(CC.debounceTimer);
@@ -796,8 +816,14 @@
       } else if (state === 'unsaved') {
         bar.classList.add('vbb-cc-status-bar--unsaved');
         bar.setAttribute('title', 'Unsaved changes');
-        iconEl.innerHTML = '<span class="vbb-cc-status-unsaved-icon">🡱</span>';
+        iconEl.innerHTML = '<span class="vbb-cc-status-unsaved-icon">&#x25B3;</span>';
         textEl.textContent = 'Unsaved changes';
+      }
+    },
+
+    _updateUnsavedIndicator: function () {
+      if (CC.state.dirty && !CC.state.saving) {
+        CC.showStatus('unsaved');
       }
     },
 
@@ -888,50 +914,141 @@
       return toast;
     },
 
-    undo: function () {
-      if (CC.undoRedoStack.length === 0) return;
-      var lastChange = CC.undoRedoStack.pop();
-      CC.redoStack.push(lastChange);
-      // Revert the setting
-      var path = lastChange.path;
-      var value = lastChange.value;
-      var keys = path.split('.');
-      var current = CC.state.settings;
-      for (var i = 0; i < keys.length - 1; i++) {
-        if (!current[keys[i]] || typeof current[keys[i]] !== 'object') {
-          current[keys[i]] = {};
-        }
-        current = current[keys[i]];
+undo: function () {
+      if (CC.state.undoRedoStack.length === 0) {
+        CC.showToast('No actions to undo', 'info');
+        return;
       }
-      var lastKey = keys[keys.length - 1];
-      current[lastKey] = value;
-      // Re-render affected cards
-      CC.renderCards();
-      // Show toast feedback
-      CC.showToast('Undo performed', 'info');
+      var action = CC.state.undoRedoStack.pop();
+      CC.state.redoStack.push(action);
+      CC._setNestedValue(CC.state.settings, action.path, action.oldValue);
+      CC._renderField(action.path);
+      CC.debouncedSave();
+      CC.showToast('Undo performed', 'success');
+      CC._updateUndoRedoButtons();
     },
 
     redo: function () {
-      if (CC.redoStack.length === 0) return;
-      var undoneChange = CC.redoStack.pop();
-      CC.undoRedoStack.push(undoneChange);
-      // Re-apply the setting
-      var path = undoneChange.path;
-      var value = undoneChange.value;
+      if (CC.state.redoStack.length === 0) {
+        CC.showToast('No actions to redo', 'info');
+        return;
+      }
+      var action = CC.state.redoStack.pop();
+      CC.state.undoRedoStack.push(action);
+      CC._setNestedValue(CC.state.settings, action.path, action.newValue);
+      CC._renderField(action.path);
+      CC.debouncedSave();
+      CC.showToast('Redo performed', 'success');
+      CC._updateUndoRedoButtons();
+    },
+
+    _setNestedValue: function (obj, path, value) {
       var keys = path.split('.');
-      var current = CC.state.settings;
+      var current = obj;
       for (var i = 0; i < keys.length - 1; i++) {
         if (!current[keys[i]] || typeof current[keys[i]] !== 'object') {
           current[keys[i]] = {};
         }
         current = current[keys[i]];
       }
-      var lastKey = keys[keys.length - 1];
-      current[lastKey] = value;
-      // Re-render affected cards
-      CC.renderCards();
-      // Show toast feedback
-      CC.showToast('Redo performed', 'info');
+      current[keys[keys.length - 1]] = value;
+    },
+
+    _renderField: function (path) {
+      var input = document.querySelector('[data-path="' + path.replace(/"/g, '\\"') + '"]');
+      if (!input) { CC.renderCards(); return; }
+      if (input.type === 'color') {
+        input.value = CC._getNestedValue(CC.state.settings, path) || '';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      } else if (input.tagName === 'SELECT') {
+        input.value = CC._getNestedValue(CC.state.settings, path) || '';
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      } else {
+        input.value = CC._getNestedValue(CC.state.settings, path) || '';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    },
+
+    _getNestedValue: function (obj, path) {
+      var keys = path.split('.');
+      var current = obj;
+      for (var i = 0; i < keys.length; i++) {
+        if (current == null) return undefined;
+        current = current[keys[i]];
+      }
+      return current;
+    },
+
+    _bindUndoRedo: function () {
+      var undoBtns = document.querySelectorAll('.vbb-cc-undo-btn');
+      var redoBtns = document.querySelectorAll('.vbb-cc-redo-btn');
+      for (var i = 0; i < undoBtns.length; i++) {
+        (function (btn) {
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            CC.undo();
+            CC._updateUndoRedoButtons();
+          });
+        })(undoBtns[i]);
+      }
+      for (var j = 0; j < redoBtns.length; j++) {
+        (function (btn) {
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            CC.redo();
+            CC._updateUndoRedoButtons();
+          });
+        })(redoBtns[j]);
+      }
+      CC._updateUndoRedoButtons();
+    },
+
+    _updateUndoRedoButtons: function () {
+      var allUndo = document.querySelectorAll('.vbb-cc-undo-btn');
+      var allRedo = document.querySelectorAll('.vbb-cc-redo-btn');
+      for (var i = 0; i < allUndo.length; i++) {
+        allUndo[i].disabled = (CC.state.undoRedoStack.length === 0);
+      }
+      for (var j = 0; j < allRedo.length; j++) {
+        allRedo[j].disabled = (CC.state.redoStack.length === 0);
+      }
+    },
+
+    renderComparisonButton: function () {
+      var compareBtn = document.getElementById('vbb-cc-compare-btn');
+      if (!compareBtn) return;
+      var savedMode = localStorage.getItem('vbb-cc-comparison-mode');
+      CC.state.comparisonMode = savedMode === 'before' ? 'before' : 'after';
+      if (CC.state.comparisonMode === 'before') {
+        compareBtn.classList.add('vbb-cc-compare-btn--active');
+        compareBtn.setAttribute('aria-pressed', 'true');
+      } else {
+        compareBtn.classList.remove('vbb-cc-compare-btn--active');
+        compareBtn.setAttribute('aria-pressed', 'false');
+      }
+      compareBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        CC.toggleComparisonMode();
+      });
+    },
+
+    toggleComparisonMode: function () {
+      CC.state.comparisonMode = CC.state.comparisonMode === 'after' ? 'before' : 'after';
+      localStorage.setItem('vbb-cc-comparison-mode', CC.state.comparisonMode);
+      CC._renderComparisonButton();
+      CC.refreshPreview();
+    },
+
+    _renderComparisonButton: function () {
+      var compareBtn = document.getElementById('vbb-cc-compare-btn');
+      if (!compareBtn) return;
+      if (CC.state.comparisonMode === 'before') {
+        compareBtn.classList.add('vbb-cc-compare-btn--active');
+        compareBtn.setAttribute('aria-pressed', 'true');
+      } else {
+        compareBtn.classList.remove('vbb-cc-compare-btn--active');
+        compareBtn.setAttribute('aria-pressed', 'false');
+      }
     },
 
     _dismissToast: function (toast) {
@@ -950,12 +1067,14 @@
     onFieldChange: function (path, value, castToBool) {
       var keys = path.split('.');
       var current = CC.state.settings;
+      var oldVal;
       for (var i = 0; i < keys.length - 1; i++) {
         if (!current[keys[i]] || typeof current[keys[i]] !== 'object') {
           current[keys[i]] = {};
         }
         current = current[keys[i]];
       }
+      oldVal = current[keys[keys.length - 1]];
       var lastKey = keys[keys.length - 1];
       current[lastKey] = castToBool ? !!value : value;
       // LOG: hero data on change
@@ -969,14 +1088,11 @@
       // than palette/color hex values changed, the next _finishSave MUST
       // regenerate + reload to pick up fresh baked HTML.
       if (path.indexOf('palettes.') === 0 || path.indexOf('colors.') === 0) {
-        // Pure palette/color hex change — track for undo/redo
-        CC.undoRedoStack.push({ path: path, value: CC.state.settings });
-        // Keep only last 5 entries
-        if (CC.undoRedoStack.length > 5) {
-          CC.undoRedoStack.shift();
+        CC.state.undoRedoStack.push({ path: path, oldValue: oldVal, newValue: current[lastKey] });
+        if (CC.state.undoRedoStack.length > 5) {
+          CC.state.undoRedoStack.shift();
         }
-        // Clear redo stack on new color change
-        CC.redoStack = [];
+        CC.state.redoStack = [];
       } else {
         CC._needsRegeneration = true;
       }
@@ -987,7 +1103,7 @@
       }
 
       // Undo stack size limit notification (optional)
-      if (CC.undoRedoStack.length >= 5) {
+      if (CC.state.undoRedoStack.length >= 5) {
         // Maximum reached, oldest will be dropped on next change
       }
 
@@ -1109,7 +1225,13 @@
       );
 
       // Colors Card
-      html += '<div class="vbb-cc-card" data-card="colors"><h2>Colors</h2><p class="description">Light &amp; Dark palette — edit any swatch.</p>' + CC.renderColorGroups(s) + '</div>';
+      html += '<div class="vbb-cc-card vbb-cc-card--minimized" data-card="colors">' +
+        '<div class="vbb-cc-card-header" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(0,0,0,0.02);border-radius:8px;">' +
+          '<div><h2 style="margin:0;font-size:1rem;">Colors</h2><p class="description" style="margin:2px 0 0;font-size:0.8rem;color:#666;">Light &amp; Dark palette — edit any swatch.</p></div>' +
+          '<button type="button" class="vbb-cc-toggle-btn" aria-label="Expandir/Colapsar" style="background:none;border:none;cursor:pointer;font-size:1.1rem;padding:4px 8px;transform:rotate(-90deg);transition:transform 0.2s;">▼</button>' +
+        '</div>' +
+        '<div class="vbb-cc-card-body" style="display:none;padding-top:12px;">' + CC.renderColorGroups(s) + '</div>' +
+      '</div>';
 
       // Typography Card
       html += CC.buildCard(
@@ -1178,12 +1300,12 @@ CC._initExtras();
 
     buildCard: function (title, description, body) {
       return (
-        '<div class="vbb-cc-card"><h2>' +
-        title +
-        '</h2><p class="description">' +
-        description +
-        '</p>' +
-        body +
+        '<div class="vbb-cc-card vbb-cc-card--minimized">' +
+          '<div class="vbb-cc-card-header" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(0,0,0,0.02);border-radius:8px;">' +
+            '<div><h2 style="margin:0;font-size:1rem;">' + title + '</h2><p class="description" style="margin:2px 0 0;font-size:0.8rem;color:#666;">' + description + '</p></div>' +
+            '<button type="button" class="vbb-cc-toggle-btn" aria-label="Expandir/Colapsar" style="background:none;border:none;cursor:pointer;font-size:1.1rem;padding:4px 8px;transform:rotate(-90deg);transition:transform 0.2s;">▼</button>' +
+          '</div>' +
+          '<div class="vbb-cc-card-body" style="display:none;padding-top:12px;">' + body + '</div>' +
         '</div>'
       );
     },
@@ -1234,13 +1356,21 @@ CC._initExtras();
     _reRenderColorsCard: function () {
       var card = document.querySelector('.vbb-cc-card[data-card="colors"]');
       if (!card) return;
+      var isExpanded = card.classList.contains('vbb-cc-card--expanded');
       var s = CC.state.settings;
       var newCard = document.createElement('div');
-      newCard.className = 'vbb-cc-card';
+      newCard.className = 'vbb-cc-card ' + (isExpanded ? 'vbb-cc-card--expanded' : 'vbb-cc-card--minimized');
       newCard.setAttribute('data-card', 'colors');
-      newCard.innerHTML = '<h2>Colors</h2><p class="description">Light &amp; Dark palette — edit any swatch.</p>' + CC.renderColorGroups(s);
+      var displayStyle = isExpanded ? 'block' : 'none';
+      var transformStyle = isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)';
+      newCard.innerHTML = 
+        '<div class="vbb-cc-card-header" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(0,0,0,0.02);border-radius:8px;">' +
+          '<div><h2 style="margin:0;font-size:1rem;">Colors</h2><p class="description" style="margin:2px 0 0;font-size:0.8rem;color:#666;">Light &amp; Dark palette — edit any swatch.</p></div>' +
+          '<button type="button" class="vbb-cc-toggle-btn" aria-label="Expandir/Colapsar" style="background:none;border:none;cursor:pointer;font-size:1.1rem;padding:4px 8px;transform:' + transformStyle + ';transition:transform 0.2s;">▼</button>' +
+        '</div>' +
+        '<div class="vbb-cc-card-body" style="display:' + displayStyle + ';padding-top:12px;">' + CC.renderColorGroups(s) + '</div>';
       card.parentNode.replaceChild(newCard, card);
-      // Re-bind change events on the new color inputs
+      CC.bindCardEvents();
       var newInputs = newCard.querySelectorAll('input[type="color"], input[type="text"][data-path]');
       newInputs.forEach(function (el) {
         if (el.type === 'color') {
@@ -2867,6 +2997,32 @@ CC._initExtras();
         });
       }
 
+      // Collapsible cards toggle (minimized by default)
+      var headers = document.querySelectorAll('.vbb-cc-card-header');
+      headers.forEach(function (header) {
+        if (header.dataset.boundToggle) return;
+        header.dataset.boundToggle = 'true';
+        header.addEventListener('click', function (e) {
+          var card = header.closest('.vbb-cc-card');
+          if (!card) return;
+          var body = card.querySelector('.vbb-cc-card-body');
+          var btn = card.querySelector('.vbb-cc-toggle-btn');
+          if (!body) return;
+
+          if (body.style.display === 'none') {
+            body.style.display = 'block';
+            card.classList.remove('vbb-cc-card--minimized');
+            card.classList.add('vbb-cc-card--expanded');
+            if (btn) btn.style.transform = 'rotate(0deg)';
+          } else {
+            body.style.display = 'none';
+            card.classList.add('vbb-cc-card--minimized');
+            card.classList.remove('vbb-cc-card--expanded');
+            if (btn) btn.style.transform = 'rotate(-90deg)';
+          }
+        });
+      });
+
       var cards = document.querySelectorAll('.vbb-cc-card');
 
       cards.forEach(function (card) {
@@ -3671,6 +3827,15 @@ CC._initExtras();
         lines.push('--vbb-pro-content-width:' + (s.layout.contentWidth || '1180px') + ';');
         lines.push('--vbb-pro-wide-width:' + (s.layout.wideWidth || '1440px') + ';');
         lines.push('--vbb-pro-radius:' + (s.layout.radius || '24px') + ';');
+        lines.push('--vbb-pro-shadow:' + CC._shadowValue(s.layout.shadow) + ';');
+        lines.push('--vbb-pro-section-spacing:' + CC._spacingValue(s.layout.spacingScale) + ';');
+        var buttonStyle = (s.buttons && s.buttons.style) || 'default';
+        lines.push('--vbb-pro-button-radius:' + ('pill' === buttonStyle ? '999px' : ('square' === buttonStyle ? '0px' : (s.layout.radius || '24px'))) + ';');
+        lines.push('--vbb-pro-button-padding:' + (s.buttons && s.buttons.padding ? s.buttons.padding : '.65rem 1.4rem') + ';');
+        lines.push('--vbb-pro-button-shadow:' + (s.buttons && s.buttons.shadow ? s.buttons.shadow : 'none') + ';');
+        lines.push('--vbb-pro-text-color:' + (palette.text || '#1a1a2e') + ';');
+        lines.push('--vbb-pro-heading-color:' + (palette.text || '#1a1a2e') + ';');
+        lines.push('--vbb-pro-glow-intensity:8px;');
       }
       lines.push('}');
 
@@ -3679,6 +3844,42 @@ CC._initExtras();
 
       // Non-standard slugs — class-level overrides
       lines.push('.has-background-background-color{background-color:var(--vbb-pro-background)!important}.has-surface-background-color{background-color:var(--vbb-pro-surface)!important}');
+
+      // Button styles
+      lines.push('.wp-block-button__link,.vbb-pro-button{border-radius:var(--vbb-pro-button-radius,6px);background:var(--vbb-pro-secondary);color:var(--vbb-pro-primary);padding:var(--vbb-pro-button-padding,.65rem 1.4rem);transition:box-shadow .3s ease;box-shadow:var(--vbb-pro-button-shadow,0 2px 8px rgba(0,0,0,.15));font-weight:500;text-decoration:none;display:inline-block;line-height:1.4}');
+      lines.push('.wp-block-button__link:hover,.wp-block-button__link:focus-visible,.vbb-pro-button:hover,.vbb-pro-button:focus-visible{box-shadow:0 0 0 var(--vbb-pro-glow-intensity,8px) color-mix(in srgb,var(--vbb-pro-primary) 60%,transparent);outline:none}');
+      lines.push('.wp-block-button__link[disabled],.vbb-pro-button[disabled]{box-shadow:none!important;cursor:default;pointer-events:none}');
+
+      // Typography — body and heading font families
+      lines.push('body,.vbb-pro-content{font-family:var(--vbb-pro-body-font,inherit);color:var(--vbb-pro-text-color,var(--vbb-pro-text));background:var(--vbb-pro-background)}');
+      lines.push('h1,h2,h3,h4,h5,h6,.vbb-pro-heading{font-family:var(--vbb-pro-heading-font,inherit);color:var(--vbb-pro-heading-color,var(--vbb-pro-text))}');
+
+      // Global content widths
+      lines.push('.wp-site-blocks > *,.vbb-pro-content{--wp--style--global--content-size:var(--vbb-pro-content-width,1180px);--wp--style--global--wide-size:var(--vbb-pro-wide-width,1440px)}');
+      lines.push('.vbb-pro-wide{max-width:var(--vbb-pro-wide-width,1440px);margin-left:auto;margin-right:auto;padding-left:clamp(1rem,3vw,2rem);padding-right:clamp(1rem,3vw,2rem)}');
+
+      // Card styles
+      lines.push('.vbb-pro-card,.wp-block-group.is-style-card{border-radius:var(--vbb-pro-radius,24px);box-shadow:var(--vbb-pro-shadow,0 12px 34px rgba(15,23,36,.12));overflow:hidden;transition:box-shadow .3s ease}');
+      lines.push('.vbb-pro-card:hover,.wp-block-group.is-style-card:hover{box-shadow:var(--vbb-pro-shadow,0 12px 34px rgba(15,23,36,.12)),0 0 0 1px rgba(0,0,0,.04)}');
+
+      // Nav type classes
+      lines.push('.vbb-nav-sticky .wp-block-group:has(.wp-block-navigation){position:sticky;top:0;z-index:100;background:var(--vbb-pro-background);box-shadow:0 2px 12px rgba(0,0,0,.08)}');
+      lines.push('.vbb-nav-hamburger .wp-block-navigation__responsive-container-open{display:flex!important}');
+      lines.push('.vbb-nav-hamburger .wp-block-navigation__responsive-container:not(.is-menu-open){display:none!important}');
+
+      // Nav style classes
+      lines.push('.vbb-nav-style-modern .wp-block-navigation-item__content{position:relative;padding-bottom:2px}');
+      lines.push('.vbb-nav-style-modern .wp-block-navigation-item__content::after{content:"";position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--vbb-pro-primary);transition:width .3s ease}');
+      lines.push('.vbb-nav-style-modern .wp-block-navigation-item__content:hover::after,.vbb-nav-style-modern .current-menu-item .wp-block-navigation-item__content::after{width:100%}');
+      lines.push('.vbb-nav-style-minimal .wp-block-navigation-item__content{opacity:.75;transition:opacity .3s ease}');
+      lines.push('.vbb-nav-style-minimal .wp-block-navigation-item__content:hover{opacity:1}');
+      lines.push('.vbb-nav-style-classic .wp-block-navigation .wp-block-navigation__container{gap:0!important}');
+      lines.push('.vbb-nav-style-classic .wp-block-navigation-item{padding:.5rem 1rem;border-right:1px solid rgba(0,0,0,.08)}');
+      lines.push('.vbb-nav-style-classic .wp-block-navigation-item:last-child{border-right:none}');
+      lines.push('.vbb-nav-style-pill .wp-block-navigation-item__content{background:var(--vbb-pro-surface);padding:.35rem 1rem!important;border-radius:999px;transition:background .3s ease,color .3s ease}');
+      lines.push('.vbb-nav-style-pill .wp-block-navigation-item__content:hover{background:var(--vbb-pro-primary);color:var(--vbb-pro-background)}');
+      lines.push('.vbb-nav-cta{display:inline-flex;align-items:center;padding:.45rem 1.1rem;border-radius:var(--vbb-pro-button-radius,6px);font-weight:600;font-size:.9rem;text-decoration:none;transition:opacity .2s;white-space:nowrap;line-height:1.4}');
+      lines.push('.vbb-nav-cta:hover{opacity:.85}');
 
       // Per-block scoped vars
       if (s.blocks) {
@@ -3707,10 +3908,39 @@ CC._initExtras();
         if (fc.linkColor) fVars.push('--vbb-footer-link:' + fc.linkColor);
         if (fc.linkHoverColor) fVars.push('--vbb-footer-link-hover:' + fc.linkHoverColor);
         if (fc.bottomBarBgColor) fVars.push('--vbb-footer-bottom-bg:' + fc.bottomBarBgColor);
-        lines.push('.vbb-site-footer{' + fVars.join(';') + '}');
+        // Bind footer tokens to CSS custom properties on :root so they cascade
+        lines.push('.vbb-site-footer :root{' + fVars.join(';') + '}');
       }
 
       return lines.join('');
+    },
+
+    buildCssVarsFromSettings: function (settings) {
+      if (!settings) return '';
+      var original = CC.state.settings;
+      CC.state.settings = settings;
+      var result = CC.buildCssVars();
+      CC.state.settings = original;
+      return result;
+    },
+
+    _shadowValue: function (shadow) {
+      var map = {
+        'none': 'none',
+        'medium': '0 18px 48px rgba(15,23,36,.18)',
+        'strong': '0 24px 72px rgba(15,23,36,.28)',
+        'soft': '0 12px 34px rgba(15,23,36,.12)',
+      };
+      return map[shadow] || map['soft'];
+    },
+
+    _spacingValue: function (spacing) {
+      var map = {
+        'compact': 'clamp(1.75rem, 4vw, 3.5rem)',
+        'wide': 'clamp(4rem, 8vw, 7rem)',
+        'comfortable': 'clamp(3rem, 6vw, 5rem)',
+      };
+      return map[spacing] || map['comfortable'];
     },
 
     _blockKeyToSectionClass: function (key) {
@@ -3727,9 +3957,23 @@ CC._initExtras();
         'logoCloud': 'logo-cloud',
         'pricing': 'pricing-tables',
         'team': 'team',
+        'stats': 'stats',
+        'gallery': 'gallery',
+        'video': 'video',
+        'newsletter': 'newsletter',
+        'map': 'map',
+        'comparison': 'comparison',
+        'blog': 'blog',
       };
       var suffix = map[key] || key.replace(/_/g, '-');
-      return '.vbb-section-' + suffix;
+      // Page-scoped: when a page is selected in the CC context, wrap block selectors
+      // under .vbb-pro-page-wrapper so the preview iframe reflects root-level
+      // page-scoped styling (rather than bare .vbb-section-* selectors).
+      var selector = '.vbb-section-' + suffix;
+      if (CC.state && CC.state.currentPageId) {
+        selector = '.vbb-pro-page-wrapper ' + selector;
+      }
+      return selector;
     },
 
     /* ── Section Key Info Map ──────────────────
@@ -3753,7 +3997,10 @@ CC._initExtras();
       'gallery':           { label: 'Gallery',           blockKey: 'gallery',        cssSuffix: 'gallery' },
       'video':             { label: 'Video',             blockKey: 'video',          cssSuffix: 'video' },
       'newsletter':        { label: 'Newsletter',        blockKey: 'newsletter',     cssSuffix: 'newsletter' },
-      'problem':           { label: 'Problem',           blockKey: null,             cssSuffix: 'problem' },
+      'map':               { label: 'Map',               blockKey: 'map',            cssSuffix: 'map' },
+      'comparison':        { label: 'Comparison',        blockKey: 'comparison',     cssSuffix: 'comparison' },
+      'blog':              { label: 'Blog',              blockKey: 'blog',           cssSuffix: 'blog' },
+      'problem':           { label: 'Problem',           blockKey: 'problem',        cssSuffix: 'problem' },
     },
 
     /* ── kebab-case → Title Case ───────────────── */
@@ -4264,7 +4511,7 @@ CC._initExtras();
       if (e) e.preventDefault();
       CC.saveSettings(function () {
         // Save profile via XHR — no page reload, preserves currentPageId.
-        var profileName = (CC.state.settings.profileName || 'Profile ' + new Date().toLocaleDateString());
+        var profileName = 'Profile ' + new Date().toLocaleDateString();
         CC.showStatus('saving', 'Saving profile\u2026');
         CC.xhr(
           CC.state.ajaxUrl + 'profile',
@@ -4439,19 +4686,8 @@ CC._initExtras();
     var self = this;
 
     document.addEventListener('keydown', function (e) {
-      var target = e.target;
-      // Disable keyboard shortcuts when focused on input fields (color pickers, text inputs)
-      if (target.tagName === 'INPUT') {
-        var type = target.getAttribute('type');
-        if (type === 'color' || type === 'text') {
-          // Allow Ctrl+S to be handled by the input, but block Ctrl+Z
-          if (e.ctrlKey || e.metaKey) {
-            e.preventDefault();
-            return;
-          }
-        }
-      }
-      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT') {
+      // Disable keyboard shortcuts when focused on input fields (color pickers, text inputs, selects)
+      if (self._isInputFocused()) {
         if (e.key === 'Escape') {
           self._closeAllModals();
         }
@@ -4497,24 +4733,23 @@ CC._initExtras();
         if (preview) preview.focus();
         return;
       }
-      // Ctrl+Z = Undo (from 5-action color stack or full settings snapshot)
+      // Ctrl+Z = Undo
       if (isMeta && !isShift && e.key === 'z') {
         e.preventDefault();
-        // Use the 5-action color undo stack if available, otherwise fall back to full settings snapshot
-        if (CC.undoRedoStack.length > 0) {
+        if (CC.state.undoRedoStack.length > 0) {
           CC.undo();
         } else {
-          CC._undo();
+          CC.showToast('No actions to undo', 'info');
         }
         return;
       }
-      // Ctrl+Shift+Z = Redo (from 5-action color stack or full settings snapshot)
+      // Ctrl+Shift+Z = Redo
       if (isMeta && isShift && e.key === 'z') {
         e.preventDefault();
-        if (CC.redoStack.length > 0) {
+        if (CC.state.redoStack.length > 0) {
           CC.redo();
         } else {
-          CC._redo();
+          CC.showToast('No actions to redo', 'info');
         }
         return;
       }
@@ -4691,7 +4926,20 @@ CC._initExtras();
   // Exponer CC globalmente para debug
   window.CC = window.vbbCommandCenter;
 
+  /* ── Undo/Redo Initialization ───────────────────── */
+  // Deprecated: use _bindUndoRedo() / _updateUndoRedoButtons() from init.
+  CC._initUndoRedoButtons = function () {
+    CC._updateUndoRedoButtons();
+  };
+
+  /* ── Comparison Mode Initialization ──────────────── */
+  // Deprecated: use renderComparisonButton() from init.
+  CC._initComparisonMode = function () {
+    CC.renderComparisonButton();
+  };
+
   var boot = function() {
+    console.log('--- VBB COMMAND CENTER BOOT TRIGGERED ---');
     try {
       CC.init();
     } catch (err) {
@@ -4699,73 +4947,12 @@ CC._initExtras();
     }
   };
 
-  // Initialize undo/redo and comparison on load
-  CC._initUndoRedoButtons();
-  CC._initComparisonMode();
-
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
   } else {
     boot();
   }
 })();
-
-/* ── Undo/Redo Initialization ───────────────────── */
-CC._initUndoRedoButtons = function () {
-  var undoBtn = CC.el.undoBtn;
-  var redoBtn = CC.el.redoBtn;
-  if (!undoBtn || !redoBtn) return;
-  // Enable/disable based on stack state
-  if (CC.undoRedoStack.length === 0) {
-    undoBtn.disabled = true;
-  } else {
-    undoBtn.disabled = false;
-  }
-  if (CC.redoStack.length === 0) {
-    redoBtn.disabled = true;
-  } else {
-    redoBtn.disabled = false;
-  }
-};
-
-/* ── Comparison Mode Initialization ──────────────── */
-CC._initComparisonMode = function () {
-  var compareBtn = document.getElementById('vbb-cc-compare-btn');
-  var cc = CC || window.vbbCommandCenter;
-  if (!compareBtn) return;
-  // Restore saved mode or default to 'after'
-  var savedMode = localStorage.getItem('vbb-cc-comparison-mode');
-  cc.state.comparisonMode = savedMode === 'before' ? 'before' : 'after';
-  // Update button visual state
-  if (cc.state.comparisonMode === 'before') {
-    compareBtn.classList.add('vbb-cc-compare-btn--active');
-  } else {
-    compareBtn.classList.remove('vbb-cc-compare-btn--active');
-  }
-  // Add click handler
-  compareBtn.addEventListener('click', function () {
-    cc.state.comparisonMode = cc.state.comparisonMode === 'after' ? 'before' : 'after';
-    localStorage.setItem('vbb-cc-comparison-mode', cc.state.comparisonMode);
-    // Update button visual state
-    if (cc.state.comparisonMode === 'before') {
-      compareBtn.classList.add('vbb-cc-compare-btn--active');
-    } else {
-      compareBtn.classList.remove('vbb-cc-compare-btn--active');
-    }
-    // Switch preview iframe state
-    var iframe = document.getElementById('vbb-cc-iframe');
-    if (iframe) {
-      var allowedOrigin = window.location.origin;
-      if (cc.state.comparisonMode === 'before') {
-        // Send saved CSS vars via postMessage
-        var cssVars = cc.buildCssVars();
-        if (cssVars && iframe.contentWindow) {
-          iframe.contentWindow.postMessage({ type: 'vbb:css-vars', styleTag: cssVars }, allowedOrigin);
-        }
-      }
-    }
-  });
-};
 
 /* ── Keyboard Shortcuts Fix ──────────────────────── */
 CC._fixKeyboardShortcuts = function () {
@@ -4784,25 +4971,26 @@ CC._fixKeyboardShortcuts = function () {
 /* ── Export/Import Profile Functions ───────────── */
 CC.exportProfile = function () {
   var settings = CC.state.settings || {};
-  var profileName = settings.profileName || 'Pro Elite Profile';
-  var data = {
-    profileName: profileName,
-    colorMode: settings.colorMode || 'light',
-    palettes: settings.palettes || { light: {}, dark: {} },
-    typography: settings.typography || { heading: '', body: '' },
-    layout: settings.layout || { contentWidth: '', wideWidth: '', radius: '', shadow: '', spacingScale: '' },
-    blocks: settings.blocks || {},
-    buttons: settings.buttons || {},
-    exportedAt: new Date().toISOString(),
-    theme: 'vertical-block-base',
-    profileType: 'pro-elite-settings',
-    schemaVersion: '0.3.2'
+  var profile = {
+    profileName:  settings.profileName || 'Custom',
+    settings: {
+      colorMode: settings.colorMode || 'light',
+      palettes:  settings.palettes  || { light: {}, dark: {} },
+      typography: settings.typography || { heading: '', body: '' },
+      layout:    settings.layout    || { contentWidth: '', wideWidth: '', radius: '', shadow: '', spacingScale: '' },
+      blocks:    settings.blocks    || {},
+      buttons:   settings.buttons   || {},
+    },
+    exportedAt:   new Date().toISOString(),
+    theme:        'orkestone',
+    profileType:  'elite',
+    schemaVersion:'1.0.0',
   };
-  var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  var blob = new Blob([JSON.stringify(profile, null, 2)], { type: 'application/json' });
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
   a.href = url;
-  a.download = 'vbb-pro-profile-' + new Date().toISOString().replace(/[:.]/g, '').slice(0, 15) + '.json';
+  a.download = 'orkestone-profile-' + new Date().toISOString().replace(/[:.]/g, '').slice(0, 15) + '.json';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -4810,10 +4998,28 @@ CC.exportProfile = function () {
   CC.showToast('Perfil exportado exitosamente', 'success');
 };
 
-CC.importProfile = function () {
-  var fileInput = document.createElement('input');
-  fileInput.type = 'file';
-  fileInput.accept = '.json';
+CC._validateProfileJSON = function (data) {
+      if (!data || typeof data !== 'object') return 'Invalid JSON';
+      if (!data.settings || typeof data.settings !== 'object') return 'Missing settings object';
+      var s = data.settings;
+      var required = ['colorMode', 'palettes', 'typography', 'layout', 'blocks', 'buttons'];
+      for (var i = 0; i < required.length; i++) {
+        if (!(required[i] in s)) return 'Missing required field: settings.' + required[i];
+      }
+      if (!s.palettes || typeof s.palettes !== 'object') return 'Invalid palettes';
+      if (!s.palettes.light || typeof s.palettes.light !== 'object') return 'Missing palettes.light';
+      if (!s.palettes.dark || typeof s.palettes.dark !== 'object') return 'Missing palettes.dark';
+      return null; // valid
+    };
+
+    CC.importProfile = function () {
+  var fileInput = document.getElementById('vbb-cc-import-file');
+  if (!fileInput) {
+    fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+  }
+  fileInput.value = '';
   fileInput.click();
   fileInput.addEventListener('change', function (e) {
     var file = e.target.files[0];
@@ -4825,13 +5031,12 @@ CC.importProfile = function () {
         CC.showToast('El JSON no es válido', 'error');
         return;
       }
-      // Validate required fields
-      var hasSettings = data.settings && typeof data.settings === 'object';
-      if (!hasSettings) {
-        CC.showToast('El JSON no es válido: falta settings', 'error');
+      var validationError = CC._validateProfileJSON(data);
+      if (validationError) {
+        CC.showToast('Perfil inválido: ' + validationError, 'error');
         return;
       }
-      // Apply via AJAX
+      // Apply via AJAX using the settings sub-object
       CC.showStatus('saving', 'Importando configuración…');
       CC.xhr(
         CC.state.ajaxUrl + 'vertical-settings',

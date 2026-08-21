@@ -266,8 +266,7 @@ function vbb_pro_default_settings() {
 	}
 
 	return array(
-		'profileName' => 'Default Pro Elite',
-		'colorMode'   => 'light',
+'colorMode'   => 'light',
 		'siteConfig'  => array(
 			'type' => 'landing',
 		),
@@ -430,7 +429,6 @@ function vbb_pro_sanitize_settings( $settings ) {
 	}
 
 	$out = $defaults;
-	$out['profileName'] = sanitize_text_field( $settings['profileName'] ?? $defaults['profileName'] );
 	$out['colorMode']   = in_array( $settings['colorMode'] ?? 'light', array( 'light', 'dark', 'auto' ), true ) ? $settings['colorMode'] : 'light';
 	
 	$out['siteConfig'] = array(

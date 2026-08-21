@@ -346,6 +346,26 @@ function vbb_import_vertical_media( $limit = 25 ) {
 }
 
 /**
+ * Remap remote source URLs in block content to local attachment URLs.
+ *
+ * Accepts a source_url → attachment_url map built by
+ * vbb_import_vertical_media_with_placeholders() and rewrites every
+ * occurrence in $content in a single strtr() pass.  Source URLs not
+ * present in the map are left completely unchanged.
+ *
+ * @param string $content Block post_content string.
+ * @param array  $url_map Mapping of original remote URL => local attachment URL.
+ * @return string Remapped content (or original when map is empty).
+ */
+function vbb_remap_block_urls( $content, $url_map ) {
+	if ( empty( $url_map ) || ! is_string( $content ) ) {
+		return $content;
+	}
+
+	return strtr( $content, $url_map );
+}
+
+/**
  * Import media URLs declared by active vertical into Media Library,
  * creating SVG placeholder attachments on failure.
  *
@@ -354,11 +374,12 @@ function vbb_import_vertical_media( $limit = 25 ) {
  * from vbb_svg_placeholder() and marks it with _vbb_broken=1 and
  * _vbb_broken_url for audit in the import report.
  *
- * @param int   $limit  Maximum items to try in one execution (0 = no limit).
- * @param array $report Reference to the global import report accumulator.
+ * @param int   $limit    Maximum items to try in one execution (0 = no limit).
+ * @param array $report   Reference to the global import report accumulator.
+ * @param array $url_map  Reference to source_url → attachment URL map (populated in-place).
  * @return array Partial summary for this batch.
  */
-function vbb_import_vertical_media_with_placeholders( $limit = 25, &$report = array() ) {
+function vbb_import_vertical_media_with_placeholders( $limit = 25, &$report = array(), &$url_map = array() ) {
 	if ( ! function_exists( 'media_sideload_image' ) ) {
 		require_once ABSPATH . 'wp-admin/includes/media.php';
 		require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -385,6 +406,10 @@ function vbb_import_vertical_media_with_placeholders( $limit = 25, &$report = ar
 				'url' => $url,
 				'id'  => $existing_id,
 			);
+
+			// Deduplicated existing attachment: map source URL → stored attachment URL.
+			$url_map[ $url ] = wp_get_attachment_url( $existing_id );
+
 			continue;
 		}
 
@@ -407,10 +432,13 @@ function vbb_import_vertical_media_with_placeholders( $limit = 25, &$report = ar
 				);
 			} else {
 				$summary['imported'][] = array(
-					'url'        => $url,
-					'id'         => (int) $placeholder_id,
+					'url'            => $url,
+					'id'             => (int) $placeholder_id,
 					'is_placeholder' => true,
 				);
+
+				// Placeholder fallback: map source URL → placeholder attachment URL.
+				$url_map[ $url ] = wp_get_attachment_url( $placeholder_id );
 
 				$report['failed'][] = array(
 					'url'    => $url,
@@ -434,6 +462,9 @@ function vbb_import_vertical_media_with_placeholders( $limit = 25, &$report = ar
 		);
 
 		++$report['sideloaded'];
+
+		// Successful sideload: map source URL → newly stored attachment URL.
+		$url_map[ $url ] = wp_get_attachment_url( $attachment_id );
 	}
 
 	return $summary;
@@ -513,8 +544,10 @@ function vbb_resolve_navigation_page_ids( $items, $id_map ) {
 			'url'   => isset( $item['url'] ) ? esc_url_raw( $item['url'] ) : '',
 		);
 
-		// If url_slug is set and exists in the page map, use the resolved ID.
-		if ( isset( $item['url_slug'] ) && '' !== $item['url_slug'] ) {
+		// url_slug resolution flow:
+	// 1. If $item['url_slug'] exists and is in $page_id_map → set $item['object_id'] = $page_id_map[$url_slug], $item['kind'] = 'post-type'
+	// 2. Else → fallback: $item['kind'] = 'custom', $item['url'] preserved
+	if ( isset( $item['url_slug'] ) && '' !== $item['url_slug'] ) {
 			$slug = sanitize_title( $item['url_slug'] );
 
 			if ( isset( $id_map[ $slug ] ) ) {
@@ -585,6 +618,9 @@ function vbb_import_vertical_full( $vertical_key ) {
 		'failed'     => array(),
 	);
 
+	// URL map: source remote URL → local attachment URL, populated during media import.
+	$url_map = array();
+
 	// ---- 1. Load the target vertical config directly (not via cache). ----
 	$config = vbb_load_vertical_by_key( $vertical_key );
 
@@ -623,13 +659,18 @@ function vbb_import_vertical_full( $vertical_key ) {
 	vbb_invalidate_vertical_cache();
 
 	// ---- 4. Import media with placeholder fallback. ----
-	$media_result = vbb_import_vertical_media_with_placeholders( 0, $report );
+	$media_result = vbb_import_vertical_media_with_placeholders( 0, $report, $url_map );
 
 	// ---- 5. Generate pages with baked block content. ----
 	$sections_config = isset( $config['sections'] ) && is_array( $config['sections'] )
 		? $config['sections']
 		: array();
-	$pages_result    = vbb_generate_vertical_pages_from_baked( $config, $sections_config );
+	$pages_result    = vbb_generate_vertical_pages_from_baked( $config, $sections_config, $url_map );
+
+	// Compute remap stats from page generation result.
+	$urls_remapped   = isset( $pages_result['remap_replacements'] ) ? (int) $pages_result['remap_replacements'] : 0;
+	$remap_skipped   = array_values( array_unique( array_column( isset( $report['failed'] ) && is_array( $report['failed'] ) ? $report['failed'] : array(), 'url' ) ) );
+	unset( $pages_result['remap_replacements'] );
 
 	// ---- 6. Two-pass navigation: resolve page IDs, then build nav. ----
 	// After pages are created, build the slug→ID map so navigation items
@@ -648,6 +689,8 @@ function vbb_import_vertical_full( $vertical_key ) {
 	$report['pages_errors']           = count( $pages_result['errors'] );
 	$report['media_sideloaded']       = $report['sideloaded'];
 	$report['media_failed']           = count( $report['failed'] );
+	$report['urls_remapped_count']    = $urls_remapped;
+	$report['remap_skipped']          = $remap_skipped;
 	$report['woocommerce_configured'] = ! empty( $woocommerce_result['configured'] );
 	unset( $report['sideloaded'] );
 
@@ -760,18 +803,21 @@ function vbb_invalidate_vertical_cache() {
  * Unlike vbb_generate_vertical_pages(), this function:
  *   - Accepts an explicit config array (not just the active config).
  *   - Uses vbb_build_page_content_from_baked() instead of pattern refs.
+ *   - Remaps remote image URLs to local attachment URLs when $url_map is provided.
  *   - Sets _vbb_vertical meta on each created page.
  *   - Updates existing pages with matching slugs instead of skipping them.
  *
  * @param array $config          Full vertical config.
  * @param array $sections_config Top-level sections config.
+ * @param array $url_map         Optional. source_url → local attachment URL map.
  * @return array{
  *   created: array,
  *   updated: array,
- *   errors: string[]
+ *   errors: string[],
+ *   remap_replacements?: int
  * }
  */
-function vbb_generate_vertical_pages_from_baked( $config, $sections_config = array() ) {
+function vbb_generate_vertical_pages_from_baked( $config, $sections_config = array(), $url_map = array() ) {
 	$summary = array(
 		'created' => array(),
 		'updated' => array(),
@@ -791,6 +837,19 @@ function vbb_generate_vertical_pages_from_baked( $config, $sections_config = arr
 		}
 
 		$baked_content = vbb_build_page_content_from_baked( $page, $sections_config );
+
+		// Count how many map entries actually appear in this page's content (before rewrite).
+		$page_replacements = 0;
+
+		if ( ! empty( $url_map ) ) {
+			foreach ( $url_map as $src_url => $dst_url ) {
+				if ( false !== strpos( $baked_content, $src_url ) ) {
+					++$page_replacements;
+				}
+			}
+
+			$baked_content = vbb_remap_block_urls( $baked_content, $url_map );
+		}
 
 		$existing = get_page_by_path( $slug, OBJECT, 'page' );
 
@@ -825,6 +884,8 @@ function vbb_generate_vertical_pages_from_baked( $config, $sections_config = arr
 			'id'   => (int) $post_id,
 			'slug' => $slug,
 		);
+
+		$summary['remap_replacements'] = ( $summary['remap_replacements'] ?? 0 ) + $page_replacements;
 	}
 
 	return $summary;

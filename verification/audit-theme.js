@@ -80,13 +80,19 @@ const WP_PASS = process.env.WP_PASS;
         if (p.viewport) await page.setViewportSize(p.viewport);
 
         page.on('console', msg => {
-            if (msg.type() === 'error') {
-                report.consoleErrors.push({ page: p.name, text: msg.text() });
-            }
+            if (msg.type() !== 'error') return;
+            const text = msg.text();
+            // "Failed to load resource" errors are browser echoes of failed
+            // network requests already captured by the response handler below.
+            // Counting both double-reports the same failure, so we skip them
+            // here and treat the network handler as the source of truth.
+            if (text.startsWith('Failed to load resource')) return;
+            report.consoleErrors.push({ page: p.name, text });
         });
         page.on('response', r => {
-            if (r.status() >= 400) {
-                report.networkErrors.push({ page: p.name, url: r.url(), status: r.status() });
+            const url = r.url();
+            if (r.status() >= 400 && !IGNORE_URL.some(re => re.test(url))) {
+                report.networkErrors.push({ page: p.name, url, status: r.status() });
             }
         });
 

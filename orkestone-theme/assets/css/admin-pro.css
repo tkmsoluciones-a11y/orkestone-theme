@@ -126,8 +126,9 @@
 .vbb-cc-card .vbb-cc-field input[type=text],.vbb-cc-card .vbb-cc-field select{width:100%;padding:8px 10px;border:1px solid var(--vbb-admin-input-border,#c3c4c7);border-radius:8px;font-size:0.9rem;transition:border-color .2s}
 .vbb-cc-card .vbb-cc-field input[type=text]:focus,.vbb-cc-card .vbb-cc-field select:focus{border-color:var(--vbb-admin-accent,#2c5f2d);outline:none;box-shadow:0 0 0 3px var(--vbb-admin-focus-ring,rgba(44,95,45,.1))}
 .vbb-cc-card .vbb-cc-field input[type=color]{width:100%;height:42px;padding:2px;border:1px solid var(--vbb-admin-input-border,#c3c4c7);border-radius:8px;cursor:pointer}
-.vbb-cc-color-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.vbb-cc-color-grid .vbb-cc-field{margin-bottom:0}
+.vbb-cc-color-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));gap:14px;margin-top:8px}
+.vbb-cc-color-grid .vbb-cc-field{background:var(--vbb-admin-surface,#f8f9fa);border:1px solid var(--vbb-admin-border-light,#e2e8f0);border-radius:10px;padding:12px;margin-bottom:0;box-shadow:0 1px 3px rgba(0,0,0,0.02);transition:all 0.2s ease}
+.vbb-cc-color-grid .vbb-cc-field:hover{border-color:var(--vbb-admin-border,#cbd5e1);box-shadow:0 4px 12px rgba(0,0,0,0.05)}
 .vbb-cc-check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .vbb-cc-toggle{display:flex;align-items:center;gap:10px;background:var(--vbb-admin-surface,#f6f7f7);border:1px solid var(--vbb-admin-border-light,#eaeced);border-radius:10px;padding:10px 14px;cursor:pointer;transition:background .15s,box-shadow .15s}
 .vbb-cc-toggle:hover{background:var(--vbb-admin-border-light,#eaeced);border-color:var(--vbb-admin-border,#dcdcde)}
@@ -372,13 +373,17 @@
 	opacity:1;
 }
 .vbb-cc-status-bar--unsaved{
-  background:var(--vbb-admin-toast-info-bg,#f0f6fc);
-  color:#1d4c7a;
+  background:#fff3cd;
+  border-color:#ffc107;
+  color:#856404;
   opacity:1;
-  border-left:4px solid var(--vbb-admin-accent,#2c5f2d);
+  border-left:4px solid #ffc107;
 }
 .vbb-cc-status-bar--unsaved .vbb-cc-status-text{
   font-weight:600;
+}
+.vbb-cc-status-bar--unsaved .vbb-cc-status-text::after{
+  content:' (Unsaved changes)';
 }
 .vbb-cc-status-bar--unsaved .vbb-cc-status-unsaved-icon{
   flex-shrink:0;
@@ -1098,14 +1103,9 @@
 .vbb-cc-card .vbb-cc-field label{font-size:.78rem;margin-bottom:3px}
 .vbb-cc-card .vbb-cc-field input[type=text],
 .vbb-cc-card .vbb-cc-field select{padding:6px 8px;font-size:.82rem;border-radius:6px}
-.vbb-cc-card .vbb-cc-field input[type=color]{height:32px;border-radius:6px}
-.vbb-cc-color-grid{gap:6px}
 .vbb-cc-check-grid{gap:6px}
 .vbb-cc-toggle{padding:7px 10px;border-radius:8px}
 .vbb-cc-toggle .vbb-cc-toggle-label{font-size:.82rem}
-.vbb-cc-color-grid .vbb-cc-field input[type=color]{width:32px!important;height:32px}
-.vbb-cc-hex-input{width:70px;padding:4px 6px;font-size:.75rem}
-.vbb-cc-color-swatch{gap:4px}
 .vbb-cc-block-settings{padding:12px}
 .vbb-cc-block-header{padding:8px 12px}
 .vbb-cc-block-settings-inner{gap:10px}

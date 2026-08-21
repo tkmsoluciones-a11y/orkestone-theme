@@ -31,9 +31,25 @@ if ( ! function_exists( 'esc_url' ) ) {
 	}
 }
 
-if ( ! function_exists( 'sanitize_email' ) ) {
-	function sanitize_email( $email ) {
-		return filter_var( (string) $email, FILTER_SANITIZE_EMAIL );
+if ( ! function_exists( 'wp_json_encode' ) ) {
+	function wp_json_encode( $data, $options = 0, $depth = 512 ) {
+		return json_encode( $data, $options, $depth );
+	}
+}
+
+if ( ! function_exists( 'admin_url' ) ) {
+	function admin_url( $path = '' ) {
+		return 'http://localhost/wp-admin/' . ltrim( $path, '/' );
+	}
+}
+
+if ( ! function_exists( 'wp_nonce_field' ) ) {
+	function wp_nonce_field( $action = -1, $name = '_wpnonce', $referer = true, $echo = true ) {
+		$html = '<input type="hidden" name="' . $name . '" value="test-nonce" />';
+		if ( $echo ) {
+			echo $html;
+		}
+		return $html;
 	}
 }
 
@@ -159,6 +175,7 @@ if ( ! function_exists( 'get_pages' ) ) {
 
 // ── Load helpers (needed for vbb_esc_text, vbb_esc_url_value) ──────────────
 require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/block-registry.php';
 require_once __DIR__ . '/block-baker.php';
 
 // ── Test helpers ───────────────────────────────────────────────────────────
@@ -1222,6 +1239,29 @@ assert_no_notices(
 	},
 	'vbb_pro_regenerate_all_pages triggers no notices'
 );
+
+echo "\n=== Hero Style D & Legal Vertical Blocks ===\n";
+$hero_d_html = vbb_bake_hero_style_d( array(
+	'heading'        => 'Fight Back Against Unfair Criminal Charges',
+	'highlightText'  => 'Fight Back',
+	'subhead'        => 'Top defense lawyers in Philadelphia',
+	'primaryCtaText' => 'Call Now',
+	'primaryCtaUrl'  => 'tel:2672252545',
+	'secondaryCtaText' => 'Get Help Now',
+	'secondaryCtaUrl'  => '/contact',
+));
+assert_contains( $hero_d_html, 'vbb-hero-style-d', 'Hero Style D has wrapper class' );
+assert_contains( $hero_d_html, 'sqsrte-text-highlight', 'Hero Style D highlights text segment' );
+assert_contains( $hero_d_html, 'Call Now', 'Hero Style D has primary CTA' );
+
+$practice_grid_html = vbb_bake_practice_grid( array(
+	'heading' => 'Practice Areas',
+	'items'   => array(
+		array( 'title' => 'Violent Crimes', 'image' => 'img.jpg', 'url' => '/violent-crimes' ),
+	),
+));
+assert_contains( $practice_grid_html, 'vbb-practice-grid-section', 'Practice grid has wrapper class' );
+assert_contains( $practice_grid_html, 'Violent Crimes', 'Practice grid includes item title' );
 
 // Summary
 $total = $passed + $failed;

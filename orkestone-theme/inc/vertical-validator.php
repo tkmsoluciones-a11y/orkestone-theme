@@ -30,6 +30,10 @@ function vbb_validate_vertical_config( $config ) {
 		'contentModels',
 	);
 
+	// navigation.primary[].url_slug?: string (optional, pattern ^[a-z0-9]+(?:-[a-z0-9]+)*$)
+	// When present and matching a published page slug, the importer resolves it
+	// to kind:post-type + id; otherwise the item falls back to kind:custom.
+
 	foreach ( $required_top_level as $key ) {
 		if ( ! array_key_exists( $key, $config ) ) {
 			vbb_log_warning( 'Missing vertical field: ' . $key );

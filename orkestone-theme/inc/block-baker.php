@@ -1766,6 +1766,221 @@ function vbb_bake_divider( $data ) {
 	return $html;
 }
 
+/**
+ * Bake Problem / Solution section.
+ *
+ * @param array $data Section data (eyebrow, title, description, solution).
+ * @return string Gutenberg block markup.
+ */
+function vbb_bake_problem( $data ) {
+	$eyebrow     = isset( $data['eyebrow'] ) ? sanitize_text_field( $data['eyebrow'] ) : '';
+	$title       = isset( $data['title'] ) ? sanitize_text_field( $data['title'] ) : '';
+	$description = isset( $data['description'] ) ? wp_kses_post( $data['description'] ) : '';
+	$solution    = isset( $data['solution'] ) ? wp_kses_post( $data['solution'] ) : '';
+
+	$effect_class = vbb_get_effect_class( $data );
+
+	$html  = '<!-- wp:group {"className":"vbb-section vbb-section-problem' . $effect_class . '","layout":{"type":"constrained"}} -->';
+	$html .= "\n" . '<div class="wp-block-group vbb-section vbb-section-problem' . $effect_class . '">';
+
+	if ( $eyebrow ) {
+		$html .= "\n\t" . '<!-- wp:paragraph {"className":"vbb-eyebrow"} -->';
+		$html .= "\n\t" . '<p class="vbb-eyebrow">' . esc_html( $eyebrow ) . '</p>';
+		$html .= "\n\t" . '<!-- /wp:paragraph -->';
+	}
+
+	if ( $title ) {
+		$html .= "\n\t" . '<!-- wp:heading {"level":2} -->';
+		$html .= "\n\t" . '<h2 class="wp-block-heading">' . esc_html( $title ) . '</h2>';
+		$html .= "\n\t" . '<!-- /wp:heading -->';
+	}
+
+	if ( $description ) {
+		$html .= "\n\t" . '<!-- wp:paragraph -->';
+		$html .= "\n\t" . '<p>' . $description . '</p>';
+		$html .= "\n\t" . '<!-- /wp:paragraph -->';
+	}
+
+	if ( $solution ) {
+		$html .= "\n\t" . '<!-- wp:group {"className":"vbb-problem-solution","layout":{"type":"constrained"}} -->';
+		$html .= "\n\t" . '<div class="wp-block-group vbb-problem-solution">';
+		$html .= "\n\t\t" . '<!-- wp:heading {"level":3} -->';
+		$html .= "\n\t\t" . '<h3 class="wp-block-heading">Solución</h3>';
+		$html .= "\n\t\t" . '<!-- /wp:heading -->';
+		$html .= "\n\t\t" . '<!-- wp:paragraph -->';
+		$html .= "\n\t\t" . '<p>' . $solution . '</p>';
+		$html .= "\n\t\t" . '<!-- /wp:paragraph -->';
+		$html .= "\n\t" . '</div>';
+		$html .= "\n\t" . '<!-- /wp:group -->';
+	}
+
+	$html .= "\n" . '</div>';
+	$html .= "\n" . '<!-- /wp:group -->';
+
+	return $html;
+}
+
+/**
+ * Bake Hero Style D.
+ */
+function vbb_bake_hero_style_d( $data ) {
+	$heading        = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	$highlight      = isset( $data['highlightText'] ) ? esc_html( $data['highlightText'] ) : '';
+	$subhead        = isset( $data['subhead'] ) ? esc_html( $data['subhead'] ) : '';
+	$primary_text   = isset( $data['primaryCtaText'] ) ? esc_html( $data['primaryCtaText'] ) : '';
+	$primary_url    = isset( $data['primaryCtaUrl'] ) ? esc_url( $data['primaryCtaUrl'] ) : '#';
+	$secondary_text = isset( $data['secondaryCtaText'] ) ? esc_html( $data['secondaryCtaText'] ) : '';
+	$secondary_url  = isset( $data['secondaryCtaUrl'] ) ? esc_url( $data['secondaryCtaUrl'] ) : '#';
+	$bg_image       = isset( $data['bgImage'] ) ? esc_url( $data['bgImage'] ) : '';
+	$bg_video       = isset( $data['bgVideo'] ) ? esc_url( $data['bgVideo'] ) : '';
+
+	if ( $highlight && $heading ) {
+		$heading = str_replace( $highlight, '<span class="sqsrte-text-highlight">' . $highlight . '</span>', $heading );
+	}
+
+	$style_attr = $bg_image ? ' style="background-image: url(' . $bg_image . ');"' : '';
+
+	$html  = '<!-- wp:group {"className":"vbb-section vbb-hero-style-d"} -->';
+	$html .= '<div class="vbb-section vbb-hero-style-d"' . $style_attr . '>';
+	if ( $bg_video ) {
+		$html .= '<video autoplay muted loop playsinline class="vbb-hero-bg-video"><source src="' . $bg_video . '" type="video/mp4"></video>';
+	}
+	$html .= '<div class="vbb-hero-overlay"></div>';
+	$html .= '<div class="vbb-hero-content">';
+	if ( $heading ) {
+		$html .= '<h1 class="vbb-hero-title">' . $heading . '</h1>';
+	}
+	if ( $subhead ) {
+		$html .= '<p class="vbb-hero-subhead">' . $subhead . '</p>';
+	}
+	if ( $primary_text || $secondary_text ) {
+		$html .= '<div class="vbb-hero-ctas">';
+		if ( $primary_text ) {
+			$html .= '<a href="' . $primary_url . '" class="btn btn--primary sqs-button-element--primary">' . $primary_text . '</a>';
+		}
+		if ( $secondary_text ) {
+			$html .= '<a href="' . $secondary_url . '" class="btn btn--tertiary sqs-button-element--tertiary">' . $secondary_text . '</a>';
+		}
+		$html .= '</div>';
+	}
+	$html .= '</div>';
+	$html .= '</div>';
+	$html .= '<!-- /wp:group -->';
+	return $html;
+}
+
+/**
+ * Bake Trust Badges Strip.
+ */
+function vbb_bake_trust_badges_strip( $data ) {
+	$strip_image = isset( $data['stripImage'] ) ? esc_url( $data['stripImage'] ) : '';
+	$badges      = isset( $data['badges'] ) && is_array( $data['badges'] ) ? $data['badges'] : array();
+
+	$html  = '<!-- wp:group {"className":"vbb-section vbb-trust-badges-strip"} -->';
+	$html .= '<div class="vbb-section vbb-trust-badges-strip">';
+	if ( $strip_image ) {
+		$html .= '<div class="vbb-trust-badges-image"><img src="' . $strip_image . '" alt="Trust Badges"></div>';
+	} elseif ( ! empty( $badges ) ) {
+		$html .= '<div class="vbb-trust-badges-grid">';
+		foreach ( $badges as $b ) {
+			$name = isset( $b['name'] ) ? esc_html( $b['name'] ) : '';
+			$img  = isset( $b['image'] ) ? esc_url( $b['image'] ) : '';
+			$url  = isset( $b['url'] ) ? esc_url( $b['url'] ) : '';
+			$html .= '<div class="vbb-trust-badge-item">';
+			if ( $url ) {
+				$html .= '<a href="' . $url . '" target="_blank" rel="noopener">';
+			}
+			if ( $img ) {
+				$html .= '<img src="' . $img . '" alt="' . $name . '">';
+			} else {
+				$html .= '<span>' . $name . '</span>';
+			}
+			if ( $url ) {
+				$html .= '</a>';
+			}
+			$html .= '</div>';
+		}
+		$html .= '</div>';
+	}
+	$html .= '</div>';
+	$html .= '<!-- /wp:group -->';
+	return $html;
+}
+
+/**
+ * Bake Practice Areas Poster Grid.
+ */
+function vbb_bake_practice_grid( $data ) {
+	$heading = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	$items   = isset( $data['items'] ) && is_array( $data['items'] ) ? $data['items'] : array();
+
+	$html  = '<!-- wp:group {"className":"vbb-section vbb-practice-grid-section"} -->';
+	$html .= '<div class="vbb-section vbb-practice-grid-section">';
+	if ( $heading ) {
+		$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
+	}
+	if ( ! empty( $items ) ) {
+		$html .= '<div class="vbb-practice-grid-container">';
+		foreach ( $items as $item ) {
+			$title = isset( $item['title'] ) ? esc_html( $item['title'] ) : '';
+			$image = isset( $item['image'] ) ? esc_url( $item['image'] ) : '';
+			$url   = isset( $item['url'] ) ? esc_url( $item['url'] ) : '#';
+
+			$html .= '<div class="vbb-practice-poster-card">';
+			$html .= '<div class="vbb-practice-poster-media" style="background-image: url(' . $image . ');"></div>';
+			$html .= '<div class="vbb-practice-poster-overlay">';
+			$html .= '<a href="' . $url . '" class="btn btn--primary sqs-button-element--primary">' . $title . '</a>';
+			$html .= '</div>';
+			$html .= '</div>';
+		}
+		$html .= '</div>';
+	}
+	$html .= '</div>';
+	$html .= '<!-- /wp:group -->';
+	return $html;
+}
+
+/**
+ * Bake Contact Form + Map & BBB.
+ */
+function vbb_bake_contact_form_map( $data ) {
+	$heading = isset( $data['heading'] ) ? esc_html( $data['heading'] ) : '';
+	$address = isset( $data['address'] ) ? esc_html( $data['address'] ) : '';
+	$phone   = isset( $data['phone'] ) ? esc_html( $data['phone'] ) : '';
+	$email   = isset( $data['email'] ) ? esc_html( $data['email'] ) : '';
+
+	$html  = '<!-- wp:group {"className":"vbb-section vbb-contact-form-map"} -->';
+	$html .= '<div class="vbb-section vbb-contact-form-map">';
+	if ( $heading ) {
+		$html .= '<h2 class="vbb-section-title">' . $heading . '</h2>';
+	}
+	$html .= '<div class="vbb-contact-grid">';
+	$html .= '<div class="vbb-contact-info">';
+	if ( $address ) {
+		$html .= '<p class="vbb-contact-address"><strong>Address:</strong> ' . nl2br( $address ) . '</p>';
+	}
+	if ( $phone ) {
+		$html .= '<p class="vbb-contact-phone"><strong>Phone:</strong> <a href="tel:' . preg_replace( '/[^0-9+]/', '', $phone ) . '">' . $phone . '</a></p>';
+	}
+	if ( $email ) {
+		$html .= '<p class="vbb-contact-email"><strong>Email:</strong> <a href="mailto:' . $email . '">' . $email . '</a></p>';
+	}
+	$html .= '</div>';
+	$html .= '<div class="vbb-contact-form-wrap">';
+	$html .= '<form class="vbb-ajax-contact-form" method="POST">';
+	$html .= '<div class="vbb-form-field"><input type="text" name="name" placeholder="Your Name" required></div>';
+	$html .= '<div class="vbb-form-field"><input type="email" name="email" placeholder="Email Address" required></div>';
+	$html .= '<div class="vbb-form-field"><input type="tel" name="phone" placeholder="Phone Number"></div>';
+	$html .= '<div class="vbb-form-field"><textarea name="message" placeholder="Tell us what happened" required></textarea></div>';
+	$html .= '<button type="submit" class="btn btn--primary sqs-button-element--primary">Get Help Now</button>';
+	$html .= '</form>';
+	$html .= '</div>';
+	$html .= '</div>';
+	$html .= '</div>';
+	$html .= '<!-- /wp:group -->';
+	return $html;
+}
+
 function vbb_bake_page_content( $page_id ) {
 	$page_id = (int) $page_id;
 

@@ -451,6 +451,100 @@ function vbb_get_block_registry() {
 		),
 	);
 
+	$blocks['problem'] = array(
+		'label'      => 'Problem / Solution',
+		'icon'       => 'dashicons-warning',
+		'styles'     => array( 'A' ),
+		'effects'    => array( 'none', 'fade', 'slide-up', 'zoom', 'flip' ),
+		'hasColors'  => true,
+		'fields'     => array(
+			array( 'key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text', 'default' => '' ),
+			array( 'key' => 'title', 'label' => 'Title', 'type' => 'text', 'default' => '' ),
+			array( 'key' => 'description', 'label' => 'Problem Description', 'type' => 'textarea', 'default' => '' ),
+			array( 'key' => 'solution', 'label' => 'Solution Text', 'type' => 'textarea', 'default' => '' ),
+		),
+	);
+
+	$blocks['heroStyleD'] = array(
+		'label'      => 'Hero Style D (Legal/Portfolio)',
+		'icon'       => 'dashicons-video-alt2',
+		'styles'     => array( 'A', 'B' ),
+		'effects'    => array( 'none', 'fade' ),
+		'hasColors'  => true,
+		'fields'     => array(
+			array( 'key' => 'heading', 'label' => 'Main Heading', 'type' => 'textarea', 'default' => 'Fight Back Against Unfair Criminal Charges' ),
+			array( 'key' => 'highlightText', 'label' => 'Highlighted Text Segment', 'type' => 'text', 'default' => 'Fight Back' ),
+			array( 'key' => 'subhead', 'label' => 'Subhead / Description', 'type' => 'textarea', 'default' => '' ),
+			array( 'key' => 'primaryCtaText', 'label' => 'Primary CTA Text', 'type' => 'text', 'default' => 'Call Now' ),
+			array( 'key' => 'primaryCtaUrl', 'label' => 'Primary CTA URL', 'type' => 'url', 'default' => 'tel:+12672252545' ),
+			array( 'key' => 'secondaryCtaText', 'label' => 'Secondary CTA Text', 'type' => 'text', 'default' => 'Get Help Now' ),
+			array( 'key' => 'secondaryCtaUrl', 'label' => 'Secondary CTA URL', 'type' => 'url', 'default' => '/contact' ),
+			array( 'key' => 'bgImage', 'label' => 'Background Image', 'type' => 'image', 'default' => '' ),
+			array( 'key' => 'bgVideo', 'label' => 'Background Video MP4', 'type' => 'url', 'default' => '' ),
+			array( 'key' => 'overlayOpacity', 'label' => 'Overlay Opacity (0-1)', 'type' => 'number', 'default' => 0.15 ),
+		),
+	);
+
+	$blocks['trustBadgesStrip'] = array(
+		'label'      => 'Trust Badges Strip',
+		'icon'       => 'dashicons-awards',
+		'styles'     => array( 'A' ),
+		'effects'    => array( 'none' ),
+		'hasColors'  => false,
+		'fields'     => array(
+			array( 'key' => 'stripImage', 'label' => 'Strip Badges Image', 'type' => 'image', 'default' => '' ),
+			array(
+				'key'         => 'badges',
+				'label'       => 'Individual Badges',
+				'type'        => 'repeatable',
+				'default'     => array(),
+				'item_fields' => array(
+					array( 'key' => 'name', 'label' => 'Badge Name', 'type' => 'text', 'default' => '' ),
+					array( 'key' => 'image', 'label' => 'Logo Image', 'type' => 'image', 'default' => '' ),
+					array( 'key' => 'url', 'label' => 'Link URL', 'type' => 'url', 'default' => '' ),
+				),
+			),
+		),
+	);
+
+	$blocks['practiceGrid'] = array(
+		'label'      => 'Practice Areas Poster Grid',
+		'icon'       => 'dashicons-screenoptions',
+		'styles'     => array( 'A', 'B' ),
+		'effects'    => array( 'none', 'fade', 'zoom' ),
+		'hasColors'  => true,
+		'fields'     => array(
+			array( 'key' => 'heading', 'label' => 'Section Heading', 'type' => 'text', 'default' => 'Criminal Defense Practice Areas' ),
+			array(
+				'key'         => 'items',
+				'label'       => 'Practice Areas',
+				'type'        => 'repeatable',
+				'default'     => array(),
+				'item_fields' => array(
+					array( 'key' => 'title', 'label' => 'Title', 'type' => 'text', 'default' => '' ),
+					array( 'key' => 'image', 'label' => 'Poster Image', 'type' => 'image', 'default' => '' ),
+					array( 'key' => 'url', 'label' => 'Target URL', 'type' => 'url', 'default' => '#' ),
+				),
+			),
+		),
+	);
+
+	$blocks['contactFormMap'] = array(
+		'label'      => 'Contact Form + Map & BBB',
+		'icon'       => 'dashicons-location-alt',
+		'styles'     => array( 'A', 'B' ),
+		'effects'    => array( 'none' ),
+		'hasColors'  => true,
+		'fields'     => array(
+			array( 'key' => 'heading', 'label' => 'Heading', 'type' => 'text', 'default' => 'Contact A Philadelphia Criminal Lawyer Today' ),
+			array( 'key' => 'address', 'label' => 'Address', 'type' => 'textarea', 'default' => '1717 Arch Street, Suite 320, Philadelphia, PA 19103' ),
+			array( 'key' => 'phone', 'label' => 'Phone', 'type' => 'text', 'default' => '(267) 225-2545' ),
+			array( 'key' => 'email', 'label' => 'Email', 'type' => 'text', 'default' => 'ztg@goldsteinmehta.com' ),
+			array( 'key' => 'lat', 'label' => 'Latitude', 'type' => 'text', 'default' => '39.9555899' ),
+			array( 'key' => 'lng', 'label' => 'Longitude', 'type' => 'text', 'default' => '-75.1690718' ),
+		),
+	);
+
 	return $blocks;
 }
 
@@ -477,50 +571,60 @@ function vbb_get_baker_map() {
 
 	// Key mapping: registry key → baker key (kebab-case for baker dispatcher).
 	$key_to_baker_key = array(
-		'hero'            => 'hero',
-		'heroCentered'    => 'hero-centered',
-		'servicesGrid'    => 'services-grid',
-		'benefits'        => 'benefits',
-		'process'         => 'process',
-		'testimonials'    => 'testimonials',
-		'faq'             => 'faq',
-		'contact'         => 'contact-section',
-		'ctaFinal'        => 'cta-final',
-		'logoCloud'       => 'logoCloud',
-		'pricing'         => 'pricing',
-		'team'            => 'team',
-		'stats'           => 'stats',
-		'gallery'         => 'gallery',
-		'video'           => 'video',
-		'newsletter'      => 'newsletter',
-		'map'             => 'map',
-		'comparison'      => 'comparison',
-		'blog'            => 'blog',
-		'divider'         => 'divider',
+		'hero'             => 'hero',
+		'heroCentered'     => 'hero-centered',
+		'heroStyleD'       => 'hero-style-d',
+		'trustBadgesStrip' => 'trust-badges-strip',
+		'practiceGrid'     => 'practice-grid',
+		'contactFormMap'   => 'contact-form-map',
+		'servicesGrid'     => 'services-grid',
+		'benefits'         => 'benefits',
+		'process'          => 'process',
+		'testimonials'     => 'testimonials',
+		'faq'              => 'faq',
+		'contact'          => 'contact-section',
+		'ctaFinal'         => 'cta-final',
+		'logoCloud'        => 'logoCloud',
+		'pricing'          => 'pricing',
+		'team'             => 'team',
+		'stats'            => 'stats',
+		'gallery'          => 'gallery',
+		'video'            => 'video',
+		'newsletter'       => 'newsletter',
+		'map'              => 'map',
+		'comparison'       => 'comparison',
+		'blog'             => 'blog',
+		'divider'          => 'divider',
+		'problem'          => 'problem',
 	);
 
 	// Baker function names by block key.
 	$baker_functions = array(
-		'hero'          => 'vbb_bake_hero',
-		'heroCentered'  => 'vbb_bake_hero_centered',
-		'servicesGrid'  => 'vbb_bake_services_grid',
-		'benefits'      => 'vbb_bake_benefits',
-		'process'       => 'vbb_bake_process',
-		'testimonials'  => 'vbb_bake_testimonials',
-		'faq'           => 'vbb_bake_faq',
-		'contact'       => 'vbb_bake_contact_section',
-		'ctaFinal'      => 'vbb_bake_cta_final',
-		'logoCloud'     => 'vbb_bake_logo_cloud',
-		'pricing'       => 'vbb_bake_pricing_tables',
-		'team'          => 'vbb_bake_team_section',
-		'stats'         => 'vbb_bake_stats',
-		'gallery'       => 'vbb_bake_gallery',
-		'video'         => 'vbb_bake_video',
-		'newsletter'    => 'vbb_bake_newsletter',
-		'map'           => 'vbb_bake_map',
-		'comparison'    => 'vbb_bake_comparison',
-		'blog'          => 'vbb_bake_blog',
-		'divider'       => 'vbb_bake_divider',
+		'hero'             => 'vbb_bake_hero',
+		'heroCentered'     => 'vbb_bake_hero_centered',
+		'heroStyleD'       => 'vbb_bake_hero_style_d',
+		'trustBadgesStrip' => 'vbb_bake_trust_badges_strip',
+		'practiceGrid'     => 'vbb_bake_practice_grid',
+		'contactFormMap'   => 'vbb_bake_contact_form_map',
+		'servicesGrid'     => 'vbb_bake_services_grid',
+		'benefits'         => 'vbb_bake_benefits',
+		'process'          => 'vbb_bake_process',
+		'testimonials'     => 'vbb_bake_testimonials',
+		'faq'              => 'vbb_bake_faq',
+		'contact'          => 'vbb_bake_contact_section',
+		'ctaFinal'         => 'vbb_bake_cta_final',
+		'logoCloud'        => 'vbb_bake_logo_cloud',
+		'pricing'          => 'vbb_bake_pricing_tables',
+		'team'             => 'vbb_bake_team_section',
+		'stats'            => 'vbb_bake_stats',
+		'gallery'          => 'vbb_bake_gallery',
+		'video'            => 'vbb_bake_video',
+		'newsletter'       => 'vbb_bake_newsletter',
+		'map'              => 'vbb_bake_map',
+		'comparison'       => 'vbb_bake_comparison',
+		'blog'             => 'vbb_bake_blog',
+		'divider'          => 'vbb_bake_divider',
+		'problem'          => 'vbb_bake_problem',
 	);
 
 	foreach ( $registry as $key => $def ) {

@@ -317,6 +317,34 @@
 .vbb-section-cta-final.vbb-style-c p { color: var(--vbb-primary, var(--vbb-text)) !important; }
 
 /* ==========================================================================
+   PROBLEM / SOLUTION
+   ========================================================================== */
+.vbb-section-problem,
+.vbb-section-problem * {
+	--vbb-accent: var(--vbb-pro-accent);
+	--vbb-bg: var(--vbb-pro-background);
+	--vbb-surface: var(--vbb-pro-surface);
+	--vbb-text: var(--vbb-pro-text);
+	--vbb-muted: var(--vbb-pro-mutedText);
+}
+
+.vbb-section-problem .wp-block-heading { color: var(--vbb-text) !important; }
+.vbb-section-problem p { color: var(--vbb-muted) !important; }
+.vbb-section-problem .vbb-eyebrow { color: var(--vbb-accent) !important; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; margin-bottom: 0.5rem; }
+.vbb-section-problem .vbb-problem-solution {
+	background: color-mix(in srgb, var(--vbb-accent) 10%, var(--vbb-surface));
+	border-left: 4px solid var(--vbb-accent);
+	padding: 1.5rem;
+	border-radius: var(--vbb-pro-radius);
+	margin-top: 1.5rem;
+}
+.vbb-section-problem .vbb-problem-solution h3 {
+	color: var(--vbb-accent) !important;
+	margin-top: 0;
+	margin-bottom: 1rem;
+}
+
+/* ==========================================================================
    LOGO CLOUD
    ========================================================================== */
 .vbb-section-logo-cloud,
@@ -504,4 +532,238 @@
 }
 .vbb-site-footer .vbb-footer-socials a:hover {
 	background: rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   HERO STYLE D & LEGAL VERTICAL COMPONENTS
+   ========================================================================== */
+.vbb-hero-style-d {
+	position: relative;
+	min-height: 85vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-size: cover;
+	background-position: center;
+	background-color: #0b0b0b;
+	color: #ffffff;
+	padding: 4rem 2rem;
+	overflow: hidden;
+}
+.vbb-hero-bg-video {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	transform: translateX(-50%) translateY(-50%);
+	z-index: 1;
+	object-fit: cover;
+}
+.vbb-hero-style-d .vbb-hero-overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(11, 11, 11, 0.65);
+	z-index: 2;
+}
+.vbb-hero-style-d .vbb-hero-content {
+	position: relative;
+	z-index: 3;
+	text-align: center;
+	max-width: 1100px;
+	margin: 0 auto;
+}
+.vbb-hero-style-d .vbb-hero-title {
+	font-size: clamp(2rem, 3.5vw, 3.2rem);
+	font-weight: 700;
+	line-height: 1.2;
+	margin-bottom: 1.5rem;
+	color: #ffffff;
+}
+.vbb-hero-style-d .sqsrte-text-highlight {
+	background-color: rgba(212, 168, 67, 0.45);
+	padding: 0.1em 0.3em;
+	border-radius: 4px;
+}
+.vbb-hero-style-d .vbb-hero-subhead {
+	font-size: 1.15rem;
+	line-height: 1.6;
+	color: #d1d1d1;
+	max-width: 800px;
+	margin: 0 auto 2rem auto;
+}
+.vbb-hero-style-d .vbb-hero-ctas {
+	display: flex;
+	gap: 1rem;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.vbb-hero-style-d .btn--primary,
+.vbb-practice-poster-overlay .btn--primary {
+	background-color: #D4A843 !important;
+	color: #000000 !important;
+	border: 2px solid #D4A843 !important;
+	padding: 0.75rem 2rem;
+	border-radius: 9999px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+.vbb-hero-style-d .btn--primary:hover,
+.vbb-practice-poster-overlay .btn--primary:hover {
+	background-color: #e5b853 !important;
+	border-color: #e5b853 !important;
+}
+.vbb-hero-style-d .btn--tertiary {
+	background-color: transparent !important;
+	color: #ffffff !important;
+	border: 2px solid #ffffff !important;
+	padding: 0.75rem 2rem;
+	border-radius: 9999px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+.vbb-hero-style-d .btn--tertiary:hover {
+	background-color: #ffffff !important;
+	color: #000000 !important;
+}
+
+/* Trust Badges Strip */
+.vbb-trust-badges-strip {
+	background-color: #000000;
+	padding: 3rem 1rem;
+	text-align: center;
+}
+.vbb-trust-badges-image img {
+	max-width: 100%;
+	height: auto;
+	margin: 0 auto;
+	display: block;
+}
+.vbb-trust-badges-grid {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 3rem;
+	flex-wrap: wrap;
+	max-width: 1400px;
+	margin: 0 auto;
+}
+.vbb-trust-badge-item img {
+	max-height: 60px;
+	object-fit: contain;
+	filter: grayscale(100%) brightness(200%);
+	transition: filter 0.2s ease;
+}
+.vbb-trust-badge-item img:hover {
+	filter: none;
+}
+
+/* Practice Grid */
+.vbb-practice-grid-section {
+	padding: 5rem 2rem;
+	background-color: #121212;
+	color: #ffffff;
+}
+.vbb-section-title {
+	text-align: center;
+	font-size: 2.2rem;
+	font-weight: 700;
+	margin-bottom: 3rem;
+	color: #ffffff;
+}
+.vbb-practice-grid-container {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 2rem;
+	max-width: 1400px;
+	margin: 0 auto;
+}
+@media (max-width: 1024px) {
+	.vbb-practice-grid-container { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+	.vbb-practice-grid-container { grid-template-columns: 1fr; }
+}
+.vbb-practice-poster-card {
+	position: relative;
+	aspect-ratio: 1 / 1;
+	border-radius: 50%;
+	overflow: hidden;
+	box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+	cursor: pointer;
+}
+.vbb-practice-poster-media {
+	position: absolute;
+	inset: 0;
+	background-size: cover;
+	background-position: center;
+	transition: transform 0.4s ease;
+}
+.vbb-practice-poster-card:hover .vbb-practice-poster-media {
+	transform: scale(1.08);
+}
+.vbb-practice-poster-overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.45);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	text-align: center;
+}
+
+/* Contact Form + Map */
+.vbb-contact-form-map {
+	padding: 5rem 2rem;
+	background-color: #0b0b0b;
+	color: #ffffff;
+}
+.vbb-contact-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 4rem;
+	max-width: 1200px;
+	margin: 0 auto;
+	align-items: center;
+}
+@media (max-width: 768px) {
+	.vbb-contact-grid { grid-template-columns: 1fr; }
+}
+.vbb-contact-info p {
+	font-size: 1.1rem;
+	line-height: 1.8;
+	color: #d1d1d1;
+	margin-bottom: 1rem;
+}
+.vbb-contact-info a {
+	color: #D4A843;
+	text-decoration: underline;
+}
+.vbb-contact-form-wrap form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+.vbb-form-field input,
+.vbb-form-field textarea {
+	width: 100%;
+	padding: 1rem;
+	background-color: #1a1a1a;
+	border: 1px solid #333333;
+	border-radius: 8px;
+	color: #ffffff;
+	font-size: 1rem;
+}
+.vbb-form-field textarea {
+	min-height: 140px;
+	resize: vertical;
+}
+.vbb-contact-form-wrap button[type="submit"] {
+	align-self: flex-start;
+	cursor: pointer;
 }

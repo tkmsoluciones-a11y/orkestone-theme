@@ -19,13 +19,22 @@ function vbb_pro_admin_menu() {
 }
 add_action( 'admin_menu', 'vbb_pro_admin_menu' );
 function vbb_pro_admin_assets( $hook ) {
-	// More permissive check: load if we are on any pro-elite related page
-	if ( false === strpos( $hook, 'vbb-pro' ) && false === strpos( $hook, 'vbb-verticals' ) && false === strpos( $hook, 'vbb-command-center' ) ) { return; }
+	$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+	$is_cc = ( 'vbb-command-center' === $page || 'vbb-pro-elite' === $page || 'vbb-verticals' === $page || false !== strpos( $hook, 'vbb-pro' ) || false !== strpos( $hook, 'vbb-verticals' ) || false !== strpos( $hook, 'vbb-command-center' ) );
+
+	if ( ! $is_cc ) { return; }
 	
 	wp_enqueue_style( 'vbb-pro-admin', get_template_directory_uri() . '/assets/css/admin-pro.css', array(), wp_get_theme()->get( 'Version' ) );
-	wp_enqueue_script( 'vbb-pro-admin', get_template_directory_uri() . '/assets/js/admin-pro.js', array(), wp_get_theme()->get( 'Version' ) . '-' . time(), true );
 
-	if ( false !== strpos( $hook, 'vbb-command-center' ) ) {
+	// The Command Center boot script (#vbb-cc-cards / #vbb-page-selector) only
+	// exists on the Command Center page. Loading it on vbb-verticals makes it
+	// retry 20x for DOM nodes that never appear, spamming the console.
+	$is_command_center = ( 'vbb-command-center' === $page || false !== strpos( $hook, 'vbb-command-center' ) );
+	if ( $is_command_center ) {
+		wp_enqueue_script( 'vbb-pro-admin', get_template_directory_uri() . '/assets/js/admin-pro.js', array(), wp_get_theme()->get( 'Version' ) . '-' . time(), true );
+	}
+
+	if ( 'vbb-command-center' === $page || false !== strpos( $hook, 'vbb-command-center' ) ) {
 		wp_enqueue_media();
 		$home_url = home_url( '/' );
 		$presets = vbb_pro_get_builtin_presets();
@@ -63,12 +72,11 @@ function vbb_pro_handle_admin_actions() {
 		// Profiling via Command Center: the JS already persisted settings via XHR.
 		// Read from the database to avoid empty $_POST wiping the data.
 		$stored = vbb_pro_get_settings();
-		$name   = sanitize_text_field( wp_unslash( $_POST['profileName'] ?? $stored['profileName'] ?? 'Pro Elite Profile' ) );
+		$name   = sanitize_text_field( $stored['profileName'] ?? 'Pro Elite Profile' );
 		vbb_pro_save_profile( $name, $stored );
 		add_settings_error( 'vbb_pro_elite', 'saved', 'Perfil guardado desde la configuración actual.', 'updated' );
 	} elseif ( 'save' === $action ) {
 		$settings = array(
-			'profileName' => sanitize_text_field( wp_unslash( $_POST['profileName'] ?? 'Pro Elite Profile' ) ),
 			'colorMode'   => sanitize_key( wp_unslash( $_POST['colorMode'] ?? 'light' ) ),
 			'palettes'    => array(
 				'light' => isset( $_POST['palettes']['light'] ) ? wp_unslash( $_POST['palettes']['light'] ) : array(),
@@ -178,6 +186,38 @@ function vbb_pro_export_settings() {
 }
 add_action( 'admin_post_vbb_pro_export_settings', 'vbb_pro_export_settings' );
 
+/**
+ * AJAX endpoint: export current settings as a Command Center profile JSON.
+ * Used by the toolbar Export-Profile button.
+ */
+function vbb_pro_export_profile() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( 'No autorizado.', 'Forbidden', array( 'response' => 403 ) );
+	}
+	check_admin_referer( 'vbb_pro_export_profile' );
+
+	$s       = vbb_pro_get_settings();
+	$profile = array(
+		'profileName'  => $s['profileName'] ?? 'Custom',
+		'colorMode'    => $s['colorMode'] ?? 'light',
+		'palettes'     => $s['palettes'] ?? array( 'light' => array(), 'dark' => array() ),
+		'typography'   => $s['typography'] ?? array( 'heading' => '', 'body' => '' ),
+		'layout'       => $s['layout'] ?? array(),
+		'blocks'       => $s['blocks'] ?? array(),
+		'buttons'      => $s['buttons'] ?? array(),
+		'exportedAt'   => current_time( 'mysql' ),
+		'theme'        => 'orkestone',
+		'profileType'  => 'elite',
+		'schemaVersion'=> '1.0.0',
+	);
+	nocache_headers();
+	header( 'Content-Type: application/json; charset=utf-8' );
+	header( 'Content-Disposition: attachment; filename="orkestone-profile-' . gmdate( 'Ymd-His' ) . '.json"' );
+	echo wp_json_encode( $profile, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
+	exit;
+}
+add_action( 'admin_post_vbb_pro_export_profile', 'vbb_pro_export_profile' );
+
 function vbb_pro_field_color_palette( $mode, $name, $label, $value ) {
 	echo '<label><span>' . esc_html( $label ) . '</span><input type="color" name="palettes[' . esc_attr( $mode ) . '][' . esc_attr( $name ) . ']" value="' . esc_attr( $value ) . '"></label>';
 }
@@ -199,7 +239,6 @@ function vbb_pro_nav_tabs() {
 
 function vbb_pro_render_design_form( $s ) { ?>
 	<h2>Diseño Light / Dark</h2>
-	<label><span>Nombre del perfil</span><input type="text" name="profileName" value="<?php echo esc_attr( $s['profileName'] ); ?>"></label>
 	<label><span>Modo de color</span><select name="colorMode">
 		<?php foreach ( array( 'light' => 'Light', 'dark' => 'Dark', 'auto' => 'Auto según dispositivo' ) as $key => $label ) { echo '<option value="' . esc_attr( $key ) . '" ' . selected( $s['colorMode'], $key, false ) . '>' . esc_html( $label ) . '</option>'; } ?>
 	</select></label>
@@ -241,7 +280,6 @@ function vbb_pro_render_blocks_form( $s ) { ?>
 <?php }
 
 function vbb_pro_hidden_current_settings_fields( $s ) {
-	echo '<input type="hidden" name="profileName" value="' . esc_attr( $s['profileName'] ) . '">';
 	echo '<input type="hidden" name="colorMode" value="' . esc_attr( $s['colorMode'] ) . '">';
 	foreach ( array( 'light', 'dark' ) as $mode ) { foreach ( $s['palettes'][ $mode ] as $key => $value ) { echo '<input type="hidden" name="palettes[' . esc_attr( $mode ) . '][' . esc_attr( $key ) . ']" value="' . esc_attr( $value ) . '">'; } }
 	foreach ( $s['typography'] as $key => $value ) { echo '<input type="hidden" name="typography[' . esc_attr( $key ) . ']" value="' . esc_attr( $value ) . '">'; }
@@ -261,7 +299,7 @@ function vbb_pro_render_admin_page() {
 		<?php settings_errors( 'vbb_pro_elite' ); vbb_pro_nav_tabs(); ?>
 
 		<?php if ( 'vbb-pro-elite' === $page ) : ?>
-			<div class="vbb-pro-grid"><div class="vbb-pro-card"><h2>Dashboard</h2><p><strong>Modo activo:</strong> <?php echo esc_html( $s['colorMode'] ); ?></p><p><strong>Perfil:</strong> <?php echo esc_html( $s['profileName'] ); ?></p><p>Usa las pestañas para editar diseño, bloques, verticales y perfiles.</p></div><div class="vbb-pro-card"><h2>Estado</h2><p>Light/Dark activo, export/import compatible y toggles conectados al generador.</p></div></div>
+			<div class="vbb-pro-grid"><div class="vbb-pro-card"><h2>Dashboard</h2><p><strong>Modo activo:</strong> <?php echo esc_html( $s['colorMode'] ); ?></p><p>Usa las pestañas para editar diseño, bloques, verticales y perfiles.</p></div><div class="vbb-pro-card"><h2>Estado</h2><p>Light/Dark activo, export/import compatible y toggles conectados al generador.</p></div></div>
 		<?php elseif ( 'vbb-pro-elite-profiles' === $page ) : ?>
 			<div class="vbb-pro-grid"><form method="post" class="vbb-pro-card"><?php wp_nonce_field( 'vbb_pro_elite_action', 'vbb_pro_nonce' ); ?><input type="hidden" name="vbb_pro_action" value="apply_preset"><h2>Presets Pro</h2><select name="presetKey"><?php foreach ( $presets as $key => $preset ) { echo '<option value="' . esc_attr( $key ) . '">' . esc_html( $preset['name'] ?? $key ) . '</option>'; } ?></select><p><button class="button button-primary">Aplicar preset</button></p></form><form method="post" class="vbb-pro-card"><?php wp_nonce_field( 'vbb_pro_elite_action', 'vbb_pro_nonce' ); ?><input type="hidden" name="vbb_pro_action" value="apply_profile"><h2>Perfiles guardados</h2><select name="profileKey"><?php foreach ( $profiles as $key => $profile ) { echo '<option value="' . esc_attr( $key ) . '">' . esc_html( $profile['name'] ?? $key ) . '</option>'; } ?></select><p><button class="button">Activar perfil</button></p></form></div>
 		<?php elseif ( 'vbb-pro-elite-import-export' === $page ) : ?>
@@ -631,6 +669,7 @@ function vbb_pro_render_command_center() {
 				<button class="vbb-cc-undo-btn" id="vbb-cc-undo" title="Deshacer última cambio" disabled>⇦</button>
 				<button class="vbb-cc-redo-btn" id="vbb-cc-redo" title="Rehacer último cambio" disabled>⇨</button>
 				<button class="vbb-cc-export-profile-btn" id="vbb-cc-export-profile" title="Exportar perfil JSON">Export</button>
+				<input type="file" id="vbb-cc-import-file" accept=".json" style="display:none" aria-hidden="true">
 				<button class="vbb-cc-import-profile-btn" id="vbb-cc-import-profile" title="Importar perfil JSON">Import</button>
 				<button class="vbb-cc-dark-preview-btn" id="vbb-cc-dark-preview-btn" title="Toggle dark preview">&#x2600; Light</button>
 				<button class="vbb-cc-preset-btn" id="vbb-cc-zoom-btn" title="Zoom 2x">&#x26B0;</button>
@@ -639,7 +678,7 @@ function vbb_pro_render_command_center() {
 				<button class="vbb-cc-preview-btn" id="vbb-cc-preview-open" title="Abrir en nueva pestaña">&#x2197;</button>
 				<button class="vbb-cc-preview-btn" id="vbb-cc-preview-copy" title="Copiar enlace">&#x1F4CB;</button>
 				<!-- Keyboard shortcut indicator -->
-				<span class="vbb-cc-keyshort-indicator">Ctrl+S: guardar | Ctrl+Z: deshacer</span>
+				<span class="vbb-cc-keyshort-indicator">Ctrl+S Save &bull; Ctrl+Z Undo &bull; Ctrl+Shift+Z Redo</span>
 				</div>
 
 <!-- Preview Iframe Container — taking up 100% remaining vertical space -->
