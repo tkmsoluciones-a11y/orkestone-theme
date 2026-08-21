@@ -238,6 +238,9 @@
 				'<div class="orke-hub-field" style="display:inline-block;width:calc(50% - 60px);">' +
 					'<input type="text" name="orke_menu_items[' + newIndex + '][url]" value="" placeholder="URL (e.g., /services)" />' +
 				'</div>' +
+				'<div class="orke-hub-field" style="display:inline-block;width:100%;margin-top:4px;">' +
+					'<input type="text" name="orke_menu_items[' + newIndex + '][url_slug]" value="" class="nav-url-slug regular-text" placeholder="p.ej. servicios" pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"/>' +
+				'</div>' +
 				'<button type="button" class="orke-hub-button orke-hub-button--danger orke-remove-menu-item" style="vertical-align:top;">&times;</button>';
 
 			menuContainer.appendChild(template);
@@ -334,5 +337,47 @@
 			briefingForm.querySelector('input[name="action"]').value = 'orke_save_briefing';
 		});
 	});
+
+/**
+	 * --------------------------------------------------------------------------
+	 * 7. url_slug population and validation for nav items
+	 * --------------------------------------------------------------------------
+	 *
+	 * On page load, server-rendered .nav-url-slug inputs are already populated
+	 * via PHP. For rows added dynamically by the "Add Menu Item" button, the
+	 * template includes an empty .nav-url-slug field.
+	 *
+	 * On blur or submit, a non-blocking warning is shown when the value does
+	 * not match the Wordpress-slug pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+	 */
+
+	// Attach blur validation to all .nav-url-slug inputs (existing and future).
+	if (briefingForm) {
+		briefingForm.addEventListener('blur', function (e) {
+			if (!e.target.classList.contains('nav-url-slug')) return;
+
+			var val = e.target.value.trim();
+			if (val === '') return; // empty is allowed (external URL fallback)
+
+			var pattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+			if (!pattern.test(val)) {
+				alert('Page Slug "' + val + '" no es un slug válido. Usa solo letras minúsculas, números y guiones. Ej: mis-servicios');
+				e.target.focus();
+			}
+		}, true);
+
+		// On form submit, collect url_slug values — native POST includes them
+		// automatically because the inputs carry the correct name attribute.
+		// This collector is kept as an explicit hook for any future AJAX save path.
+		briefingForm.addEventListener('submit', function () {
+			var slugInputs = briefingForm.querySelectorAll('.nav-url-slug');
+			slugInputs.forEach(function (input) {
+				// Ensure blank values are submitted as empty string (not undefined).
+				if (!input.value) {
+					input.value = '';
+				}
+			});
+		});
+	}
 
 })();

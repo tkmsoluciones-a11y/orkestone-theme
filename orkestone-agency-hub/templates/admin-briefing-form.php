@@ -334,17 +334,25 @@
 						foreach ( $menu_items as $index => $item ) :
 							?>
 							<div class="orke-hub-menu-row" data-index="<?php echo esc_attr( $index ); ?>">
-								<div class="orke-hub-field" style="display:inline-block;width:calc(50% - 8px);margin-right:8px;">
-									<input type="text" name="orke_menu_items[<?php echo esc_attr( $index ); ?>][label]"
-										value="<?php echo isset( $item['label'] ) ? esc_attr( $item['label'] ) : ''; ?>"
-										placeholder="<?php esc_attr_e( 'Label', 'orkestone-agency-hub' ); ?>" />
-								</div>
-								<div class="orke-hub-field" style="display:inline-block;width:calc(50% - 60px);">
-									<input type="text" name="orke_menu_items[<?php echo esc_attr( $index ); ?>][url]"
-										value="<?php echo isset( $item['url'] ) ? esc_attr( $item['url'] ) : ''; ?>"
-										placeholder="<?php esc_attr_e( 'URL (e.g., /services)', 'orkestone-agency-hub' ); ?>" />
-								</div>
-								<button type="button" class="orke-hub-button orke-hub-button--danger orke-remove-menu-item" style="vertical-align:top;">&times;</button>
+<div class="orke-hub-field" style="display:inline-block;width:calc(50% - 8px);margin-right:8px;">
+								<input type="text" name="orke_menu_items[<?php echo esc_attr( $index ); ?>][label]"
+									value="<?php echo isset( $item['label'] ) ? esc_attr( $item['label'] ) : ''; ?>"
+									placeholder="<?php esc_attr_e( 'Label', 'orkestone-agency-hub' ); ?>" />
+							</div>
+							<div class="orke-hub-field" style="display:inline-block;width:calc(50% - 60px);">
+								<input type="text" name="orke_menu_items[<?php echo esc_attr( $index ); ?>][url]"
+									value="<?php echo isset( $item['url'] ) ? esc_attr( $item['url'] ) : ''; ?>"
+									placeholder="<?php esc_attr_e( 'URL (e.g., /services)', 'orkestone-agency-hub' ); ?>" />
+							</div>
+							<div class="orke-hub-field" style="display:inline-block;width:100%;margin-top:4px;">
+								<input type="text" name="orke_menu_items[<?php echo esc_attr( $index ); ?>][url_slug]"
+									value="<?php echo isset( $item['url_slug'] ) ? esc_attr( $item['url_slug'] ) : ''; ?>"
+									class="nav-url-slug regular-text"
+									pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
+									placeholder="<?php esc_attr_e( 'p.ej. servicios', 'orkestone-agency-hub' ); ?>" />
+								<p class="description"><?php esc_html_e( 'Optional: slug de la página WP destino para enlace tipo post-type. Dejar vacío para URLs externas.', 'orkestone-agency-hub' ); ?></p>
+							</div>
+							<button type="button" class="orke-hub-button orke-hub-button--danger orke-remove-menu-item" style="vertical-align:top;">&times;</button>
 							</div>
 						<?php endforeach; ?>
 					</div>

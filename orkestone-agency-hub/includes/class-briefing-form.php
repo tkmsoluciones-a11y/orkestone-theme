@@ -368,10 +368,18 @@ class Orkestone_Briefing_Form {
 			foreach ( wp_unslash( $raw_data['orke_menu_items'] ) as $item ) {
 				$label = isset( $item['label'] ) ? sanitize_text_field( $item['label'] ) : '';
 				if ( ! empty( $label ) ) {
-					$data['navigation'][] = array(
+					$entry = array(
 						'label' => $label,
 						'url'   => isset( $item['url'] ) ? sanitize_url( $item['url'] ) : '/',
 					);
+
+					// Optional page-slug: sanitize as WP title slug; skip key if blank.
+					if ( isset( $item['url_slug'] ) && '' !== trim( $item['url_slug'] ) ) {
+						$slug                 = sanitize_title( $item['url_slug'] );
+						$entry['url_slug']    = $slug;
+					}
+
+					$data['navigation'][] = $entry;
 				}
 			}
 		}

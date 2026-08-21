@@ -244,6 +244,11 @@ class Orkestone_JSON_Builder {
 				'url'   => ! empty( $item['url'] ) ? sanitize_url( $item['url'] ) : '/',
 			);
 
+			// Preserve url_slug so the theme importer can resolve page IDs downstream.
+			if ( ! empty( $item['url_slug'] ) ) {
+				$nav_item['url_slug'] = sanitize_text_field( $item['url_slug'] );
+			}
+
 			if ( ! empty( $item['children'] ) && is_array( $item['children'] ) ) {
 				$nav_item['children'] = $this->build_navigation( $item['children'] );
 			}
