@@ -122,27 +122,27 @@
 							"memory_*": true
 						  }
 						},
-				  "ceo-orkestone-theme": {
-						"description": "CEO del theme/plugin WordPress Orkestone (cliente visual de aurix-core-dev). Decide cambios visuales, prioriza specs, no escribe código.",
-						"mode": "primary",
-						"model": "freedeepseek/nemotron-3.5-lightning",
-						"options": {},
-						"permission": {
-							"bash": "deny",
-							"write": "deny",
-							"edit": "deny",
-							"task": "deny",
-							"read": "allow"
-						},
-						"prompt": "{file:C:/Users/Admin/.config/opencode/prompts/ceo-theme-orkestone.md}",
-						"tools": {
-							"bash": false,
-							"edit": true,
-							"read": true,
-							"write": true
-						}
+					"ceo-orkestone-theme": {
+							"description": "CEO del theme/plugin WordPress Orkestone. Analiza, decide y propone. Nunca ejecuta.",
+							"mode": "primary",
+							"model": "freedeepseek/nemotron-3.5-lightning",
+							"options": {},
+							"permission": {
+								"bash": "deny",
+								"write": "deny",
+								"edit": "deny",
+								"task": "deny",
+								"read": "allow"
+							},
+							"prompt": "{file:C:/Users/Admin/.config/opencode/prompts/ceo-theme-orkestone.md}",
+							"tools": {
+								"bash": false,
+								"edit": false,
+								"read": true,
+								"write": false
+							}
 					},
-                  "jd-fix-agent":  {
+					"jd-fix-agent":  {
                                        "description":  "Surgical fix agent for judgment-day protocol",
                                        "hidden":  true,
                                        "mode":  "subagent",
