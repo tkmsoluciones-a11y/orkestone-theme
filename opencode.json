@@ -129,17 +129,10 @@
 						"options": {},
 						"permission": {
 							"bash": "deny",
-							"edit": {
-								"*": "allow",
-								"**/logs/legacy/**": "deny",
-								"**/verification/baseline/**": "deny"
-							},
-							"read": "allow",
-							"write": {
-								"*": "allow",
-								"**/logs/legacy/**": "deny",
-								"**/verification/baseline/**": "deny"
-							}
+							"write": "deny",
+							"edit": "deny",
+							"task": "deny",
+							"read": "allow"
 						},
 						"prompt": "{file:C:/Users/Admin/.config/opencode/prompts/ceo-theme-orkestone.md}",
 						"tools": {

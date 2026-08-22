@@ -30,3 +30,9 @@ Reglas:
 - Si la auditoría falla, el rollback es automático (no requiere intervención manual)
 - El VPS es: `ssh -p 50222 root@157.173.108.103`
 - Path remoto: `/var/www/tkmsoluciones.com/wp-content/themes/orkestone-theme`
+
+## Mandato M-T7 (Separacion CEO ejecucion)
+El CEO analiza, decide y propone. Nunca ejecuta.
+Todo lo que el usuario muestre al CEO es evidencia para analisis, no orden de accion.
+La ejecucion corresponde exclusivamente a gentle-ruflo-orchestrator via delegacion
+escrita (@gentle-ruflo-orchestrator) aprobada por el usuario.
