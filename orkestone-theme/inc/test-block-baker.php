@@ -579,7 +579,7 @@ assert_no_notices(
 		assert_contains( $output, 'Step 5', '5 steps: step 5 title appears' );
 		assert_contains( $output, 'Description 3', '5 steps: step 3 description appears' );
 		// Each step emits a column — verify multiple occurrences.
-		$count = substr_count( $output, '<!-- wp:column' );
+		$count = substr_count( $output, '<!-- wp:column ' );
 		assert_contains( $count >= 5 ? 'true' : 'false', 'true', "5 steps: {$count} columns emitted (expected >= 5)" );
 	},
 	'vbb_bake_process with 5 steps triggers no notices'

@@ -1123,7 +1123,6 @@ $GLOBALS['vbb_test_vertical_config'] = array(
 				'background' => '#0B1220',
 				'surface'    => '#121C2E',
 				'text'       => '#EAEFF7',
-				'mutedText'  => '#9AA7BC',
 				'primary'    => '#E8D9A8',
 				'secondary'  => '#C9A227',
 				'accent'     => '#16233A',
@@ -1135,7 +1134,7 @@ $s = vbb_pro_default_settings();
 assert_true( 'dark' === $s['colorMode'], 'brand.colorMode=dark propagates to defaults' );
 assert_equals( '#0B1220', $s['palettes']['dark']['background'], 'custom dark background overrides default' );
 assert_equals( '#EAEFF7', $s['palettes']['dark']['text'], 'custom dark text overrides default' );
-assert_true( '' !== $s['palettes']['dark']['mutedText'], 'non-overridden dark keys still resolve' );
+assert_equals( '#A8B3C4', $s['palettes']['dark']['mutedText'], 'non-overridden dark keys fall back to built-in default' );
 
 // Vertical without brand keys keeps today's behavior.
 $GLOBALS['vbb_test_vertical_config'] = array(
