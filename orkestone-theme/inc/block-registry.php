@@ -584,7 +584,7 @@ function vbb_get_baker_map() {
 		'faq'              => 'faq',
 		'contact'          => 'contact-section',
 		'ctaFinal'         => 'cta-final',
-		'logoCloud'        => 'logoCloud',
+		'logoCloud'        => 'logo-cloud',
 		'pricing'          => 'pricing',
 		'team'             => 'team',
 		'stats'            => 'stats',

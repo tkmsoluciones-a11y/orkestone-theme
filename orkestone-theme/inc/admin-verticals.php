@@ -277,8 +277,10 @@ function vbb_render_verticals_admin_page() {
 	$verticals     = vbb_list_available_verticals();
 	$media_count   = count( vbb_get_vertical_media_items() );
 	?>
-	<div class="wrap">
-		<h1><?php echo esc_html__( 'Verticales JSON — Vertical Block Base', 'vertical-block-base' ); ?></h1>
+	<div class="wrap vbb-pro-wrap">
+		<h1>OrkestOne Theme</h1>
+		<p class="description"><?php echo esc_html__( 'Importa, activa y aplica verticales JSON sin editar archivos del theme manualmente.', 'vertical-block-base' ); ?></p>
+		<?php if ( function_exists( 'vbb_pro_nav_tabs' ) ) { vbb_pro_nav_tabs(); } ?>
 		<p><?php echo esc_html__( 'Importa, activa y aplica verticales JSON sin editar archivos del theme manualmente.', 'vertical-block-base' ); ?></p>
 
 		<?php if ( ! empty( $notice['message'] ) ) : ?>

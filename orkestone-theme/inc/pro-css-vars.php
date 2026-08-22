@@ -170,6 +170,9 @@ function vbb_pro_print_css_vars() {
 		--wp--preset--color--muted: var(--vbb-pro-mutedText);
 	}
 	body{background:var(--vbb-pro-background);color:var(--vbb-pro-text);font-family:var(--vbb-pro-body-font)}
+	.vbb-section-hero img[src=""],.vbb-section-hero .vbb-hero-bg-image[style*="url('')"],.vbb-section-hero img:not([src]){display:none!important}
+	.vbb-section-hero.vbb-style-a:has(img[src=""]) .wp-block-columns{justify-content:center}
+	.vbb-section-hero.vbb-style-a:has(img[src=""]) .wp-block-column:first-child{display:none}
 	h1,h2,h3,h4,h5,h6{font-family:var(--vbb-pro-heading-font)}
 	.wp-block-button__link{border-radius:var(--vbb-pro-button-radius);background:var(--vbb-pro-secondary);color:var(--vbb-pro-primary);transition:box-shadow .3s ease;<?php echo ! empty( $s['buttons']['uppercase'] ) ? 'text-transform:uppercase;letter-spacing:.08em;' : ''; ?>}
 	.wp-block-button__link:hover,.wp-block-button__link:focus-visible{box-shadow:0 0 0 var(--vbb-pro-glow-intensity,8px) color-mix(in srgb,var(--vbb-pro-primary) 60%,transparent);outline:none}
@@ -225,6 +228,12 @@ function vbb_pro_print_css_vars() {
 	/* Brand & Header — title color + background + anti-aliasing */
 	.wp-block-site-title a{color:<?php echo esc_html( $s['headerConfig']['textColor'] ?? '#000000' ); ?>!important;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 	header .wp-block-group:first-child,.wp-block-group:has(.wp-block-site-title){background-color:<?php echo esc_html( $s['headerConfig']['bgColor'] ?? '#ffffff' ); ?>!important}
+	<?php if ( 'dark' === $s['colorMode'] ) : ?>
+	.vbb-color-mode-dark header .wp-block-group:first-child,.vbb-color-mode-dark .wp-block-group:has(.wp-block-site-title){background-color:var(--vbb-pro-surface)!important}
+	.vbb-color-mode-dark .wp-block-site-title a{color:var(--vbb-pro-text)!important}
+	<?php endif; ?>
+	html[data-theme="dark"] header .wp-block-group:first-child,html[data-theme="dark"] .wp-block-group:has(.wp-block-site-title){background-color:var(--vbb-pro-surface)!important}
+	html[data-theme="dark"] .wp-block-site-title a{color:var(--vbb-pro-text)!important}
 	/* Frontend dark mode toggle — icono + visibilidad */
 	.vbb-dark-mode-toggle{background:var(--vbb-pro-surface);border:1px solid var(--vbb-pro-muted-text);border-radius:8px;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;line-height:1;padding:0;transition:background .2s,border-color .2s,transform .3s;position:relative;color:var(--vbb-pro-text)}
 	.vbb-dark-mode-toggle:hover{background:var(--vbb-pro-primary);color:var(--vbb-pro-background);border-color:var(--vbb-pro-primary)}
