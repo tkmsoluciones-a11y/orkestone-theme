@@ -281,7 +281,6 @@ function vbb_render_verticals_admin_page() {
 		<h1>OrkestOne Theme</h1>
 		<p class="description"><?php echo esc_html__( 'Importa, activa y aplica verticales JSON sin editar archivos del theme manualmente.', 'vertical-block-base' ); ?></p>
 		<?php if ( function_exists( 'vbb_pro_nav_tabs' ) ) { vbb_pro_nav_tabs(); } ?>
-		<p><?php echo esc_html__( 'Importa, activa y aplica verticales JSON sin editar archivos del theme manualmente.', 'vertical-block-base' ); ?></p>
 
 		<?php if ( ! empty( $notice['message'] ) ) : ?>
 			<div class="notice notice-<?php echo esc_attr( $notice['type'] ); ?> is-dismissible"><p><?php echo esc_html( $notice['message'] ); ?></p></div>
